@@ -16,11 +16,12 @@
     ]
   },
 
- "vars": {
+  "vars": {
     "ADMIN_EMAIL": "marketing@rico.bet",
     "APP_NAME": "Rico Club",
     "APP_TIMEZONE": "America/Sao_Paulo",
-    "MINI_APP_URL": "https://rico-community.marketing-696.workers.dev"
+    "MINI_APP_URL": "https://rico-community.marketing-696.workers.dev",
+    "OFFICIAL_CHANNEL_URL": "https://t.me/ricobetbrchannel"
   },
 
   "d1_databases": [
