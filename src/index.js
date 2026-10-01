@@ -5,12 +5,6 @@ export default {
     try {
       const url = new URL(request.url);
 
-      if (url.pathname === "/admin") {
-        return env.ASSETS.fetch(
-          new Request(new URL("/admin.html", url), request)
-        );
-      }
-
       if (url.pathname.startsWith("/api/")) {
         return handleApi(request, env, url);
       }
@@ -33,7 +27,6 @@ export default {
     }
   }
 };
-
 
 /* =========================================================
    API ROUTER
