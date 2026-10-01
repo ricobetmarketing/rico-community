@@ -44,7 +44,9 @@
   async function init() {
 
     bindNavigation();
+
     bindActions();
+
 
     if (
       !tg ||
@@ -55,9 +57,11 @@
         .classList
         .add("hidden");
 
+
       $("#telegramRequired")
         .classList
         .remove("hidden");
+
 
       return;
 
@@ -65,6 +69,7 @@
 
 
     tg.ready();
+
     tg.expand();
 
 
@@ -74,12 +79,13 @@
         "#090a10"
       );
 
+
       tg.setBackgroundColor?.(
         "#090a10"
       );
 
     } catch {
-      // Telegram client capability varies.
+      // Optional Telegram client support.
     }
 
 
@@ -96,7 +102,8 @@
         await api(
           "/api/app/bootstrap",
           {
-            method: "POST"
+            method:
+              "POST"
           }
         );
 
@@ -104,23 +111,40 @@
       state.bootstrap =
         data;
 
+
       state.user =
         data.user;
 
+
       state.missions =
-        data.missions || [];
+        data.missions ||
+        [];
+
 
       state.rewards =
-        data.rewards || [];
+        data.rewards ||
+        [];
+
 
       state.drops =
-        data.drops || [];
+        data.drops ||
+        [];
+
 
       state.leaderboard =
-        data.leaderboard || [];
+        data.leaderboard ||
+        [];
+
 
       state.settings =
-        data.settings || {};
+        data.settings ||
+        {};
+
+
+      applyAppearance();
+
+
+      applySectionVisibility();
 
 
       renderAll();
@@ -129,6 +153,7 @@
       $("#appLoader")
         .classList
         .add("hidden");
+
 
       $("#playerApp")
         .classList
@@ -140,9 +165,11 @@
         .classList
         .add("hidden");
 
+
       $("#telegramRequired")
         .classList
         .remove("hidden");
+
 
       showToast(
         error.message ||
@@ -168,6 +195,457 @@
 
     renderLeaderboard();
 
+    renderDynamicContent();
+
+  }
+
+
+  /* ======================================================
+     APPEARANCE
+  ======================================================= */
+
+  function applyAppearance() {
+
+    const settings =
+      state.settings;
+
+
+    const primary =
+      validColor(
+        settings.primary_color
+      )
+        ? settings.primary_color
+        : "#FA59A9";
+
+
+    const secondary =
+      validColor(
+        settings.secondary_color
+      )
+        ? settings.secondary_color
+        : "#64D6FA";
+
+
+    const background =
+      validColor(
+        settings.background_color
+      )
+        ? settings.background_color
+        : "#090A10";
+
+
+    document.documentElement
+      .style
+      .setProperty(
+        "--pink",
+        primary
+      );
+
+
+    document.documentElement
+      .style
+      .setProperty(
+        "--blue",
+        secondary
+      );
+
+
+    document.documentElement
+      .style
+      .setProperty(
+        "--bg",
+        background
+      );
+
+
+    document.documentElement
+      .style
+      .setProperty(
+        "--gradient",
+        `linear-gradient(
+          135deg,
+          ${primary} 0%,
+          #9b6cff 48%,
+          ${secondary} 100%
+        )`
+      );
+
+
+    document.body.style.backgroundColor =
+      background;
+
+
+    try {
+
+      tg?.setHeaderColor?.(
+        background
+      );
+
+
+      tg?.setBackgroundColor?.(
+        background
+      );
+
+    } catch {
+      // Optional.
+    }
+
+
+    const appName =
+      settings.app_name ||
+      "Rico Club";
+
+
+    document.title =
+      appName;
+
+
+    const brandStrong =
+      document.querySelector(
+        ".app-brand strong"
+      );
+
+
+    if (brandStrong) {
+
+      brandStrong.textContent =
+        appName.toUpperCase();
+
+    }
+
+  }
+
+
+  function applySectionVisibility() {
+
+    toggleElement(
+      "#checkinCard",
+      enabled(
+        "show_checkin"
+      )
+    );
+
+
+    const checkinSection =
+      $("#checkinCard")
+        ?.closest(
+          ".home-section"
+        );
+
+
+    if (checkinSection) {
+
+      checkinSection
+        .classList
+        .toggle(
+          "hidden",
+          !enabled(
+            "show_checkin"
+          )
+        );
+
+    }
+
+
+    const missionHome =
+      $("#homeMissionList")
+        ?.closest(
+          ".home-section"
+        );
+
+
+    if (missionHome) {
+
+      missionHome
+        .classList
+        .toggle(
+          "hidden",
+          !enabled(
+            "show_missions"
+          )
+        );
+
+    }
+
+
+    toggleNavPage(
+      "missions",
+      enabled(
+        "show_missions"
+      )
+    );
+
+
+    toggleNavPage(
+      "rewards",
+      enabled(
+        "show_rewards"
+      )
+    );
+
+
+    toggleNavPage(
+      "rank",
+      enabled(
+        "show_leaderboard"
+      )
+    );
+
+
+    const invite =
+      $("#homeInviteButton")
+        ?.closest(
+          ".invite-card"
+        );
+
+
+    if (invite) {
+
+      invite
+        .classList
+        .toggle(
+          "hidden",
+          !enabled(
+            "show_referrals"
+          )
+        );
+
+    }
+
+
+    $("#profileInvite")
+      ?.classList
+      .toggle(
+        "hidden",
+        !enabled(
+          "show_referrals"
+        )
+      );
+
+  }
+
+
+  function toggleNavPage(
+    page,
+    visible
+  ) {
+
+    $(
+      `.bottom-nav-item[data-page="${page}"]`
+    )
+      ?.classList
+      .toggle(
+        "hidden",
+        !visible
+      );
+
+  }
+
+
+  function toggleElement(
+    selector,
+    visible
+  ) {
+
+    $(selector)
+      ?.classList
+      .toggle(
+        "hidden",
+        !visible
+      );
+
+  }
+
+
+  function enabled(
+    key
+  ) {
+
+    return String(
+      state.settings[key] ??
+      "true"
+    ) !== "false";
+
+  }
+
+
+  function renderDynamicContent() {
+
+    const settings =
+      state.settings;
+
+
+    const appName =
+      settings.app_name ||
+      "Rico Club";
+
+
+    const heroTitle =
+      settings.hero_title ||
+      appName;
+
+
+    const heroSubtitle =
+      settings.hero_subtitle ||
+      "";
+
+
+    const announcement =
+      String(
+        settings.announcement ||
+        ""
+      )
+        .trim();
+
+
+    const greeting =
+      $("#welcomeName");
+
+
+    if (
+      greeting &&
+      heroTitle
+    ) {
+
+      greeting.dataset
+        .defaultGreeting =
+        greeting.textContent;
+
+    }
+
+
+    const existingAnnouncement =
+      $("#dynamicAnnouncement");
+
+
+    if (
+      announcement &&
+      !existingAnnouncement
+    ) {
+
+      const home =
+        $("#pageHome");
+
+
+      const header =
+        home
+          ?.querySelector(
+            ".home-greeting"
+          );
+
+
+      if (
+        home &&
+        header
+      ) {
+
+        const box =
+          document
+            .createElement(
+              "div"
+            );
+
+
+        box.id =
+          "dynamicAnnouncement";
+
+
+        box.style.cssText = `
+          margin:0 0 17px;
+          padding:13px 15px;
+          border:1px solid rgba(255,255,255,.07);
+          border-radius:15px;
+          background:rgba(255,255,255,.025);
+          font-size:10px;
+          line-height:1.5;
+          color:var(--muted);
+        `;
+
+
+        box.textContent =
+          announcement;
+
+
+        header.insertAdjacentElement(
+          "afterend",
+          box
+        );
+
+      }
+
+    }
+
+
+    if (
+      !announcement &&
+      existingAnnouncement
+    ) {
+
+      existingAnnouncement.remove();
+
+    }
+
+
+    if (
+      settings.hero_image_url
+    ) {
+
+      const wallet =
+        document.querySelector(
+          ".wallet-card"
+        );
+
+
+      if (wallet) {
+
+        wallet.style.backgroundImage =
+          `
+            linear-gradient(
+              145deg,
+              rgba(12,13,20,.88),
+              rgba(12,13,20,.94)
+            ),
+            url("${cssUrl(
+              settings.hero_image_url
+            )}")
+          `;
+
+
+        wallet.style.backgroundSize =
+          "cover";
+
+
+        wallet.style.backgroundPosition =
+          "center";
+
+      }
+
+    }
+
+
+    if (
+      heroSubtitle
+    ) {
+
+      const progressText =
+        $("#tierProgressText");
+
+
+      if (
+        progressText &&
+        Number(
+          state.user?.current_points ||
+          0
+        ) === 0
+      ) {
+
+        progressText.textContent =
+          heroSubtitle;
+
+      }
+
+    }
+
   }
 
 
@@ -179,6 +657,7 @@
 
     const user =
       state.user;
+
 
     if (!user) {
       return;
@@ -244,7 +723,8 @@
 
     $("#streakPill strong")
       .textContent =
-      user.current_streak || 0;
+      user.current_streak ||
+      0;
 
 
     $("#rankText")
@@ -278,7 +758,8 @@
 
     $("#profileStreak")
       .textContent =
-      user.current_streak || 0;
+      user.current_streak ||
+      0;
 
 
     $("#profileRank")
@@ -380,65 +861,125 @@
     points
   ) {
 
+    const settings =
+      state.settings;
+
+
     const tiers = [
 
       {
-        min: 0,
-        max: 500,
-        next: "Bronze"
+        name:
+          "Rookie",
+
+        min:
+          Number(
+            settings.tier_rookie ||
+            0
+          )
       },
 
       {
-        min: 500,
-        max: 1500,
-        next: "Silver"
+        name:
+          "Bronze",
+
+        min:
+          Number(
+            settings.tier_bronze ||
+            500
+          )
       },
 
       {
-        min: 1500,
-        max: 5000,
-        next: "Gold"
+        name:
+          "Silver",
+
+        min:
+          Number(
+            settings.tier_silver ||
+            1500
+          )
       },
 
       {
-        min: 5000,
-        max: 15000,
-        next: "Diamond"
+        name:
+          "Gold",
+
+        min:
+          Number(
+            settings.tier_gold ||
+            5000
+          )
       },
 
       {
-        min: 15000,
-        max: null,
-        next: null
+        name:
+          "Diamond",
+
+        min:
+          Number(
+            settings.tier_diamond ||
+            15000
+          )
       }
 
     ];
 
 
-    const current =
-      tiers
-        .slice()
-        .reverse()
-        .find(
-          tier =>
-            points >= tier.min
-        )
-      ||
-      tiers[0];
+    let currentIndex =
+      0;
 
 
-    if (!current.max) {
+    for (
+      let i = 0;
+      i < tiers.length;
+      i++
+    ) {
+
+      if (
+        points >=
+        tiers[i].min
+      ) {
+        currentIndex =
+          i;
+      }
+
+    }
+
+
+    if (
+      currentIndex ===
+      tiers.length - 1
+    ) {
 
       return {
-
         percent: 100,
-
         text:
           "Diamond status unlocked"
-
       };
 
     }
+
+
+    const current =
+      tiers[
+        currentIndex
+      ];
+
+
+    const next =
+      tiers[
+        currentIndex + 1
+      ];
+
+
+    const range =
+      next.min -
+      current.min;
+
+
+    const gained =
+      points -
+      current.min;
 
 
     const percent =
@@ -447,15 +988,8 @@
         Math.min(
           100,
           (
-            (
-              points -
-              current.min
-            )
-            /
-            (
-              current.max -
-              current.min
-            )
+            gained /
+            range
           ) * 100
         )
       );
@@ -467,9 +1001,9 @@
 
       text:
         `${formatNumber(
-          current.max -
+          next.min -
           points
-        )} points to ${current.next}`
+        )} points to ${next.name}`
 
     };
 
@@ -501,14 +1035,42 @@
       $("#checkinStatusTag");
 
 
-    if (done) {
-
-      card.classList.add(
-        "completed"
+    const reward =
+      Number(
+        state.settings
+          .daily_checkin_points ||
+        20
       );
 
 
-      button.disabled = true;
+    const rewardText =
+      document.querySelector(
+        ".checkin-reward"
+      );
+
+
+    if (rewardText) {
+
+      rewardText.textContent =
+        `+${formatNumber(
+          reward
+        )} Rico Points`;
+
+    }
+
+
+    if (done) {
+
+      card
+        ?.classList
+        .add(
+          "completed"
+        );
+
+
+      button.disabled =
+        true;
+
 
       button.textContent =
         "DONE";
@@ -517,9 +1079,12 @@
       tag.textContent =
         "COMPLETED";
 
-      tag.classList.add(
-        "done"
-      );
+
+      tag
+        .classList
+        .add(
+          "done"
+        );
 
 
       $("#checkinDescription")
@@ -528,12 +1093,16 @@
 
     } else {
 
-      card.classList.remove(
-        "completed"
-      );
+      card
+        ?.classList
+        .remove(
+          "completed"
+        );
 
 
-      button.disabled = false;
+      button.disabled =
+        false;
+
 
       button.textContent =
         "CHECK IN";
@@ -542,14 +1111,19 @@
       tag.textContent =
         "READY";
 
-      tag.classList.remove(
-        "done"
-      );
+
+      tag
+        .classList
+        .remove(
+          "done"
+        );
 
 
       $("#checkinDescription")
         .textContent =
-        "Check in today to collect your Rico Points.";
+        `Check in today to collect ${formatNumber(
+          reward
+        )} Rico Points.`;
 
     }
 
@@ -562,7 +1136,9 @@
       $("#checkinButton");
 
 
-    button.disabled = true;
+    button.disabled =
+      true;
+
 
     button.textContent =
       "CHECKING IN";
@@ -574,7 +1150,8 @@
         await api(
           "/api/app/checkin",
           {
-            method: "POST"
+            method:
+              "POST"
           }
         );
 
@@ -607,7 +1184,8 @@
 
       state.user.lifetime_points =
         Number(
-          state.user.lifetime_points ||
+          state.user
+            .lifetime_points ||
           0
         )
         +
@@ -630,6 +1208,8 @@
 
       renderCheckin();
 
+      renderRewards();
+
 
       $("#successTitle")
         .textContent =
@@ -645,7 +1225,9 @@
 
       $("#successModal")
         .classList
-        .remove("hidden");
+        .remove(
+          "hidden"
+        );
 
 
       try {
@@ -656,12 +1238,14 @@
           );
 
       } catch {
-        // Haptic support varies.
+        // Optional.
       }
 
     } catch (error) {
 
-      button.disabled = false;
+      button.disabled =
+        false;
+
 
       button.textContent =
         "CHECK IN";
@@ -684,7 +1268,8 @@
   function renderMissions() {
 
     const missions =
-      state.missions || [];
+      state.missions ||
+      [];
 
 
     const home =
@@ -727,7 +1312,10 @@
 
     home.innerHTML =
       missions
-        .slice(0,2)
+        .slice(
+          0,
+          2
+        )
         .map(
           renderMissionCard
         )
@@ -851,7 +1439,8 @@
   function renderRewards() {
 
     const rewards =
-      state.rewards || [];
+      state.rewards ||
+      [];
 
 
     const container =
@@ -874,6 +1463,7 @@
         </div>
       `;
 
+
       return;
 
     }
@@ -891,14 +1481,34 @@
               );
 
 
-            const affordable =
+            const balance =
               Number(
                 state.user
                   ?.current_points ||
                 0
-              )
-              >=
+              );
+
+
+            const affordable =
+              balance >=
               cost;
+
+
+            const outOfStock =
+              reward.stock !==
+                null &&
+              Number(
+                reward.redeemed_count ||
+                0
+              ) >=
+              Number(
+                reward.stock
+              );
+
+
+            const enabled =
+              affordable &&
+              !outOfStock;
 
 
             return `
@@ -966,13 +1576,21 @@
                     </strong>
 
                     <button
+                      class="redeem-button"
+                      data-reward-id="${reward.id}"
                       type="button"
-                      ${affordable ? "" : "disabled"}
+                      ${
+                        enabled
+                          ? ""
+                          : "disabled"
+                      }
                     >
                       ${
-                        affordable
-                          ? "REDEEM"
-                          : "LOCKED"
+                        outOfStock
+                          ? "SOLD OUT"
+                          : affordable
+                            ? "REDEEM"
+                            : "LOCKED"
                       }
                     </button>
 
@@ -987,6 +1605,158 @@
         )
         .join("");
 
+
+    $$(".redeem-button")
+      .forEach(
+        button =>
+          button.addEventListener(
+            "click",
+            () =>
+              redeemReward(
+                Number(
+                  button.dataset
+                    .rewardId
+                )
+              )
+          )
+      );
+
+  }
+
+
+  async function redeemReward(
+    rewardId
+  ) {
+
+    const reward =
+      state.rewards
+        .find(
+          item =>
+            Number(
+              item.id
+            ) ===
+            rewardId
+        );
+
+
+    if (!reward) {
+      return;
+    }
+
+
+    if (
+      !confirm(
+        `Redeem "${reward.title}" for ${formatNumber(
+          reward.points_cost
+        )} Rico Points?`
+      )
+    ) {
+      return;
+    }
+
+
+    try {
+
+      const result =
+        await api(
+          "/api/app/redeem",
+          {
+            method:
+              "POST",
+
+            body:
+              JSON.stringify({
+                reward_id:
+                  rewardId
+              })
+          }
+        );
+
+
+      state.user.current_points =
+        Number(
+          state.user
+            .current_points
+        )
+        -
+        Number(
+          result.points_spent
+        );
+
+
+      reward.redeemed_count =
+        Number(
+          reward.redeemed_count ||
+          0
+        ) + 1;
+
+
+      renderUser();
+
+      renderRewards();
+
+
+      if (result.code) {
+
+        showRewardCode(
+          result.reward,
+          result.code
+        );
+
+      } else {
+
+        showToast(
+          `${result.reward} redeemed successfully.`
+        );
+
+      }
+
+
+      try {
+
+        tg?.HapticFeedback
+          ?.notificationOccurred(
+            "success"
+          );
+
+      } catch {
+        // Optional.
+      }
+
+    } catch (error) {
+
+      showToast(
+        error.message
+      );
+
+    }
+
+  }
+
+
+  function showRewardCode(
+    rewardName,
+    code
+  ) {
+
+    $("#successTitle")
+      .textContent =
+      rewardName;
+
+
+    $("#successSubtitle")
+      .innerHTML =
+      `Your reward code:<br><br><strong style="font-size:18px;color:white">${escapeHtml(
+        code
+      )}</strong>`;
+
+
+    $("#successModal")
+      .classList
+      .remove(
+        "hidden"
+      );
+
   }
 
 
@@ -997,18 +1767,25 @@
   function renderDrops() {
 
     const drops =
-      state.drops || [];
+      state.drops ||
+      [];
 
 
     const section =
       $("#dropSection");
 
 
-    if (!drops.length) {
+    if (
+      !enabled(
+        "show_drops"
+      ) ||
+      !drops.length
+    ) {
 
       section
         .classList
         .add("hidden");
+
 
       return;
 
@@ -1023,7 +1800,10 @@
     $("#dropCards")
       .innerHTML =
       drops
-        .slice(0,1)
+        .slice(
+          0,
+          1
+        )
         .map(
           drop => {
 
@@ -1032,17 +1812,15 @@
 
 
             const start =
-              new Date(
+              parseDate(
                 drop.start_at
-              )
-              .getTime();
+              );
 
 
             const end =
-              new Date(
+              parseDate(
                 drop.end_at
-              )
-              .getTime();
+              );
 
 
             let status =
@@ -1053,10 +1831,8 @@
               now >= start &&
               now <= end
             ) {
-
               status =
                 "LIVE NOW";
-
             }
 
 
@@ -1105,32 +1881,23 @@
                 <div class="drop-meta">
 
                   <div>
-
-                    <span>
-                      REMAINING
-                    </span>
+                    <span>REMAINING</span>
 
                     <strong>
                       ${formatNumber(
                         remaining
                       )}
                     </strong>
-
                   </div>
 
-
                   <div>
-
-                    <span>
-                      REWARD
-                    </span>
+                    <span>REWARD</span>
 
                     <strong>
                       ${formatNumber(
                         drop.reward_value
                       )}
                     </strong>
-
                   </div>
 
                 </div>
@@ -1152,7 +1919,8 @@
   function renderLeaderboard() {
 
     const rows =
-      state.leaderboard || [];
+      state.leaderboard ||
+      [];
 
 
     const podium =
@@ -1190,7 +1958,10 @@
 
 
     const topThree =
-      rows.slice(0,3);
+      rows.slice(
+        0,
+        3
+      );
 
 
     const order = [
@@ -1217,13 +1988,11 @@
                 #${user.rank}
               </span>
 
-
               <div class="podium-avatar">
                 ${getInitial(
                   user
                 )}
               </div>
-
 
               <strong>
                 ${escapeHtml(
@@ -1233,13 +2002,11 @@
                 )}
               </strong>
 
-
               <b>
                 ${formatNumber(
                   user.current_points
                 )}
               </b>
-
 
               <small>
                 Rico Points
@@ -1264,13 +2031,11 @@
                   #${user.rank}
                 </span>
 
-
                 <div class="rank-mini-avatar">
                   ${getInitial(
                     user
                   )}
                 </div>
-
 
                 <div>
 
@@ -1282,7 +2047,6 @@
                     )}
                   </strong>
 
-
                   <small>
                     ${escapeHtml(
                       user.tier ||
@@ -1293,7 +2057,6 @@
                 </div>
 
               </div>
-
 
               <strong>
                 ${formatNumber(
@@ -1357,6 +2120,45 @@
     page
   ) {
 
+    const allowed = {
+
+      missions:
+        enabled(
+          "show_missions"
+        ),
+
+      rewards:
+        enabled(
+          "show_rewards"
+        ),
+
+      rank:
+        enabled(
+          "show_leaderboard"
+        )
+
+    };
+
+
+    if (
+      Object.prototype
+        .hasOwnProperty
+        .call(
+          allowed,
+          page
+        ) &&
+      !allowed[page]
+    ) {
+
+      openPage(
+        "home"
+      );
+
+      return;
+
+    }
+
+
     $$(".app-page")
       .forEach(
         element =>
@@ -1401,7 +2203,8 @@
 
     window.scrollTo({
       top: 0,
-      behavior: "smooth"
+      behavior:
+        "smooth"
     });
 
 
@@ -1467,8 +2270,19 @@
             state.settings
               .official_channel_url;
 
+
           if (url) {
-            openExternal(url);
+
+            openExternal(
+              url
+            );
+
+          } else {
+
+            showToast(
+              "Official channel is not configured yet."
+            );
+
           }
 
         }
@@ -1486,7 +2300,8 @@
               await api(
                 "/api/app/activity",
                 {
-                  method: "POST"
+                  method:
+                    "POST"
                 }
               );
 
@@ -1532,8 +2347,15 @@
 
 
     const botUsername =
-      state.settings
-        .bot_username;
+      String(
+        state.settings
+          .bot_username ||
+        ""
+      )
+        .replace(
+          /^@/,
+          ""
+        );
 
 
     if (
@@ -1544,6 +2366,7 @@
       showToast(
         "Your invitation link is being prepared."
       );
+
 
       return;
 
@@ -1561,7 +2384,11 @@
         )
       }&text=${
         encodeURIComponent(
-          "Join me on Rico Club"
+          `Join me on ${
+            state.settings
+              .app_name ||
+            "Rico Club"
+          }`
         )
       }`;
 
@@ -1592,6 +2419,7 @@
         url
       );
 
+
       return;
 
     }
@@ -1604,6 +2432,7 @@
       tg.openLink(
         url
       );
+
 
       return;
 
@@ -1683,21 +2512,87 @@
      HELPERS
   ======================================================= */
 
+  function validColor(
+    value
+  ) {
+
+    return /^#[0-9a-fA-F]{6}$/
+      .test(
+        String(
+          value ||
+          ""
+        )
+      );
+
+  }
+
+
+  function cssUrl(
+    url
+  ) {
+
+    return String(
+      url ||
+      ""
+    )
+      .replace(
+        /["\\]/g,
+        ""
+      );
+
+  }
+
+
+  function parseDate(
+    value
+  ) {
+
+    if (!value) {
+      return 0;
+    }
+
+
+    const normalized =
+      String(value)
+        .includes("T")
+        ? value
+        : String(value)
+            .replace(
+              " ",
+              "T"
+            )
+          +
+          "Z";
+
+
+    return new Date(
+      normalized
+    )
+      .getTime();
+
+  }
+
+
   function missionIcon(
     type
   ) {
 
     const map = {
 
-      referral: "↗",
+      referral:
+        "↗",
 
-      checkin: "✓",
+      checkin:
+        "✓",
 
-      channel: "◉",
+      channel:
+        "◉",
 
-      promo: "◆",
+      promo:
+        "◆",
 
-      custom: "◇"
+      custom:
+        "◇"
 
     };
 
@@ -1722,7 +2617,9 @@
 
     toast
       .classList
-      .add("visible");
+      .add(
+        "visible"
+      );
 
 
     clearTimeout(
@@ -1788,16 +2685,22 @@
 
 
     if (
-      name.length <= 4
+      name.length <=
+      4
     ) {
       return name;
     }
 
 
     return `${
-      name.slice(0,3)
+      name.slice(
+        0,
+        3
+      )
     }***${
-      name.slice(-2)
+      name.slice(
+        -2
+      )
     }`;
 
   }
