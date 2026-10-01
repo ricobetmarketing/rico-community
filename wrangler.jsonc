@@ -12,8 +12,7 @@
     "binding": "ASSETS",
     "run_worker_first": [
       "/api/*",
-      "/telegram/*",
-      "/admin"
+      "/telegram/*"
     ]
   },
 
@@ -26,7 +25,7 @@
     {
       "binding": "DB",
       "database_name": "rico-community-db",
-      "database_id": "336be588-5be8-460b-95cd-eed67b28f4bc"
+      "database_id": "YOUR_EXISTING_DATABASE_ID"
     }
   ]
 }
