@@ -16,7 +16,8 @@
     ]
   },
 
-  "vars": {
+ "vars": {
+    "ADMIN_EMAIL": "marketing@ricobet.com",
     "APP_NAME": "Rico Club",
     "APP_TIMEZONE": "America/Sao_Paulo"
   },
