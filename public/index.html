@@ -10,7 +10,7 @@
 
   <meta
     name="theme-color"
-    content="#0d0c1b"
+    content="#090a10"
   >
 
   <title>Rico Club</title>
@@ -23,47 +23,110 @@
   <script src="https://telegram.org/js/telegram-web-app.js?63"></script>
 </head>
 
-<body class="player-body">
+<body>
 
-  <div id="appLoader" class="app-loader">
-    <div class="brand-orb">
-      <span>R</span>
+  <!-- ======================================================
+       BOOT SCREEN
+  ======================================================= -->
+
+  <div
+    id="appLoader"
+    class="app-loader"
+  >
+
+    <div class="loader-logo">
+      R
     </div>
 
-    <div class="loader-ring"></div>
+    <div class="loader-copy">
 
-    <div class="loader-title">
-      RICO CLUB
+      <strong>
+        RICO CLUB
+      </strong>
+
+      <span>
+        Loading your community
+      </span>
+
     </div>
+
+    <div class="loader-line">
+      <span></span>
+    </div>
+
   </div>
 
+
+  <!-- ======================================================
+       TELEGRAM REQUIRED
+  ======================================================= -->
+
+  <section
+    id="telegramRequired"
+    class="telegram-required hidden"
+  >
+
+    <div class="telegram-required-card">
+
+      <div class="large-brand">
+        R
+      </div>
+
+      <span class="eyebrow">
+        RICO CLUB
+      </span>
+
+      <h1>
+        Open from Telegram
+      </h1>
+
+      <p>
+        Rico Club uses your Telegram account to securely load your points,
+        missions, rewards and community activity.
+      </p>
+
+    </div>
+
+  </section>
+
+
+  <!-- ======================================================
+       APP
+  ======================================================= -->
 
   <main
     id="playerApp"
     class="player-app hidden"
   >
 
-    <header class="mobile-header">
+    <!-- TOP BAR -->
 
-      <div class="brand-lockup">
-        <div class="brand-symbol">
+    <header class="app-header">
+
+      <div class="app-brand">
+
+        <div class="app-brand-mark">
           R
         </div>
 
         <div>
-          <div class="brand-name">
-            RICO CLUB
-          </div>
 
-          <div class="brand-subtitle">
+          <strong>
+            RICO CLUB
+          </strong>
+
+          <span>
             Community Rewards
-          </div>
+          </span>
+
         </div>
+
       </div>
+
 
       <button
         id="profileAvatar"
-        class="avatar-button"
+        class="header-avatar"
         type="button"
         aria-label="Open profile"
       >
@@ -73,53 +136,75 @@
     </header>
 
 
+    <!-- ====================================================
+         HOME
+    ===================================================== -->
+
     <section
       id="pageHome"
       class="app-page active"
     >
 
-      <div class="welcome-row">
+      <div class="home-greeting">
 
         <div>
-          <div class="eyebrow">
+
+          <span
+            id="greetingLabel"
+            class="eyebrow"
+          >
             WELCOME BACK
-          </div>
+          </span>
 
           <h1 id="welcomeName">
             Rico Member
           </h1>
+
         </div>
 
         <div
           id="streakPill"
           class="streak-pill"
         >
-          🔥 0
+          <span class="streak-fire">
+            🔥
+          </span>
+
+          <strong>
+            0
+          </strong>
         </div>
 
       </div>
 
 
-      <section class="balance-card">
+      <!-- BALANCE -->
 
-        <div class="balance-card-glow"></div>
+      <section class="wallet-card">
 
-        <div class="balance-card-top">
+        <div class="wallet-orb wallet-orb-a"></div>
+        <div class="wallet-orb wallet-orb-b"></div>
+
+        <div class="wallet-head">
 
           <div>
-            <span class="label">
+
+            <span class="wallet-label">
               RICO POINTS
             </span>
 
-            <div class="balance-line">
-              <span class="diamond">
+            <div class="wallet-balance">
+
+              <span class="wallet-diamond">
                 ◆
               </span>
 
               <strong id="pointBalance">
                 0
               </strong>
+
             </div>
+
           </div>
 
           <span
@@ -131,47 +216,66 @@
 
         </div>
 
-        <div class="progress-meta">
+
+        <div class="tier-progress-copy">
 
           <span id="tierProgressText">
             Start earning Rico Points
           </span>
 
-          <strong id="rankText">
+          <b id="rankText">
             #—
-          </strong>
+          </b>
 
         </div>
 
-        <div class="progress-track">
-          <div
+
+        <div class="tier-track">
+
+          <span
             id="tierProgressBar"
-            class="progress-fill"
             style="width:0%"
-          ></div>
+          ></span>
+
         </div>
 
-        <div class="quick-stats">
+
+        <div class="wallet-stats">
 
           <div>
-            <span>STREAK</span>
+
+            <span>
+              STREAK
+            </span>
+
             <strong id="homeStreak">
               0 days
             </strong>
+
           </div>
 
           <div>
-            <span>RANK</span>
+
+            <span>
+              RANK
+            </span>
+
             <strong id="homeRank">
               #—
             </strong>
+
           </div>
 
           <div>
-            <span>LIFETIME</span>
+
+            <span>
+              LIFETIME
+            </span>
+
             <strong id="lifetimePoints">
               0
             </strong>
+
           </div>
 
         </div>
@@ -179,19 +283,30 @@
       </section>
 
 
-      <section class="section-block">
+      <!-- CHECK IN -->
+
+      <section class="home-section">
 
         <div class="section-heading">
 
           <div>
+
             <span class="eyebrow">
               TODAY
             </span>
 
             <h2>
-              Keep your streak moving
+              Daily check-in
             </h2>
+
           </div>
+
+          <span
+            id="checkinStatusTag"
+            class="section-tag"
+          >
+            READY
+          </span>
 
         </div>
 
@@ -201,32 +316,34 @@
           class="checkin-card"
         >
 
-          <div class="checkin-icon">
-            ✓
+          <div class="checkin-card-content">
+
+            <div class="checkin-symbol">
+              ✓
+            </div>
+
+            <div>
+
+              <strong>
+                Keep your streak alive
+              </strong>
+
+              <p id="checkinDescription">
+                Check in today to collect your Rico Points.
+              </p>
+
+              <span class="checkin-reward">
+                +20 Rico Points
+              </span>
+
+            </div>
+
           </div>
 
-          <div class="checkin-content">
-
-            <div class="checkin-title">
-              Daily Check-in
-            </div>
-
-            <div
-              id="checkinDescription"
-              class="checkin-description"
-            >
-              Return daily and keep building your streak.
-            </div>
-
-            <div class="checkin-reward">
-              +20 Rico Points
-            </div>
-
-          </div>
 
           <button
             id="checkinButton"
-            class="primary-small-button"
+            class="app-primary-button"
             type="button"
           >
             CHECK IN
@@ -235,41 +352,41 @@
         </article>
 
 
-        <div class="streak-week">
+        <div class="week-strip">
 
-          <div>
+          <div class="week-day">
             <span>M</span>
-            <b>✓</b>
+            <b>•</b>
           </div>
 
-          <div>
+          <div class="week-day">
             <span>T</span>
-            <b>✓</b>
+            <b>•</b>
           </div>
 
-          <div>
+          <div class="week-day">
             <span>W</span>
-            <b>✓</b>
+            <b>•</b>
           </div>
 
-          <div>
+          <div class="week-day">
             <span>T</span>
-            <b>✓</b>
+            <b>•</b>
           </div>
 
-          <div class="today">
+          <div class="week-day">
             <span>F</span>
             <b>•</b>
           </div>
 
-          <div>
+          <div class="week-day">
             <span>S</span>
-            <b>○</b>
+            <b>•</b>
           </div>
 
-          <div>
+          <div class="week-day">
             <span>S</span>
-            <b>○</b>
+            <b>•</b>
           </div>
 
         </div>
@@ -277,14 +394,17 @@
       </section>
 
 
+      <!-- DROP -->
+
       <section
         id="dropSection"
-        class="section-block hidden"
+        class="home-section hidden"
       >
 
         <div class="section-heading">
 
           <div>
+
             <span class="eyebrow">
               RICO DROP
             </span>
@@ -292,10 +412,11 @@
             <h2>
               Limited rewards
             </h2>
+
           </div>
 
           <button
-            class="text-button"
+            class="section-link"
             data-go="rewards"
             type="button"
           >
@@ -309,11 +430,14 @@
       </section>
 
 
-      <section class="section-block">
+      <!-- MISSIONS -->
+
+      <section class="home-section">
 
         <div class="section-heading">
 
           <div>
+
             <span class="eyebrow">
               MISSIONS
             </span>
@@ -321,10 +445,11 @@
             <h2>
               Your next moves
             </h2>
+
           </div>
 
           <button
-            class="text-button"
+            class="section-link"
             data-go="missions"
             type="button"
           >
@@ -335,37 +460,35 @@
 
         <div
           id="homeMissionList"
-          class="mission-stack"
+          class="mission-list"
         ></div>
 
       </section>
 
 
-      <section class="referral-card">
+      <!-- REFERRAL -->
 
-        <div>
+      <section class="invite-card">
 
-          <div class="referral-icon">
-            ↗
-          </div>
-
-          <span class="eyebrow">
-            INVITE & EARN
-          </span>
-
-          <h2>
-            Bring friends into Rico Club.
-          </h2>
-
-          <p>
-            Share your unique Telegram invitation and grow your community rewards.
-          </p>
-
+        <div class="invite-icon">
+          ↗
         </div>
+
+        <span class="eyebrow">
+          INVITE & EARN
+        </span>
+
+        <h2>
+          Grow the Rico community.
+        </h2>
+
+        <p>
+          Share your personal invitation and earn rewards when your friends qualify.
+        </p>
 
         <button
           id="homeInviteButton"
-          class="gradient-button"
+          class="app-primary-button wide"
           type="button"
         >
           INVITE FRIENDS
@@ -376,15 +499,19 @@
     </section>
 
 
+    <!-- ====================================================
+         MISSIONS
+    ===================================================== -->
+
     <section
       id="pageMissions"
       class="app-page"
     >
 
-      <div class="page-title">
+      <div class="page-intro">
 
         <span class="eyebrow">
-          RICO CLUB
+          ENGAGEMENT
         </span>
 
         <h1>
@@ -392,30 +519,30 @@
         </h1>
 
         <p>
-          Complete activities and keep earning Rico Points.
+          Complete activities, build your progress and earn more Rico Points.
         </p>
 
       </div>
 
 
-      <div class="filter-tabs">
+      <div class="pill-tabs">
 
         <button
-          class="filter-tab active"
+          class="pill-tab active"
           type="button"
         >
           Active
         </button>
 
         <button
-          class="filter-tab"
+          class="pill-tab"
           type="button"
         >
           Completed
         </button>
 
         <button
-          class="filter-tab"
+          class="pill-tab"
           type="button"
         >
           Upcoming
@@ -432,49 +559,66 @@
     </section>
 
 
+    <!-- ====================================================
+         REWARDS
+    ===================================================== -->
+
     <section
       id="pageRewards"
       class="app-page"
     >
 
-      <div class="page-title">
+      <div class="page-intro">
 
         <span class="eyebrow">
-          YOUR BALANCE
+          RICO STORE
         </span>
 
         <h1>
-          <span id="rewardBalance">
-            0
-          </span>
-          Rico Points
+          Rewards
         </h1>
 
         <p>
-          Unlock rewards using the points you earn across Rico Club.
+          Use your Rico Points to unlock community rewards.
         </p>
 
       </div>
 
 
-      <div class="filter-tabs">
+      <div class="reward-balance-bar">
+
+        <span>
+          AVAILABLE BALANCE
+        </span>
+
+        <strong>
+          ◆
+          <b id="rewardBalance">
+            0
+          </b>
+        </strong>
+
+      </div>
+
+
+      <div class="pill-tabs">
 
         <button
-          class="filter-tab active"
+          class="pill-tab active"
           type="button"
         >
           All
         </button>
 
         <button
-          class="filter-tab"
+          class="pill-tab"
           type="button"
         >
           Available
         </button>
 
         <button
-          class="filter-tab"
+          class="pill-tab"
           type="button"
         >
           Locked
@@ -491,15 +635,19 @@
     </section>
 
 
+    <!-- ====================================================
+         RANK
+    ===================================================== -->
+
     <section
       id="pageRank"
       class="app-page"
     >
 
-      <div class="page-title">
+      <div class="page-intro">
 
         <span class="eyebrow">
-          WEEKLY RANKING
+          COMMUNITY RANKING
         </span>
 
         <h1>
@@ -507,24 +655,42 @@
         </h1>
 
         <p>
-          Earn Rico Points and climb the community ranking.
+          Earn Rico Points and move up the community ranking.
         </p>
 
       </div>
 
 
-      <section
+      <div class="rank-switch">
+
+        <button
+          class="active"
+          type="button"
+        >
+          Points
+        </button>
+
+        <button
+          type="button"
+        >
+          Referrals
+        </button>
+
+      </div>
+
+
+      <div
         id="podium"
         class="podium"
-      ></section>
+      ></div>
 
 
-      <section class="rank-list-card">
+      <section class="ranking-list">
 
-        <div class="rank-list-heading">
+        <div class="ranking-list-head">
 
           <span>
-            POSITION
+            PLAYER
           </span>
 
           <span>
@@ -538,11 +704,11 @@
       </section>
 
 
-      <section class="your-rank-card">
+      <section class="my-position-card">
 
         <div>
 
-          <span class="eyebrow">
+          <span>
             YOUR POSITION
           </span>
 
@@ -552,11 +718,9 @@
 
         </div>
 
-        <div class="rank-separator"></div>
-
         <div>
 
-          <span class="eyebrow">
+          <span>
             YOUR POINTS
           </span>
 
@@ -571,6 +735,10 @@
     </section>
 
 
+    <!-- ====================================================
+         PROFILE
+    ===================================================== -->
+
     <section
       id="pageProfile"
       class="app-page"
@@ -580,10 +748,14 @@
 
         <div
           id="profileLargeAvatar"
-          class="large-avatar"
+          class="profile-avatar-large"
         >
           R
         </div>
+
+        <span class="eyebrow">
+          YOUR ACCOUNT
+        </span>
 
         <h1 id="profileName">
           Rico Member
@@ -603,27 +775,42 @@
       </div>
 
 
-      <div class="profile-stat-grid">
+      <div class="profile-stats">
 
         <div>
-          <span>POINTS</span>
+
+          <span>
+            POINTS
+          </span>
+
           <strong id="profilePoints">
             0
           </strong>
+
         </div>
 
         <div>
-          <span>STREAK</span>
+
+          <span>
+            STREAK
+          </span>
+
           <strong id="profileStreak">
             0
           </strong>
+
         </div>
 
         <div>
-          <span>RANK</span>
+
+          <span>
+            RANK
+          </span>
+
           <strong id="profileRank">
             #—
           </strong>
+
         </div>
 
       </div>
@@ -635,69 +822,83 @@
           id="profileInvite"
           type="button"
         >
-          <span>
-            👥
+
+          <span class="profile-menu-icon">
+            ↗
           </span>
 
           <div>
+
             <strong>
               Invite Friends
             </strong>
 
             <small>
-              Share your Rico Club invitation
+              Share your personal invitation
             </small>
+
           </div>
 
           <b>
-            ›
+            →
           </b>
+
         </button>
+
 
         <button
           id="profileActivity"
           type="button"
         >
-          <span>
+
+          <span class="profile-menu-icon">
             ◷
           </span>
 
           <div>
+
             <strong>
-              Activity
+              Recent Activity
             </strong>
 
             <small>
-              Your recent Rico Club activity
+              Review your latest Rico Club actions
             </small>
+
           </div>
 
           <b>
-            ›
+            →
           </b>
+
         </button>
+
 
         <button
           id="officialChannel"
           type="button"
         >
-          <span>
-            📣
+
+          <span class="profile-menu-icon">
+            ◉
           </span>
 
           <div>
+
             <strong>
               Official Channel
             </strong>
 
             <small>
-              Announcements, drops and updates
+              Community news, rewards and drops
             </small>
+
           </div>
 
           <b>
-            ›
+            →
           </b>
+
         </button>
 
       </section>
@@ -705,80 +906,94 @@
     </section>
 
 
-    <nav class="bottom-nav">
+    <!-- ====================================================
+         NAV
+    ===================================================== -->
+
+    <nav class="bottom-navigation">
 
       <button
-        class="nav-item active"
+        class="bottom-nav-item active"
         data-page="home"
         type="button"
       >
-        <span>
+
+        <span class="nav-glyph">
           ⌂
         </span>
 
         <small>
           Home
         </small>
+
       </button>
 
 
       <button
-        class="nav-item"
+        class="bottom-nav-item"
         data-page="missions"
         type="button"
       >
-        <span>
+
+        <span class="nav-glyph">
           ◇
         </span>
 
         <small>
           Missions
         </small>
+
       </button>
 
 
       <button
-        class="nav-item"
+        class="bottom-nav-item"
         data-page="rewards"
         type="button"
       >
-        <span>
+
+        <span class="nav-glyph">
           ◆
         </span>
 
         <small>
           Rewards
         </small>
+
       </button>
 
 
       <button
-        class="nav-item"
+        class="bottom-nav-item"
         data-page="rank"
         type="button"
       >
-        <span>
+
+        <span class="nav-glyph">
           ♛
         </span>
 
         <small>
           Rank
         </small>
+
       </button>
 
 
       <button
-        class="nav-item"
+        class="bottom-nav-item"
         data-page="profile"
         type="button"
       >
-        <span>
+
+        <span class="nav-glyph">
           ◎
         </span>
 
         <small>
           Me
         </small>
+
       </button>
 
     </nav>
@@ -786,39 +1001,13 @@
   </main>
 
 
-  <section
-    id="telegramRequired"
-    class="telegram-required hidden"
-  >
-
-    <div class="telegram-required-card">
-
-      <div class="brand-symbol large">
-        R
-      </div>
-
-      <h1>
-        Rico Club
-      </h1>
-
-      <p>
-        Open Rico Club from the official Telegram bot to access your account, missions and rewards.
-      </p>
-
-    </div>
-
-  </section>
-
-
-  <div
-    id="toast"
-    class="toast"
-  ></div>
-
+  <!-- ======================================================
+       SUCCESS MODAL
+  ======================================================= -->
 
   <div
     id="successModal"
-    class="modal-overlay hidden"
+    class="modal-backdrop hidden"
   >
 
     <div class="success-modal">
@@ -831,7 +1020,7 @@
         ×
       </button>
 
-      <div class="reward-burst">
+      <div class="success-gem">
         ◆
       </div>
 
@@ -849,7 +1038,7 @@
 
       <button
         id="successDone"
-        class="gradient-button"
+        class="app-primary-button wide"
         type="button"
       >
         CONTINUE
@@ -858,6 +1047,12 @@
     </div>
 
   </div>
+
+
+  <div
+    id="toast"
+    class="toast"
+  ></div>
 
 
   <script src="/app.js"></script>
