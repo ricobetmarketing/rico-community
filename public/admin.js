@@ -1,6 +1,7 @@
 (() => {
 
   const state = {
+
     admin: null,
 
     currentSection:
@@ -17,15 +18,21 @@
     drops: [],
 
     selectedPlayer: null
+
   };
 
 
-  const $ = (selector) =>
-    document.querySelector(selector);
+  const $ = selector =>
+    document.querySelector(
+      selector
+    );
 
-  const $$ = (selector) =>
+
+  const $$ = selector =>
     Array.from(
-      document.querySelectorAll(selector)
+      document.querySelectorAll(
+        selector
+      )
     );
 
 
@@ -34,24 +41,35 @@
 
   async function init() {
 
-    bindGlobalEvents();
+    bindEvents();
+
+    setDashboardDate();
+
 
     const authenticated =
       await checkSession();
 
+
     if (authenticated) {
+
       showAdmin();
-      await loadSection("dashboard");
+
+      await openSection(
+        "dashboard"
+      );
+
     } else {
+
       showLogin();
+
     }
 
   }
 
 
-  /* =====================================================
+  /* ======================================================
      AUTH
-  ====================================================== */
+  ======================================================= */
 
   async function checkSession() {
 
@@ -66,19 +84,24 @@
           }
         );
 
+
       if (!response.ok) {
         return false;
       }
 
+
       const data =
         await response.json();
+
 
       if (!data.ok) {
         return false;
       }
 
+
       state.admin =
         data.admin;
+
 
       return true;
 
@@ -91,58 +114,33 @@
   }
 
 
-  function showLogin() {
-
-    $("#loginScreen")
-      .classList.remove("hidden");
-
-    $("#adminApp")
-      .classList.add("hidden");
-
-  }
-
-
-  function showAdmin() {
-
-    $("#loginScreen")
-      .classList.add("hidden");
-
-    $("#adminApp")
-      .classList.remove("hidden");
-
-    $("#sidebarAdminEmail")
-      .textContent =
-      state.admin?.email ||
-      "Administrator";
-
-  }
-
-
-  async function login(event) {
+  async function login(
+    event
+  ) {
 
     event.preventDefault();
 
-    const email =
-      $("#loginEmail")
-        .value
-        .trim();
-
-    const password =
-      $("#loginPassword")
-        .value;
 
     const button =
       $("#loginButton");
 
+
     const errorBox =
       $("#loginError");
 
-    errorBox
-      .classList.add("hidden");
 
-    button.disabled = true;
+    errorBox
+      .classList
+      .add("hidden");
+
+
+    button.disabled =
+      true;
+
+
     button.textContent =
       "Signing in...";
+
 
     try {
 
@@ -150,22 +148,35 @@
         await api(
           "/api/admin/login",
           {
-            method: "POST",
+            method:
+              "POST",
 
             body:
               JSON.stringify({
-                email,
-                password
+
+                email:
+                  $("#loginEmail")
+                    .value
+                    .trim(),
+
+                password:
+                  $("#loginPassword")
+                    .value
+
               })
+
           }
         );
+
 
       state.admin =
         data.admin;
 
+
       showAdmin();
 
-      await loadSection(
+
+      await openSection(
         "dashboard"
       );
 
@@ -174,14 +185,17 @@
       errorBox.textContent =
         error.message;
 
+
       errorBox
-        .classList.remove(
-          "hidden"
-        );
+        .classList
+        .remove("hidden");
 
     } finally {
 
-      button.disabled = false;
+      button.disabled =
+        false;
+
+
       button.textContent =
         "Sign in";
 
@@ -197,106 +211,114 @@
       await api(
         "/api/admin/logout",
         {
-          method: "POST"
+          method:
+            "POST"
         }
       );
 
     } catch {
-      // Session will still be cleared visually.
+      // Continue locally.
     }
 
-    state.admin = null;
+
+    state.admin =
+      null;
+
 
     showLogin();
 
   }
 
 
-  /* =====================================================
+  function showLogin() {
+
+    $("#loginScreen")
+      .classList
+      .remove("hidden");
+
+
+    $("#adminApp")
+      .classList
+      .add("hidden");
+
+  }
+
+
+  function showAdmin() {
+
+    $("#loginScreen")
+      .classList
+      .add("hidden");
+
+
+    $("#adminApp")
+      .classList
+      .remove("hidden");
+
+
+    $("#sidebarAdminEmail")
+      .textContent =
+      state.admin?.email ||
+      "Administrator";
+
+  }
+
+
+  /* ======================================================
      NAVIGATION
-  ====================================================== */
+  ======================================================= */
 
-  const sectionMeta = {
+  const sections = {
 
-    dashboard: {
-      eyebrow:
-        "OVERVIEW",
+    dashboard: [
+      "OVERVIEW",
+      "Dashboard"
+    ],
 
-      title:
-        "Dashboard"
-    },
+    players: [
+      "PLAYER MANAGEMENT",
+      "Players"
+    ],
 
-    players: {
-      eyebrow:
-        "PLAYER MANAGEMENT",
+    missions: [
+      "ENGAGEMENT",
+      "Missions"
+    ],
 
-      title:
-        "Players"
-    },
+    rewards: [
+      "LOYALTY",
+      "Rewards"
+    ],
 
-    missions: {
-      eyebrow:
-        "ENGAGEMENT",
+    drops: [
+      "LIMITED EVENTS",
+      "Reward Drops"
+    ],
 
-      title:
-        "Missions"
-    },
+    referrals: [
+      "COMMUNITY GROWTH",
+      "Referrals"
+    ],
 
-    rewards: {
-      eyebrow:
-        "LOYALTY",
+    leaderboard: [
+      "RANKING",
+      "Leaderboard"
+    ],
 
-      title:
-        "Rewards"
-    },
+    messages: [
+      "TELEGRAM",
+      "Messages"
+    ],
 
-    drops: {
-      eyebrow:
-        "LIMITED EVENTS",
+    appearance: [
+      "MINI APP",
+      "Appearance"
+    ],
 
-      title:
-        "Reward Drops"
-    },
-
-    referrals: {
-      eyebrow:
-        "COMMUNITY",
-
-      title:
-        "Referrals"
-    },
-
-    leaderboard: {
-      eyebrow:
-        "RANKING",
-
-      title:
-        "Leaderboard"
-    },
-
-    messages: {
-      eyebrow:
-        "COMMUNICATION",
-
-      title:
-        "Messages"
-    },
-
-    appearance: {
-      eyebrow:
-        "MINI APP",
-
-      title:
-        "Appearance"
-    },
-
-    settings: {
-      eyebrow:
-        "CONFIGURATION",
-
-      title:
-        "Settings"
-    }
+    settings: [
+      "PLATFORM",
+      "Settings"
+    ]
 
   };
 
@@ -308,61 +330,65 @@
     state.currentSection =
       section;
 
+
     $$(".admin-section")
       .forEach(
-        (element) =>
+        element =>
           element
             .classList
             .remove("active")
       );
 
-    $$(".nav-link")
+
+    $$(".nav-item")
       .forEach(
-        (element) =>
+        element =>
           element
             .classList
             .remove("active")
       );
 
-    const target =
-      $(
-        `#section${
-          section
-            .charAt(0)
-            .toUpperCase() +
-          section.slice(1)
-        }`
-      );
 
-    target?.classList.add(
-      "active"
-    );
+    const id =
+      section
+        .charAt(0)
+        .toUpperCase()
+      +
+      section.slice(1);
+
+
+    $(`#section${id}`)
+      ?.classList
+      .add("active");
+
 
     $(
-      `.nav-link[data-section="${section}"]`
+      `.nav-item[data-section="${section}"]`
     )
       ?.classList
       .add("active");
 
+
     const meta =
-      sectionMeta[section];
+      sections[section];
 
-    if (meta) {
 
-      $("#pageEyebrow")
-        .textContent =
-        meta.eyebrow;
+    $("#pageEyebrow")
+      .textContent =
+      meta[0];
 
-      $("#pageTitle")
-        .textContent =
-        meta.title;
 
-    }
+    $("#pageTitle")
+      .textContent =
+      meta[1];
+
 
     $("#sidebar")
-      .classList.remove(
+      .classList
+      .remove(
         "mobile-open"
       );
+
 
     await loadSection(
       section
@@ -375,55 +401,44 @@
     section
   ) {
 
-    try {
+    switch (section) {
 
-      switch (section) {
+      case "dashboard":
+        await loadDashboard();
+        break;
 
-        case "dashboard":
-          await loadDashboard();
-          break;
+      case "players":
+        await loadPlayers();
+        break;
 
-        case "players":
-          await loadPlayers();
-          break;
+      case "missions":
+        await loadMissions();
+        break;
 
-        case "missions":
-          await loadMissions();
-          break;
+      case "rewards":
+        await loadRewards();
+        break;
 
-        case "rewards":
-          await loadRewards();
-          break;
+      case "drops":
+        await loadDrops();
+        break;
 
-        case "drops":
-          await loadDrops();
-          break;
+      case "leaderboard":
+        await loadLeaderboard();
+        break;
 
-        case "referrals":
-          renderReferralSummary();
-          break;
-
-        case "leaderboard":
-          await loadLeaderboard();
-          break;
-
-      }
-
-    } catch (error) {
-
-      showToast(
-        error.message ||
-        "Unable to load data."
-      );
+      case "referrals":
+        renderReferralSummary();
+        break;
 
     }
 
   }
 
 
-  /* =====================================================
+  /* ======================================================
      DASHBOARD
-  ====================================================== */
+  ======================================================= */
 
   async function loadDashboard() {
 
@@ -432,11 +447,15 @@
         "/api/admin/dashboard"
       );
 
+
     state.dashboard =
       data;
 
+
     const stats =
-      data.stats || {};
+      data.stats ||
+      {};
+
 
     $("#statPlayers")
       .textContent =
@@ -444,11 +463,13 @@
         stats.total_players
       );
 
+
     $("#statActive")
       .textContent =
       number(
         stats.active_today
       );
+
 
     $("#statCheckins")
       .textContent =
@@ -456,11 +477,13 @@
         stats.checkins_today
       );
 
+
     $("#statPoints")
       .textContent =
       number(
         stats.points_issued
       );
+
 
     $("#statReferrals")
       .textContent =
@@ -468,44 +491,53 @@
         stats.referrals
       );
 
+
     $("#statClaims")
       .textContent =
       number(
         stats.rewards_claimed
       );
 
-    renderActivityChart(
-      data.activity_chart || []
+
+    renderChart(
+      data.activity_chart ||
+      []
     );
 
-    renderRecentActivity(
-      data.recent_activity || []
+
+    renderActivity(
+      data.recent_activity ||
+      []
     );
+
 
     renderReferralSummary();
 
   }
 
 
-  function renderActivityChart(
+  function renderChart(
     rows
   ) {
 
-    const container =
-      $("#activityChart");
-
     const map = {};
 
-    for (const row of rows) {
+
+    for (
+      const row of rows
+    ) {
 
       map[row.day] =
         Number(
-          row.total || 0
+          row.total ||
+          0
         );
 
     }
 
+
     const days = [];
+
 
     for (
       let i = 6;
@@ -516,17 +548,23 @@
       const date =
         new Date();
 
+
       date.setDate(
-        date.getDate() - i
+        date.getDate() -
+        i
       );
+
 
       const key =
         date
           .toISOString()
           .slice(0,10);
 
+
       days.push({
+
         key,
+
         label:
           date
             .toLocaleDateString(
@@ -538,10 +576,13 @@
             ),
 
         value:
-          map[key] || 0
+          map[key] ||
+          0
+
       });
 
     }
+
 
     const max =
       Math.max(
@@ -552,7 +593,9 @@
         )
       );
 
-    container.innerHTML =
+
+    $("#activityChart")
+      .innerHTML =
       days
         .map(
           item => {
@@ -566,6 +609,7 @@
                 ) * 100
               );
 
+
             return `
               <div class="chart-day">
 
@@ -575,7 +619,8 @@
                   )}
                 </strong>
 
-                <div class="chart-bar-wrap">
+
+                <div class="chart-track">
 
                   <div
                     class="chart-bar"
@@ -586,6 +631,7 @@
                   ></div>
 
                 </div>
+
 
                 <span>
                   ${escapeHtml(
@@ -603,39 +649,38 @@
   }
 
 
-  function renderRecentActivity(
-    activity
+  function renderActivity(
+    rows
   ) {
 
     const container =
       $("#recentActivity");
 
-    if (!activity.length) {
+
+    if (!rows.length) {
 
       container.innerHTML = `
         <div class="empty-state">
 
-          <div class="empty-symbol">
-            ◷
-          </div>
-
           <strong>
-            No activity yet
+            No recent activity
           </strong>
 
           <p>
-            Player activity will appear here automatically after Telegram users begin interacting with Rico Club.
+            Player actions will appear here automatically.
           </p>
 
         </div>
       `;
 
+
       return;
 
     }
 
+
     container.innerHTML =
-      activity
+      rows
         .map(
           item => {
 
@@ -647,14 +692,16 @@
                     "Rico Member"
                   );
 
-            return `
-              <div class="activity-item">
 
-                <div class="activity-badge">
+            return `
+              <div class="activity-row">
+
+                <div class="activity-icon">
                   ${activityIcon(
                     item.event_type
                   )}
                 </div>
+
 
                 <div>
 
@@ -663,6 +710,7 @@
                       item.title
                     )}
                   </strong>
+
 
                   <p>
                     ${escapeHtml(
@@ -679,11 +727,12 @@
 
                 </div>
 
-                <span class="activity-time">
+
+                <time>
                   ${formatDateTime(
                     item.created_at
                   )}
-                </span>
+                </time>
 
               </div>
             `;
@@ -695,9 +744,9 @@
   }
 
 
-  /* =====================================================
+  /* ======================================================
      PLAYERS
-  ====================================================== */
+  ======================================================= */
 
   async function loadPlayers(
     search = ""
@@ -712,13 +761,17 @@
           }`
         : "";
 
+
     const data =
       await api(
         `/api/admin/players${query}`
       );
 
+
     state.players =
-      data.players || [];
+      data.players ||
+      [];
+
 
     renderPlayers();
 
@@ -727,151 +780,155 @@
 
   function renderPlayers() {
 
-    const tbody =
+    const table =
       $("#playersTable");
+
 
     const empty =
       $("#playersEmpty");
 
+
     if (!state.players.length) {
 
-      tbody.innerHTML = "";
+      table.innerHTML =
+        "";
+
 
       empty
         .classList
         .remove("hidden");
 
+
       return;
 
     }
+
 
     empty
       .classList
       .add("hidden");
 
-    tbody.innerHTML =
+
+    table.innerHTML =
       state.players
         .map(
-          player => {
+          player => `
+            <tr
+              data-player-id="${
+                player.id
+              }"
+            >
 
-            const name =
-              displayName(
-                player
-              );
+              <td>
 
-            return `
-              <tr
-                data-player-id="${
-                  player.id
-                }"
-              >
+                <div class="table-player">
 
-                <td>
+                  <div class="table-avatar">
+                    ${initial(
+                      player
+                    )}
+                  </div>
 
-                  <div class="table-player">
 
-                    <div class="table-avatar">
-                      ${initial(
-                        player
-                      )}
-                    </div>
+                  <div>
 
-                    <div>
-
-                      <strong>
-                        ${escapeHtml(
-                          name
-                        )}
-                      </strong>
-
-                      <span>
-                        ${
+                    <strong>
+                      ${escapeHtml(
+                        displayName(
                           player
-                            .telegram_username
-                            ? `@${
-                                escapeHtml(
-                                  player
-                                    .telegram_username
-                                )
-                              }`
-                            : "No username"
-                        }
-                      </span>
+                        )
+                      )}
+                    </strong>
 
-                    </div>
+
+                    <span>
+                      ${
+                        player.telegram_username
+                          ? `@${
+                              escapeHtml(
+                                player.telegram_username
+                              )
+                            }`
+                          : "No username"
+                      }
+                    </span>
 
                   </div>
 
-                </td>
+                </div>
 
-                <td>
-                  ${escapeHtml(
-                    player.telegram_id
-                  )}
-                </td>
+              </td>
 
-                <td>
-                  ${number(
-                    player
-                      .current_points
-                  )}
-                </td>
 
-                <td>
-                  ${escapeHtml(
-                    player.tier ||
-                    "Rookie"
-                  )}
-                </td>
+              <td>
+                ${escapeHtml(
+                  player.telegram_id
+                )}
+              </td>
 
-                <td>
-                  ${
-                    player
-                      .current_streak ||
-                    0
-                  } days
-                </td>
 
-                <td>
-                  ${number(
-                    player.referrals
-                  )}
-                </td>
+              <td>
+                ${number(
+                  player.current_points
+                )}
+              </td>
 
-                <td>
-                  ${formatDateTime(
-                    player
-                      .last_active_at
-                  )}
-                </td>
 
-                <td>
-                  <span
-                    class="status-badge ${
-                      escapeAttribute(
-                        player.status ||
-                        "active"
-                      )
-                    }"
-                  >
-                    ${escapeHtml(
+              <td>
+                ${escapeHtml(
+                  player.tier ||
+                  "Rookie"
+                )}
+              </td>
+
+
+              <td>
+                ${
+                  player.current_streak ||
+                  0
+                } days
+              </td>
+
+
+              <td>
+                ${number(
+                  player.referrals
+                )}
+              </td>
+
+
+              <td>
+                ${formatDateTime(
+                  player.last_active_at
+                )}
+              </td>
+
+
+              <td>
+                <span
+                  class="status-badge ${
+                    escapeAttribute(
                       player.status ||
                       "active"
-                    )}
-                  </span>
-                </td>
+                    )
+                  }"
+                >
+                  ${escapeHtml(
+                    player.status ||
+                    "active"
+                  )}
+                </span>
+              </td>
 
-              </tr>
-            `;
-
-          }
+            </tr>
+          `
         )
         .join("");
 
+
     $$("#playersTable tr")
       .forEach(
-        row => {
-
+        row =>
           row.addEventListener(
             "click",
             () =>
@@ -879,9 +936,7 @@
                 row.dataset
                   .playerId
               )
-          );
-
-        }
+          )
       );
 
   }
@@ -896,22 +951,24 @@
         `/api/admin/player/${id}`
       );
 
+
     state.selectedPlayer =
       data;
+
 
     renderPlayerDrawer(
       data
     );
 
+
     $("#drawerOverlay")
-      .classList.remove(
-        "hidden"
-      );
+      .classList
+      .remove("hidden");
+
 
     $("#playerDrawer")
-      .classList.add(
-        "open"
-      );
+      .classList
+      .add("open");
 
   }
 
@@ -919,14 +976,13 @@
   function closePlayerDrawer() {
 
     $("#drawerOverlay")
-      .classList.add(
-        "hidden"
-      );
+      .classList
+      .add("hidden");
+
 
     $("#playerDrawer")
-      .classList.remove(
-        "open"
-      );
+      .classList
+      .remove("open");
 
   }
 
@@ -938,20 +994,6 @@
     const player =
       data.player;
 
-    const transactions =
-      data.transactions || [];
-
-    const activity =
-      data.activity || [];
-
-    const referrals =
-      data.referrals || [];
-
-    const rewards =
-      data.rewards || [];
-
-    const messages =
-      data.messages || [];
 
     $("#playerDrawerContent")
       .innerHTML = `
@@ -960,29 +1002,35 @@
           <div class="player-profile-head">
 
             <div class="player-profile-avatar">
-              ${initial(player)}
+              ${initial(
+                player
+              )}
             </div>
+
 
             <div>
 
               <h2>
                 ${escapeHtml(
-                  displayName(player)
+                  displayName(
+                    player
+                  )
                 )}
               </h2>
+
 
               <p>
                 ${
                   player.telegram_username
                     ? `@${
                         escapeHtml(
-                          player
-                            .telegram_username
+                          player.telegram_username
                         )
                       }`
                     : "Telegram Member"
                 }
               </p>
+
 
               <span
                 class="status-badge ${
@@ -1004,59 +1052,38 @@
           <div class="player-detail-stats">
 
             <div class="player-detail-stat">
-
-              <span>
-                POINTS
-              </span>
-
+              <span>POINTS</span>
               <strong>
                 ${number(
-                  player
-                    .current_points
+                  player.current_points
                 )}
               </strong>
-
             </div>
 
             <div class="player-detail-stat">
-
-              <span>
-                TIER
-              </span>
-
+              <span>TIER</span>
               <strong>
                 ${escapeHtml(
                   player.tier
                 )}
               </strong>
-
             </div>
 
             <div class="player-detail-stat">
-
-              <span>
-                STREAK
-              </span>
-
+              <span>STREAK</span>
               <strong>
                 ${
-                  player
-                    .current_streak
+                  player.current_streak ||
+                  0
                 }
               </strong>
-
             </div>
 
             <div class="player-detail-stat">
-
-              <span>
-                RANK
-              </span>
-
+              <span>RANK</span>
               <strong>
                 #${data.rank || "—"}
               </strong>
-
             </div>
 
           </div>
@@ -1065,22 +1092,22 @@
           <div class="player-actions">
 
             <button
-              type="button"
               data-player-action="message"
+              type="button"
             >
-              Send Message
+              Message
             </button>
 
             <button
-              type="button"
               data-player-action="add"
+              type="button"
             >
               + Points
             </button>
 
             <button
-              type="button"
               data-player-action="deduct"
+              type="button"
             >
               − Points
             </button>
@@ -1135,10 +1162,10 @@
 
           <div
             id="playerTabContent"
-            class="player-tab-content"
           >
-            ${renderPlayerActivity(
-              activity
+            ${renderTimeline(
+              data.activity ||
+              []
             )}
           </div>
 
@@ -1146,10 +1173,22 @@
       `;
 
 
+    bindPlayerActions(
+      player,
+      data
+    );
+
+  }
+
+
+  function bindPlayerActions(
+    player,
+    data
+  ) {
+
     $$("[data-player-action]")
       .forEach(
-        button => {
-
+        button =>
           button.addEventListener(
             "click",
             () => {
@@ -1157,6 +1196,7 @@
               const action =
                 button.dataset
                   .playerAction;
+
 
               if (
                 action ===
@@ -1169,6 +1209,7 @@
 
               }
 
+
               if (
                 action ===
                 "add"
@@ -1176,10 +1217,11 @@
 
                 openPointsModal(
                   player,
-                  "add"
+                  true
                 );
 
               }
+
 
               if (
                 action ===
@@ -1188,22 +1230,19 @@
 
                 openPointsModal(
                   player,
-                  "deduct"
+                  false
                 );
 
               }
 
             }
-          );
-
-        }
+          )
       );
 
 
     $$(".player-tab")
       .forEach(
-        button => {
-
+        button =>
           button.addEventListener(
             "click",
             () => {
@@ -1218,128 +1257,125 @@
                       )
                 );
 
+
               button
                 .classList
                 .add("active");
 
-              const tab =
-                button.dataset
-                  .playerTab;
 
               const target =
-                $(
-                  "#playerTabContent"
-                );
+                $("#playerTabContent");
 
-              if (
-                tab ===
-                "activity"
+
+              switch (
+                button.dataset
+                  .playerTab
               ) {
 
-                target.innerHTML =
-                  renderPlayerActivity(
-                    activity
-                  );
+                case "activity":
 
-              }
+                  target.innerHTML =
+                    renderTimeline(
+                      data.activity ||
+                      []
+                    );
 
-              if (
-                tab ===
-                "points"
-              ) {
+                  break;
 
-                target.innerHTML =
-                  renderTransactions(
-                    transactions
-                  );
 
-              }
+                case "points":
 
-              if (
-                tab ===
-                "rewards"
-              ) {
+                  target.innerHTML =
+                    renderTransactions(
+                      data.transactions ||
+                      []
+                    );
 
-                target.innerHTML =
-                  renderSimpleRows(
-                    rewards,
-                    item =>
-                      item.title,
-                    item =>
-                      `${number(
-                        item.points_spent
-                      )} points`,
-                    item =>
-                      item.created_at
-                  );
+                  break;
 
-              }
 
-              if (
-                tab ===
-                "referrals"
-              ) {
+                case "rewards":
 
-                target.innerHTML =
-                  renderSimpleRows(
-                    referrals,
-                    item =>
-                      item
-                        .telegram_username
-                        ? `@${
-                            item
-                              .telegram_username
-                          }`
-                        : (
-                            item
-                              .first_name ||
-                            "Rico Member"
-                          ),
-                    item =>
-                      item.status,
-                    item =>
-                      item.created_at
-                  );
+                  target.innerHTML =
+                    renderSimpleTimeline(
+                      data.rewards ||
+                      [],
+                      item =>
+                        item.title,
+                      item =>
+                        `${number(
+                          item.points_spent
+                        )} points`,
+                      item =>
+                        item.created_at
+                    );
 
-              }
+                  break;
 
-              if (
-                tab ===
-                "messages"
-              ) {
 
-                target.innerHTML =
-                  renderSimpleRows(
-                    messages,
-                    item =>
-                      item
-                        .message_text,
-                    item =>
-                      item.status,
-                    item =>
-                      item.created_at
-                  );
+                case "referrals":
+
+                  target.innerHTML =
+                    renderSimpleTimeline(
+                      data.referrals ||
+                      [],
+                      item =>
+                        item.telegram_username
+                          ? `@${item.telegram_username}`
+                          : (
+                              item.first_name ||
+                              "Rico Member"
+                            ),
+                      item =>
+                        item.status,
+                      item =>
+                        item.created_at
+                    );
+
+                  break;
+
+
+                case "messages":
+
+                  target.innerHTML =
+                    renderSimpleTimeline(
+                      data.messages ||
+                      [],
+                      item =>
+                        item.message_text,
+                      item =>
+                        item.status,
+                      item =>
+                        item.created_at
+                    );
+
+                  break;
 
               }
 
             }
-          );
-
-        }
+          )
       );
 
   }
 
 
-  function renderPlayerActivity(
+  function renderTimeline(
     rows
   ) {
 
     if (!rows.length) {
-      return playerEmpty(
-        "No activity recorded"
-      );
+
+      return `
+        <div class="empty-state">
+          <strong>
+            No activity recorded
+          </strong>
+        </div>
+      `;
+
     }
+
 
     return rows
       .map(
@@ -1390,10 +1426,17 @@
   ) {
 
     if (!rows.length) {
-      return playerEmpty(
-        "No point transactions"
-      );
+
+      return `
+        <div class="empty-state">
+          <strong>
+            No point transactions
+          </strong>
+        </div>
+      `;
+
     }
+
 
     return rows
       .map(
@@ -1414,7 +1457,8 @@
                     : ""
                 }${number(
                   item.amount
-                )} Rico Points
+                )}
+                Rico Points
               </strong>
 
               <p>
@@ -1440,7 +1484,7 @@
   }
 
 
-  function renderSimpleRows(
+  function renderSimpleTimeline(
     rows,
     title,
     subtitle,
@@ -1448,10 +1492,17 @@
   ) {
 
     if (!rows.length) {
-      return playerEmpty(
-        "No records"
-      );
+
+      return `
+        <div class="empty-state">
+          <strong>
+            No records
+          </strong>
+        </div>
+      `;
+
     }
+
 
     return rows
       .map(
@@ -1491,28 +1542,9 @@
   }
 
 
-  function playerEmpty(
-    message
-  ) {
-
-    return `
-      <div class="empty-state">
-
-        <strong>
-          ${escapeHtml(
-            message
-          )}
-        </strong>
-
-      </div>
-    `;
-
-  }
-
-
-  /* =====================================================
+  /* ======================================================
      MISSIONS
-  ====================================================== */
+  ======================================================= */
 
   async function loadMissions() {
 
@@ -1521,8 +1553,11 @@
         "/api/admin/missions"
       );
 
+
     state.missions =
-      data.missions || [];
+      data.missions ||
+      [];
+
 
     renderMissions();
 
@@ -1531,98 +1566,243 @@
 
   function renderMissions() {
 
-    const grid =
-      $("#missionsGrid");
+    renderManagementCards(
+      state.missions,
+      $("#missionsGrid"),
+      $("#missionsEmpty"),
+      "◇",
+      item =>
+        item.title,
+      item =>
+        item.description ||
+        "Rico Club mission",
+      [
+        [
+          "TYPE",
+          item =>
+            item.mission_type
+        ],
 
-    const empty =
-      $("#missionsEmpty");
+        [
+          "REWARD",
+          item =>
+            `+${number(
+              item.reward_points
+            )}`
+        ]
+      ]
+    );
 
-    if (!state.missions.length) {
+  }
 
-      grid.innerHTML = "";
+
+  /* ======================================================
+     REWARDS
+  ======================================================= */
+
+  async function loadRewards() {
+
+    const data =
+      await api(
+        "/api/admin/rewards"
+      );
+
+
+    state.rewards =
+      data.rewards ||
+      [];
+
+
+    renderRewards();
+
+  }
+
+
+  function renderRewards() {
+
+    renderManagementCards(
+      state.rewards,
+      $("#rewardsGrid"),
+      $("#rewardsEmpty"),
+      "◆",
+      item =>
+        item.title,
+      item =>
+        item.description ||
+        "Rico Club reward",
+      [
+        [
+          "COST",
+          item =>
+            number(
+              item.points_cost
+            )
+        ],
+
+        [
+          "STOCK",
+          item =>
+            item.stock === null
+              ? "Unlimited"
+              : number(
+                  item.stock
+                )
+        ]
+      ]
+    );
+
+  }
+
+
+  /* ======================================================
+     DROPS
+  ======================================================= */
+
+  async function loadDrops() {
+
+    const data =
+      await api(
+        "/api/admin/drops"
+      );
+
+
+    state.drops =
+      data.drops ||
+      [];
+
+
+    renderDrops();
+
+  }
+
+
+  function renderDrops() {
+
+    renderManagementCards(
+      state.drops,
+      $("#dropsGrid"),
+      $("#dropsEmpty"),
+      "✦",
+      item =>
+        item.title,
+      item =>
+        item.description ||
+        "Rico Club reward drop",
+      [
+        [
+          "QUANTITY",
+          item =>
+            number(
+              item.total_quantity
+            )
+        ],
+
+        [
+          "CLAIMED",
+          item =>
+            number(
+              item.claimed_quantity
+            )
+        ]
+      ]
+    );
+
+  }
+
+
+  function renderManagementCards(
+    rows,
+    grid,
+    empty,
+    icon,
+    title,
+    description,
+    meta
+  ) {
+
+    if (!rows.length) {
+
+      grid.innerHTML =
+        "";
+
 
       empty
         .classList
         .remove("hidden");
 
+
       return;
 
     }
+
 
     empty
       .classList
       .add("hidden");
 
+
     grid.innerHTML =
-      state.missions
+      rows
         .map(
-          mission => `
+          item => `
             <article class="management-card">
 
               <div class="management-card-top">
 
                 <div class="management-symbol">
-                  ◇
+                  ${icon}
                 </div>
 
                 <span
                   class="status-badge ${
                     escapeAttribute(
-                      mission.status
+                      item.status
                     )
                   }"
                 >
                   ${escapeHtml(
-                    mission.status
+                    item.status
                   )}
                 </span>
 
               </div>
 
+
               <h3>
                 ${escapeHtml(
-                  mission.title
+                  title(item)
                 )}
               </h3>
 
+
               <p>
                 ${escapeHtml(
-                  mission.description ||
-                  "Rico Club mission"
+                  description(item)
                 )}
               </p>
 
+
               <div class="management-meta">
 
-                <div>
+                ${meta
+                  .map(
+                    ([label,value]) => `
+                      <div>
 
-                  <span>
-                    TYPE
-                  </span>
+                        <span>
+                          ${label}
+                        </span>
 
-                  <strong>
-                    ${escapeHtml(
-                      mission
-                        .mission_type
-                    )}
-                  </strong>
+                        <strong>
+                          ${escapeHtml(
+                            value(item)
+                          )}
+                        </strong>
 
-                </div>
-
-                <div>
-
-                  <span>
-                    REWARD
-                  </span>
-
-                  <strong>
-                    +${number(
-                      mission
-                        .reward_points
-                    )}
-                  </strong>
-
-                </div>
+                      </div>
+                    `
+                  )
+                  .join("")}
 
               </div>
 
@@ -1633,6 +1813,192 @@
 
   }
 
+
+  /* ======================================================
+     LEADERBOARD
+  ======================================================= */
+
+  async function loadLeaderboard() {
+
+    if (!state.players.length) {
+      await loadPlayers();
+    }
+
+
+    const rows =
+      [...state.players]
+        .sort(
+          (a,b) =>
+            Number(
+              b.current_points ||
+              0
+            )
+            -
+            Number(
+              a.current_points ||
+              0
+            )
+        );
+
+
+    const table =
+      $("#leaderboardTable");
+
+
+    const empty =
+      $("#leaderboardEmpty");
+
+
+    if (!rows.length) {
+
+      table.innerHTML =
+        "";
+
+
+      empty
+        .classList
+        .remove("hidden");
+
+
+      return;
+
+    }
+
+
+    empty
+      .classList
+      .add("hidden");
+
+
+    table.innerHTML =
+      rows
+        .map(
+          (player,index) => `
+            <tr
+              data-player-id="${
+                player.id
+              }"
+            >
+
+              <td>
+                #${index + 1}
+              </td>
+
+
+              <td>
+
+                <div class="table-player">
+
+                  <div class="table-avatar">
+                    ${initial(
+                      player
+                    )}
+                  </div>
+
+
+                  <div>
+
+                    <strong>
+                      ${escapeHtml(
+                        displayName(
+                          player
+                        )
+                      )}
+                    </strong>
+
+                    <span>
+                      ${
+                        player.telegram_username
+                          ? `@${
+                              escapeHtml(
+                                player.telegram_username
+                              )
+                            }`
+                          : "Telegram Member"
+                      }
+                    </span>
+
+                  </div>
+
+                </div>
+
+              </td>
+
+
+              <td>
+                ${escapeHtml(
+                  player.tier ||
+                  "Rookie"
+                )}
+              </td>
+
+
+              <td>
+                ${number(
+                  player.current_points
+                )}
+              </td>
+
+
+              <td>
+                ${
+                  player.current_streak ||
+                  0
+                } days
+              </td>
+
+            </tr>
+          `
+        )
+        .join("");
+
+
+    $$("#leaderboardTable tr")
+      .forEach(
+        row =>
+          row.addEventListener(
+            "click",
+            () =>
+              openPlayer(
+                row.dataset.playerId
+              )
+          )
+      );
+
+  }
+
+
+  function renderReferralSummary() {
+
+    const total =
+      Number(
+        state.dashboard
+          ?.stats
+          ?.referrals ||
+        0
+      );
+
+
+    $("#refTotal")
+      .textContent =
+      number(total);
+
+
+    $("#refQualified")
+      .textContent =
+      "0";
+
+
+    $("#refPending")
+      .textContent =
+      number(total);
+
+  }
+
+
+  /* ======================================================
+     MODALS
+  ======================================================= */
 
   function openMissionModal() {
 
@@ -1648,42 +2014,22 @@
           <div class="form-grid">
 
             <label class="field wide">
-
-              <span>
-                Mission Name
-              </span>
-
-              <input
-                id="missionTitle"
-                required
-                type="text"
-              >
-
+              <span>Mission Name</span>
+              <input id="missionTitle" required>
             </label>
 
 
             <label class="field wide">
-
-              <span>
-                Description
-              </span>
-
-              <textarea
-                id="missionDescription"
-              ></textarea>
-
+              <span>Description</span>
+              <textarea id="missionDescription"></textarea>
             </label>
 
 
             <label class="field">
 
-              <span>
-                Mission Type
-              </span>
+              <span>Mission Type</span>
 
-              <select
-                id="missionType"
-              >
+              <select id="missionType">
 
                 <option value="checkin">
                   Daily Check-in
@@ -1711,46 +2057,32 @@
 
 
             <label class="field">
-
-              <span>
-                Target
-              </span>
-
+              <span>Target</span>
               <input
                 id="missionTarget"
                 type="number"
                 min="1"
                 value="1"
               >
-
             </label>
 
 
             <label class="field">
-
-              <span>
-                Reward Points
-              </span>
-
+              <span>Reward Points</span>
               <input
                 id="missionReward"
                 type="number"
                 min="0"
                 value="0"
               >
-
             </label>
 
 
             <label class="field">
 
-              <span>
-                Status
-              </span>
+              <span>Status</span>
 
-              <select
-                id="missionStatus"
-              >
+              <select id="missionStatus">
 
                 <option value="draft">
                   Draft
@@ -1766,58 +2098,35 @@
 
 
             <label class="field">
-
-              <span>
-                Start Date
-              </span>
-
+              <span>Start</span>
               <input
                 id="missionStart"
                 type="datetime-local"
               >
-
             </label>
 
 
             <label class="field">
-
-              <span>
-                End Date
-              </span>
-
+              <span>End</span>
               <input
                 id="missionEnd"
                 type="datetime-local"
               >
-
             </label>
 
 
             <label class="field">
-
-              <span>
-                Button Text
-              </span>
-
-              <input
-                id="missionButton"
-                type="text"
-              >
-
+              <span>Button Text</span>
+              <input id="missionButton">
             </label>
 
 
             <label class="field">
-
-              <span>
-                Button URL
-              </span>
-
+              <span>Button URL</span>
               <input
                 id="missionUrl"
                 type="url"
               >
-
             </label>
 
           </div>
@@ -1826,7 +2135,7 @@
           <div class="modal-actions">
 
             <button
-              class="ghost-button"
+              class="secondary-button"
               type="button"
               data-close-modal
             >
@@ -1850,225 +2159,93 @@
     $("#missionForm")
       .addEventListener(
         "submit",
-        createMission
+        async event => {
+
+          event.preventDefault();
+
+
+          await api(
+            "/api/admin/missions",
+            {
+              method:
+                "POST",
+
+              body:
+                JSON.stringify({
+
+                  title:
+                    $("#missionTitle")
+                      .value
+                      .trim(),
+
+                  description:
+                    $("#missionDescription")
+                      .value
+                      .trim(),
+
+                  mission_type:
+                    $("#missionType")
+                      .value,
+
+                  target_value:
+                    Number(
+                      $("#missionTarget")
+                        .value
+                    ),
+
+                  reward_points:
+                    Number(
+                      $("#missionReward")
+                        .value
+                    ),
+
+                  status:
+                    $("#missionStatus")
+                      .value,
+
+                  start_at:
+                    toDatabaseDate(
+                      $("#missionStart")
+                        .value
+                    ),
+
+                  end_at:
+                    toDatabaseDate(
+                      $("#missionEnd")
+                        .value
+                    ),
+
+                  button_text:
+                    $("#missionButton")
+                      .value
+                      .trim(),
+
+                  button_url:
+                    $("#missionUrl")
+                      .value
+                      .trim()
+
+                })
+
+            }
+          );
+
+
+          closeModal();
+
+
+          showToast(
+            "Mission created."
+          );
+
+
+          await loadMissions();
+
+        }
       );
 
-    bindModalCloseButtons();
 
-  }
-
-
-  async function createMission(
-    event
-  ) {
-
-    event.preventDefault();
-
-    const payload = {
-
-      title:
-        $("#missionTitle")
-          .value
-          .trim(),
-
-      description:
-        $("#missionDescription")
-          .value
-          .trim(),
-
-      mission_type:
-        $("#missionType")
-          .value,
-
-      target_value:
-        Number(
-          $("#missionTarget")
-            .value
-        ),
-
-      reward_points:
-        Number(
-          $("#missionReward")
-            .value
-        ),
-
-      status:
-        $("#missionStatus")
-          .value,
-
-      start_at:
-        toDatabaseDate(
-          $("#missionStart")
-            .value
-        ),
-
-      end_at:
-        toDatabaseDate(
-          $("#missionEnd")
-            .value
-        ),
-
-      button_text:
-        $("#missionButton")
-          .value
-          .trim(),
-
-      button_url:
-        $("#missionUrl")
-          .value
-          .trim()
-
-    };
-
-
-    await api(
-      "/api/admin/missions",
-      {
-        method: "POST",
-
-        body:
-          JSON.stringify(
-            payload
-          )
-      }
-    );
-
-
-    closeModal();
-
-    showToast(
-      "Mission created."
-    );
-
-    await loadMissions();
-
-  }
-
-
-  /* =====================================================
-     REWARDS
-  ====================================================== */
-
-  async function loadRewards() {
-
-    const data =
-      await api(
-        "/api/admin/rewards"
-      );
-
-    state.rewards =
-      data.rewards || [];
-
-    renderRewards();
-
-  }
-
-
-  function renderRewards() {
-
-    const grid =
-      $("#rewardsGrid");
-
-    const empty =
-      $("#rewardsEmpty");
-
-    if (!state.rewards.length) {
-
-      grid.innerHTML = "";
-
-      empty
-        .classList
-        .remove("hidden");
-
-      return;
-
-    }
-
-    empty
-      .classList
-      .add("hidden");
-
-    grid.innerHTML =
-      state.rewards
-        .map(
-          reward => `
-            <article class="management-card">
-
-              <div class="management-card-top">
-
-                <div class="management-symbol">
-                  ◆
-                </div>
-
-                <span
-                  class="status-badge ${
-                    escapeAttribute(
-                      reward.status
-                    )
-                  }"
-                >
-                  ${escapeHtml(
-                    reward.status
-                  )}
-                </span>
-
-              </div>
-
-              <h3>
-                ${escapeHtml(
-                  reward.title
-                )}
-              </h3>
-
-              <p>
-                ${escapeHtml(
-                  reward.description ||
-                  "Rico Club reward"
-                )}
-              </p>
-
-              <div class="management-meta">
-
-                <div>
-
-                  <span>
-                    COST
-                  </span>
-
-                  <strong>
-                    ${number(
-                      reward
-                        .points_cost
-                    )}
-                  </strong>
-
-                </div>
-
-                <div>
-
-                  <span>
-                    STOCK
-                  </span>
-
-                  <strong>
-                    ${
-                      reward.stock ===
-                      null
-                        ? "Unlimited"
-                        : number(
-                            reward.stock
-                          )
-                    }
-                  </strong>
-
-                </div>
-
-              </div>
-
-            </article>
-          `
-        )
-        .join("");
+    bindModalClose();
 
   }
 
@@ -2087,42 +2264,22 @@
           <div class="form-grid">
 
             <label class="field wide">
-
-              <span>
-                Reward Name
-              </span>
-
-              <input
-                id="rewardTitle"
-                required
-                type="text"
-              >
-
+              <span>Reward Name</span>
+              <input id="rewardTitle" required>
             </label>
 
 
             <label class="field wide">
-
-              <span>
-                Description
-              </span>
-
-              <textarea
-                id="rewardDescription"
-              ></textarea>
-
+              <span>Description</span>
+              <textarea id="rewardDescription"></textarea>
             </label>
 
 
             <label class="field">
 
-              <span>
-                Reward Type
-              </span>
+              <span>Reward Type</span>
 
-              <select
-                id="rewardType"
-              >
+              <select id="rewardType">
 
                 <option value="manual">
                   Manual Reward
@@ -2146,113 +2303,31 @@
 
 
             <label class="field">
-
-              <span>
-                Points Cost
-              </span>
-
+              <span>Points Cost</span>
               <input
                 id="rewardCost"
                 type="number"
                 min="0"
                 value="0"
               >
-
             </label>
 
 
             <label class="field">
-
-              <span>
-                Stock
-              </span>
-
+              <span>Stock</span>
               <input
                 id="rewardStock"
                 type="number"
                 min="0"
-                placeholder="Leave empty for unlimited"
               >
-
             </label>
 
 
             <label class="field">
 
-              <span>
-                Required Tier
-              </span>
+              <span>Status</span>
 
-              <select
-                id="rewardTier"
-              >
-
-                <option value="">
-                  Everyone
-                </option>
-
-                <option value="Rookie">
-                  Rookie
-                </option>
-
-                <option value="Bronze">
-                  Bronze
-                </option>
-
-                <option value="Silver">
-                  Silver
-                </option>
-
-                <option value="Gold">
-                  Gold
-                </option>
-
-                <option value="Diamond">
-                  Diamond
-                </option>
-
-              </select>
-
-            </label>
-
-
-            <label class="field">
-
-              <span>
-                Start Date
-              </span>
-
-              <input
-                id="rewardStart"
-                type="datetime-local"
-              >
-
-            </label>
-
-
-            <label class="field">
-
-              <span>
-                End Date
-              </span>
-
-              <input
-                id="rewardEnd"
-                type="datetime-local"
-              >
-
-            </label>
-
-
-            <label class="field">
-
-              <span>
-                Status
-              </span>
-
-              <select
-                id="rewardStatus"
-              >
+              <select id="rewardStatus">
 
                 <option value="draft">
                   Draft
@@ -2272,7 +2347,7 @@
           <div class="modal-actions">
 
             <button
-              class="ghost-button"
+              class="secondary-button"
               type="button"
               data-close-modal
             >
@@ -2296,247 +2371,75 @@
     $("#rewardForm")
       .addEventListener(
         "submit",
-        createReward
+        async event => {
+
+          event.preventDefault();
+
+
+          const stock =
+            $("#rewardStock")
+              .value;
+
+
+          await api(
+            "/api/admin/rewards",
+            {
+              method:
+                "POST",
+
+              body:
+                JSON.stringify({
+
+                  title:
+                    $("#rewardTitle")
+                      .value
+                      .trim(),
+
+                  description:
+                    $("#rewardDescription")
+                      .value
+                      .trim(),
+
+                  reward_type:
+                    $("#rewardType")
+                      .value,
+
+                  points_cost:
+                    Number(
+                      $("#rewardCost")
+                        .value
+                    ),
+
+                  stock:
+                    stock === ""
+                      ? null
+                      : Number(stock),
+
+                  status:
+                    $("#rewardStatus")
+                      .value
+
+                })
+
+            }
+          );
+
+
+          closeModal();
+
+
+          showToast(
+            "Reward created."
+          );
+
+
+          await loadRewards();
+
+        }
       );
 
-    bindModalCloseButtons();
 
-  }
-
-
-  async function createReward(
-    event
-  ) {
-
-    event.preventDefault();
-
-    const stock =
-      $("#rewardStock")
-        .value;
-
-    const payload = {
-
-      title:
-        $("#rewardTitle")
-          .value
-          .trim(),
-
-      description:
-        $("#rewardDescription")
-          .value
-          .trim(),
-
-      reward_type:
-        $("#rewardType")
-          .value,
-
-      points_cost:
-        Number(
-          $("#rewardCost")
-            .value
-        ),
-
-      stock:
-        stock === ""
-          ? null
-          : Number(stock),
-
-      required_tier:
-        $("#rewardTier")
-          .value ||
-        null,
-
-      start_at:
-        toDatabaseDate(
-          $("#rewardStart")
-            .value
-        ),
-
-      end_at:
-        toDatabaseDate(
-          $("#rewardEnd")
-            .value
-        ),
-
-      status:
-        $("#rewardStatus")
-          .value
-
-    };
-
-
-    await api(
-      "/api/admin/rewards",
-      {
-        method: "POST",
-
-        body:
-          JSON.stringify(
-            payload
-          )
-      }
-    );
-
-
-    closeModal();
-
-    showToast(
-      "Reward created."
-    );
-
-    await loadRewards();
-
-  }
-
-
-  /* =====================================================
-     DROPS
-  ====================================================== */
-
-  async function loadDrops() {
-
-    const data =
-      await api(
-        "/api/admin/drops"
-      );
-
-    state.drops =
-      data.drops || [];
-
-    renderDrops();
-
-  }
-
-
-  function renderDrops() {
-
-    const grid =
-      $("#dropsGrid");
-
-    const empty =
-      $("#dropsEmpty");
-
-    if (!state.drops.length) {
-
-      grid.innerHTML = "";
-
-      empty
-        .classList
-        .remove("hidden");
-
-      return;
-
-    }
-
-    empty
-      .classList
-      .add("hidden");
-
-    grid.innerHTML =
-      state.drops
-        .map(
-          drop => `
-            <article class="management-card">
-
-              <div class="management-card-top">
-
-                <div class="management-symbol">
-                  ✦
-                </div>
-
-                <span
-                  class="status-badge ${
-                    escapeAttribute(
-                      drop.status
-                    )
-                  }"
-                >
-                  ${escapeHtml(
-                    drop.status
-                  )}
-                </span>
-
-              </div>
-
-              <h3>
-                ${escapeHtml(
-                  drop.title
-                )}
-              </h3>
-
-              <p>
-                ${escapeHtml(
-                  drop.description ||
-                  "Rico Club reward drop"
-                )}
-              </p>
-
-              <div class="management-meta">
-
-                <div>
-
-                  <span>
-                    QUANTITY
-                  </span>
-
-                  <strong>
-                    ${number(
-                      drop
-                        .total_quantity
-                    )}
-                  </strong>
-
-                </div>
-
-                <div>
-
-                  <span>
-                    CLAIMED
-                  </span>
-
-                  <strong>
-                    ${number(
-                      drop
-                        .claimed_quantity
-                    )}
-                  </strong>
-
-                </div>
-
-                <div>
-
-                  <span>
-                    START
-                  </span>
-
-                  <strong>
-                    ${formatDateTime(
-                      drop.start_at
-                    )}
-                  </strong>
-
-                </div>
-
-                <div>
-
-                  <span>
-                    END
-                  </span>
-
-                  <strong>
-                    ${formatDateTime(
-                      drop.end_at
-                    )}
-                  </strong>
-
-                </div>
-
-              </div>
-
-            </article>
-          `
-        )
-        .join("");
+    bindModalClose();
 
   }
 
@@ -2544,8 +2447,8 @@
   function openDropModal() {
 
     openModal(
-      "REWARD DROP",
-      "Create Drop",
+      "DROP",
+      "Create Reward Drop",
       `
         <form
           id="dropForm"
@@ -2555,42 +2458,22 @@
           <div class="form-grid">
 
             <label class="field wide">
-
-              <span>
-                Drop Name
-              </span>
-
-              <input
-                id="dropTitle"
-                required
-                type="text"
-              >
-
+              <span>Drop Name</span>
+              <input id="dropTitle" required>
             </label>
 
 
             <label class="field wide">
-
-              <span>
-                Description
-              </span>
-
-              <textarea
-                id="dropDescription"
-              ></textarea>
-
+              <span>Description</span>
+              <textarea id="dropDescription"></textarea>
             </label>
 
 
             <label class="field">
 
-              <span>
-                Reward Type
-              </span>
+              <span>Reward Type</span>
 
-              <select
-                id="dropRewardType"
-              >
+              <select id="dropRewardType">
 
                 <option value="points">
                   Rico Points
@@ -2610,131 +2493,63 @@
 
 
             <label class="field">
-
-              <span>
-                Reward Value
-              </span>
-
+              <span>Reward Value</span>
               <input
                 id="dropReward"
                 type="number"
                 min="0"
                 value="0"
               >
-
             </label>
 
 
             <label class="field">
-
-              <span>
-                Quantity
-              </span>
-
+              <span>Quantity</span>
               <input
                 id="dropQuantity"
                 required
                 type="number"
                 min="1"
               >
-
             </label>
 
 
             <label class="field">
-
-              <span>
-                Claim Limit Per Player
-              </span>
-
+              <span>Claim Limit</span>
               <input
                 id="dropLimit"
                 type="number"
                 min="1"
                 value="1"
               >
-
             </label>
 
 
             <label class="field">
-
-              <span>
-                Start Date
-              </span>
-
+              <span>Start</span>
               <input
                 id="dropStart"
                 required
                 type="datetime-local"
               >
-
             </label>
 
 
             <label class="field">
-
-              <span>
-                End Date
-              </span>
-
+              <span>End</span>
               <input
                 id="dropEnd"
                 required
                 type="datetime-local"
               >
-
             </label>
 
 
             <label class="field">
 
-              <span>
-                Required Tier
-              </span>
+              <span>Status</span>
 
-              <select
-                id="dropTier"
-              >
-
-                <option value="">
-                  Everyone
-                </option>
-
-                <option value="Rookie">
-                  Rookie
-                </option>
-
-                <option value="Bronze">
-                  Bronze
-                </option>
-
-                <option value="Silver">
-                  Silver
-                </option>
-
-                <option value="Gold">
-                  Gold
-                </option>
-
-                <option value="Diamond">
-                  Diamond
-                </option>
-
-              </select>
-
-            </label>
-
-
-            <label class="field">
-
-              <span>
-                Status
-              </span>
-
-              <select
-                id="dropStatus"
-              >
+              <select id="dropStatus">
 
                 <option value="draft">
                   Draft
@@ -2758,7 +2573,7 @@
           <div class="modal-actions">
 
             <button
-              class="ghost-button"
+              class="secondary-button"
               type="button"
               data-close-modal
             >
@@ -2782,341 +2597,133 @@
     $("#dropForm")
       .addEventListener(
         "submit",
-        createDrop
+        async event => {
+
+          event.preventDefault();
+
+
+          await api(
+            "/api/admin/drops",
+            {
+              method:
+                "POST",
+
+              body:
+                JSON.stringify({
+
+                  title:
+                    $("#dropTitle")
+                      .value
+                      .trim(),
+
+                  description:
+                    $("#dropDescription")
+                      .value
+                      .trim(),
+
+                  reward_type:
+                    $("#dropRewardType")
+                      .value,
+
+                  reward_value:
+                    Number(
+                      $("#dropReward")
+                        .value
+                    ),
+
+                  total_quantity:
+                    Number(
+                      $("#dropQuantity")
+                        .value
+                    ),
+
+                  claim_limit_per_user:
+                    Number(
+                      $("#dropLimit")
+                        .value
+                    ),
+
+                  start_at:
+                    toDatabaseDate(
+                      $("#dropStart")
+                        .value
+                    ),
+
+                  end_at:
+                    toDatabaseDate(
+                      $("#dropEnd")
+                        .value
+                    ),
+
+                  status:
+                    $("#dropStatus")
+                      .value
+
+                })
+
+            }
+          );
+
+
+          closeModal();
+
+
+          showToast(
+            "Reward drop created."
+          );
+
+
+          await loadDrops();
+
+        }
       );
 
-    bindModalCloseButtons();
+
+    bindModalClose();
 
   }
 
-
-  async function createDrop(
-    event
-  ) {
-
-    event.preventDefault();
-
-    const payload = {
-
-      title:
-        $("#dropTitle")
-          .value
-          .trim(),
-
-      description:
-        $("#dropDescription")
-          .value
-          .trim(),
-
-      reward_type:
-        $("#dropRewardType")
-          .value,
-
-      reward_value:
-        Number(
-          $("#dropReward")
-            .value
-        ),
-
-      total_quantity:
-        Number(
-          $("#dropQuantity")
-            .value
-        ),
-
-      claim_limit_per_user:
-        Number(
-          $("#dropLimit")
-            .value
-        ),
-
-      start_at:
-        toDatabaseDate(
-          $("#dropStart")
-            .value
-        ),
-
-      end_at:
-        toDatabaseDate(
-          $("#dropEnd")
-            .value
-        ),
-
-      required_tier:
-        $("#dropTier")
-          .value ||
-        null,
-
-      status:
-        $("#dropStatus")
-          .value
-
-    };
-
-
-    await api(
-      "/api/admin/drops",
-      {
-        method: "POST",
-
-        body:
-          JSON.stringify(
-            payload
-          )
-      }
-    );
-
-
-    closeModal();
-
-    showToast(
-      "Reward drop created."
-    );
-
-    await loadDrops();
-
-  }
-
-
-  /* =====================================================
-     LEADERBOARD
-  ====================================================== */
-
-  async function loadLeaderboard() {
-
-    if (!state.players.length) {
-      await loadPlayers();
-    }
-
-    const rows =
-      [...state.players]
-        .sort(
-          (a,b) =>
-            Number(
-              b.current_points ||
-              0
-            ) -
-            Number(
-              a.current_points ||
-              0
-            )
-        );
-
-    const table =
-      $("#leaderboardTable");
-
-    const empty =
-      $("#leaderboardEmpty");
-
-    if (!rows.length) {
-
-      table.innerHTML = "";
-
-      empty
-        .classList
-        .remove("hidden");
-
-      return;
-
-    }
-
-    empty
-      .classList
-      .add("hidden");
-
-    table.innerHTML =
-      rows
-        .map(
-          (player,index) => `
-            <tr
-              data-player-id="${
-                player.id
-              }"
-            >
-
-              <td>
-                #${index + 1}
-              </td>
-
-              <td>
-
-                <div class="table-player">
-
-                  <div class="table-avatar">
-                    ${initial(
-                      player
-                    )}
-                  </div>
-
-                  <div>
-
-                    <strong>
-                      ${escapeHtml(
-                        displayName(
-                          player
-                        )
-                      )}
-                    </strong>
-
-                    <span>
-                      ${
-                        player
-                          .telegram_username
-                          ? `@${
-                              escapeHtml(
-                                player
-                                  .telegram_username
-                              )
-                            }`
-                          : "Telegram Member"
-                      }
-                    </span>
-
-                  </div>
-
-                </div>
-
-              </td>
-
-              <td>
-                ${escapeHtml(
-                  player.tier
-                )}
-              </td>
-
-              <td>
-                ${number(
-                  player
-                    .current_points
-                )}
-              </td>
-
-              <td>
-                ${
-                  player
-                    .current_streak
-                } days
-              </td>
-
-            </tr>
-          `
-        )
-        .join("");
-
-    $$("#leaderboardTable tr")
-      .forEach(
-        row =>
-          row.addEventListener(
-            "click",
-            () =>
-              openPlayer(
-                row.dataset
-                  .playerId
-              )
-          )
-      );
-
-  }
-
-
-  function renderReferralSummary() {
-
-    const total =
-      state.dashboard
-        ?.stats
-        ?.referrals || 0;
-
-    $("#refTotal")
-      .textContent =
-      number(total);
-
-    $("#refQualified")
-      .textContent =
-      "0";
-
-    $("#refPending")
-      .textContent =
-      number(total);
-
-  }
-
-
-  /* =====================================================
-     PLAYER ACTION MODALS
-  ====================================================== */
 
   function openPointsModal(
     player,
-    type
+    adding
   ) {
-
-    const adding =
-      type === "add";
 
     openModal(
       "PLAYER POINTS",
-
       adding
         ? "Add Rico Points"
         : "Deduct Rico Points",
-
       `
         <form
           id="pointsForm"
           class="modal-form"
         >
 
-          <p class="panel-description">
-            ${
-              adding
-                ? "Add"
-                : "Deduct"
-            }
-            points for
-            <strong>
-              ${escapeHtml(
-                displayName(
-                  player
-                )
-              )}
-            </strong>.
-            Every adjustment is recorded in the player's point history.
-          </p>
-
           <label class="field">
-
-            <span>
-              Amount
-            </span>
-
+            <span>Amount</span>
             <input
               id="pointsAmount"
               required
-              min="1"
               type="number"
+              min="1"
             >
-
           </label>
 
 
           <label class="field">
-
-            <span>
-              Reason
-            </span>
-
+            <span>Reason</span>
             <textarea
               id="pointsReason"
               required
             ></textarea>
-
           </label>
 
 
           <div class="modal-actions">
 
             <button
-              class="ghost-button"
+              class="secondary-button"
               type="button"
               data-close-modal
             >
@@ -3144,6 +2751,7 @@
 
           event.preventDefault();
 
+
           let amount =
             Math.abs(
               Number(
@@ -3152,10 +2760,12 @@
               )
             );
 
+
           if (!adding) {
             amount =
               -amount;
           }
+
 
           await api(
             `/api/admin/player/${player.id}/points`,
@@ -3165,32 +2775,40 @@
 
               body:
                 JSON.stringify({
+
                   amount,
 
                   reason:
                     $("#pointsReason")
                       .value
                       .trim()
+
                 })
+
             }
           );
 
+
           closeModal();
+
 
           showToast(
             "Player points updated."
           );
 
+
           await openPlayer(
             player.id
           );
+
 
           await loadDashboard();
 
         }
       );
 
-    bindModalCloseButtons();
+
+    bindModalClose();
 
   }
 
@@ -3201,33 +2819,16 @@
 
     openModal(
       "TELEGRAM",
-
       "Send Message",
-
       `
         <form
           id="messageForm"
           class="modal-form"
         >
 
-          <p class="panel-description">
-            Message
-            <strong>
-              ${escapeHtml(
-                displayName(
-                  player
-                )
-              )}
-            </strong>
-            directly through the Rico Club Telegram bot.
-          </p>
-
-
           <label class="field">
 
-            <span>
-              Message
-            </span>
+            <span>Message</span>
 
             <textarea
               id="messageText"
@@ -3240,30 +2841,17 @@
           <div class="form-grid">
 
             <label class="field">
-
-              <span>
-                Button Text
-              </span>
-
-              <input
-                id="messageButton"
-                type="text"
-              >
-
+              <span>Button Text</span>
+              <input id="messageButton">
             </label>
 
 
             <label class="field">
-
-              <span>
-                Button URL
-              </span>
-
+              <span>Button URL</span>
               <input
                 id="messageUrl"
                 type="url"
               >
-
             </label>
 
           </div>
@@ -3272,7 +2860,7 @@
           <div class="modal-actions">
 
             <button
-              class="ghost-button"
+              class="secondary-button"
               type="button"
               data-close-modal
             >
@@ -3283,7 +2871,7 @@
               class="primary-button"
               type="submit"
             >
-              Send Message
+              Send
             </button>
 
           </div>
@@ -3299,6 +2887,7 @@
         async event => {
 
           event.preventDefault();
+
 
           await api(
             `/api/admin/player/${player.id}/message`,
@@ -3325,14 +2914,18 @@
                       .trim()
 
                 })
+
             }
           );
 
+
           closeModal();
+
 
           showToast(
             "Telegram message sent."
           );
+
 
           await openPlayer(
             player.id
@@ -3341,37 +2934,36 @@
         }
       );
 
-    bindModalCloseButtons();
+
+    bindModalClose();
 
   }
 
 
-  /* =====================================================
-     MODAL
-  ====================================================== */
-
   function openModal(
     eyebrow,
     title,
-    body
+    html
   ) {
 
     $("#modalEyebrow")
       .textContent =
       eyebrow;
 
+
     $("#modalTitle")
       .textContent =
       title;
 
+
     $("#modalBody")
       .innerHTML =
-      body;
+      html;
+
 
     $("#modalOverlay")
-      .classList.remove(
-        "hidden"
-      );
+      .classList
+      .remove("hidden");
 
   }
 
@@ -3379,17 +2971,18 @@
   function closeModal() {
 
     $("#modalOverlay")
-      .classList.add(
-        "hidden"
-      );
+      .classList
+      .add("hidden");
+
 
     $("#modalBody")
-      .innerHTML = "";
+      .innerHTML =
+      "";
 
   }
 
 
-  function bindModalCloseButtons() {
+  function bindModalClose() {
 
     $$("[data-close-modal]")
       .forEach(
@@ -3403,11 +2996,11 @@
   }
 
 
-  /* =====================================================
+  /* ======================================================
      EVENTS
-  ====================================================== */
+  ======================================================= */
 
-  function bindGlobalEvents() {
+  function bindEvents() {
 
     $("#loginForm")
       .addEventListener(
@@ -3424,14 +3017,17 @@
           const input =
             $("#loginPassword");
 
+
           const show =
             input.type ===
             "password";
+
 
           input.type =
             show
               ? "text"
               : "password";
+
 
           $("#togglePassword")
             .textContent =
@@ -3450,10 +3046,9 @@
       );
 
 
-    $$(".nav-link")
+    $$(".nav-item")
       .forEach(
-        button => {
-
+        button =>
           button.addEventListener(
             "click",
             () =>
@@ -3461,9 +3056,7 @@
                 button.dataset
                   .section
               )
-          );
-
-        }
+          )
       );
 
 
@@ -3472,8 +3065,7 @@
         "click",
         () =>
           loadSection(
-            state
-              .currentSection
+            state.currentSection
           )
       );
 
@@ -3525,8 +3117,7 @@
           ) {
 
             loadPlayers(
-              event
-                .currentTarget
+              event.currentTarget
                 .value
                 .trim()
             );
@@ -3568,14 +3159,14 @@
       );
 
 
-    $("#closePlayerDrawer")
+    $("#drawerOverlay")
       .addEventListener(
         "click",
         closePlayerDrawer
       );
 
 
-    $("#drawerOverlay")
+    $("#closePlayerDrawer")
       .addEventListener(
         "click",
         closePlayerDrawer
@@ -3607,9 +3198,9 @@
   }
 
 
-  /* =====================================================
+  /* ======================================================
      API
-  ====================================================== */
+  ======================================================= */
 
   async function api(
     path,
@@ -3626,16 +3217,23 @@
           ...options,
 
           headers: {
+
             "content-type":
               "application/json",
 
-            ...(options.headers || {})
+            ...(
+              options.headers ||
+              {}
+            )
+
           }
+
         }
       );
 
 
     let data = {};
+
 
     try {
 
@@ -3652,12 +3250,28 @@
       401
     ) {
 
-      state.admin = null;
+      if (
+        path ===
+        "/api/admin/login"
+      ) {
+
+        throw new Error(
+          data.error ||
+          "Invalid email or password."
+        );
+
+      }
+
+
+      state.admin =
+        null;
+
 
       showLogin();
 
+
       throw new Error(
-        "Your admin session has expired."
+        "Your admin session has expired. Please sign in again."
       );
 
     }
@@ -3678,9 +3292,34 @@
   }
 
 
-  /* =====================================================
+  /* ======================================================
      HELPERS
-  ====================================================== */
+  ======================================================= */
+
+  function setDashboardDate() {
+
+    $("#dashboardDate")
+      .textContent =
+      new Date()
+        .toLocaleDateString(
+          "en-GB",
+          {
+            weekday:
+              "long",
+
+            day:
+              "2-digit",
+
+            month:
+              "long",
+
+            year:
+              "numeric"
+          }
+        );
+
+  }
+
 
   function displayName(
     player
@@ -3725,7 +3364,8 @@
       )
       .format(
         Number(
-          value || 0
+          value ||
+          0
         )
       );
 
@@ -3740,6 +3380,7 @@
       return "—";
     }
 
+
     const normalized =
       String(value)
         .includes("T")
@@ -3748,12 +3389,16 @@
             .replace(
               " ",
               "T"
-            ) + "Z";
+            )
+          +
+          "Z";
+
 
     const date =
       new Date(
         normalized
       );
+
 
     if (
       Number.isNaN(
@@ -3762,6 +3407,7 @@
     ) {
       return value;
     }
+
 
     return date
       .toLocaleString(
@@ -3792,8 +3438,10 @@
       return null;
     }
 
+
     const date =
       new Date(value);
+
 
     if (
       Number.isNaN(
@@ -3802,6 +3450,7 @@
     ) {
       return null;
     }
+
 
     return date
       .toISOString()
@@ -3840,6 +3489,7 @@
 
     };
 
+
     return map[type] ||
       "•";
 
@@ -3850,18 +3500,21 @@
     value
   ) {
 
-    const element =
+    const div =
       document
         .createElement(
           "div"
         );
 
-    element.textContent =
+
+    div.textContent =
       String(
-        value ?? ""
+        value ??
+        ""
       );
 
-    return element.innerHTML;
+
+    return div.innerHTML;
 
   }
 
@@ -3888,18 +3541,20 @@
     const toast =
       $("#adminToast");
 
+
     toast.textContent =
       message;
 
+
     toast
       .classList
-      .add(
-        "visible"
-      );
+      .add("visible");
+
 
     clearTimeout(
       showToast.timer
     );
+
 
     showToast.timer =
       setTimeout(
@@ -3909,7 +3564,7 @@
             .remove(
               "visible"
             ),
-        2600
+        2500
       );
 
   }
