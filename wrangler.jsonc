@@ -19,7 +19,8 @@
  "vars": {
     "ADMIN_EMAIL": "marketing@ricobet.com",
     "APP_NAME": "Rico Club",
-    "APP_TIMEZONE": "America/Sao_Paulo"
+    "APP_TIMEZONE": "America/Sao_Paulo",
+    "MINI_APP_URL": "https://rico-community.marketing-696.workers.dev"
   },
 
   "d1_databases": [
