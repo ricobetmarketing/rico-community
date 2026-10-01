@@ -1,0 +1,1733 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width,initial-scale=1"
+  >
+
+  <meta
+    name="theme-color"
+    content="#0d0c1b"
+  >
+
+  <title>Rico Club Admin</title>
+
+  <link
+    rel="stylesheet"
+    href="/admin.css"
+  >
+</head>
+
+<body>
+
+  <!-- =====================================================
+       LOGIN
+  ====================================================== -->
+
+  <section
+    id="loginScreen"
+    class="login-screen"
+  >
+
+    <div class="login-background">
+      <div class="login-orb login-orb-one"></div>
+      <div class="login-orb login-orb-two"></div>
+    </div>
+
+    <div class="login-card">
+
+      <div class="login-brand">
+
+        <div class="brand-mark">
+          R
+        </div>
+
+        <div>
+          <strong>
+            RICO CLUB
+          </strong>
+
+          <span>
+            Administration
+          </span>
+        </div>
+
+      </div>
+
+      <div class="login-heading">
+
+        <span class="eyebrow">
+          SECURE ACCESS
+        </span>
+
+        <h1>
+          Welcome back
+        </h1>
+
+        <p>
+          Sign in to manage Rico Club players, missions,
+          rewards and Telegram activity.
+        </p>
+
+      </div>
+
+      <form id="loginForm">
+
+        <label class="field">
+
+          <span>
+            Email
+          </span>
+
+          <input
+            id="loginEmail"
+            type="email"
+            autocomplete="username"
+            required
+            placeholder="admin@ricobet.com"
+          >
+
+        </label>
+
+        <label class="field">
+
+          <span>
+            Password
+          </span>
+
+          <div class="password-wrap">
+
+            <input
+              id="loginPassword"
+              type="password"
+              autocomplete="current-password"
+              required
+              placeholder="Enter password"
+            >
+
+            <button
+              id="togglePassword"
+              type="button"
+              class="password-toggle"
+            >
+              Show
+            </button>
+
+          </div>
+
+        </label>
+
+        <button
+          id="loginButton"
+          class="primary-button full"
+          type="submit"
+        >
+          Sign in
+        </button>
+
+        <div
+          id="loginError"
+          class="form-error hidden"
+        ></div>
+
+      </form>
+
+    </div>
+
+  </section>
+
+
+  <!-- =====================================================
+       ADMIN APPLICATION
+  ====================================================== -->
+
+  <div
+    id="adminApp"
+    class="admin-shell hidden"
+  >
+
+    <!-- SIDEBAR -->
+
+    <aside
+      id="sidebar"
+      class="sidebar"
+    >
+
+      <div class="sidebar-head">
+
+        <div class="sidebar-brand">
+
+          <div class="brand-mark small">
+            R
+          </div>
+
+          <div class="sidebar-brand-text">
+
+            <strong>
+              RICO CLUB
+            </strong>
+
+            <span>
+              Administration
+            </span>
+
+          </div>
+
+        </div>
+
+        <button
+          id="sidebarClose"
+          class="icon-button sidebar-close"
+          type="button"
+          aria-label="Close navigation"
+        >
+          ×
+        </button>
+
+      </div>
+
+
+      <nav class="sidebar-nav">
+
+        <button
+          class="nav-link active"
+          data-section="dashboard"
+          type="button"
+        >
+          <span class="nav-icon">
+            ◫
+          </span>
+
+          <span>
+            Dashboard
+          </span>
+        </button>
+
+
+        <button
+          class="nav-link"
+          data-section="players"
+          type="button"
+        >
+          <span class="nav-icon">
+            ◎
+          </span>
+
+          <span>
+            Players
+          </span>
+        </button>
+
+
+        <div class="nav-label">
+          ENGAGEMENT
+        </div>
+
+
+        <button
+          class="nav-link"
+          data-section="missions"
+          type="button"
+        >
+          <span class="nav-icon">
+            ◇
+          </span>
+
+          <span>
+            Missions
+          </span>
+        </button>
+
+
+        <button
+          class="nav-link"
+          data-section="rewards"
+          type="button"
+        >
+          <span class="nav-icon">
+            ◆
+          </span>
+
+          <span>
+            Rewards
+          </span>
+        </button>
+
+
+        <button
+          class="nav-link"
+          data-section="drops"
+          type="button"
+        >
+          <span class="nav-icon">
+            ✦
+          </span>
+
+          <span>
+            Reward Drops
+          </span>
+        </button>
+
+
+        <button
+          class="nav-link"
+          data-section="referrals"
+          type="button"
+        >
+          <span class="nav-icon">
+            ↗
+          </span>
+
+          <span>
+            Referrals
+          </span>
+        </button>
+
+
+        <button
+          class="nav-link"
+          data-section="leaderboard"
+          type="button"
+        >
+          <span class="nav-icon">
+            ♛
+          </span>
+
+          <span>
+            Leaderboard
+          </span>
+        </button>
+
+
+        <div class="nav-label">
+          COMMUNICATION
+        </div>
+
+
+        <button
+          class="nav-link"
+          data-section="messages"
+          type="button"
+        >
+          <span class="nav-icon">
+            ✉
+          </span>
+
+          <span>
+            Messages
+          </span>
+        </button>
+
+
+        <div class="nav-label">
+          CONFIGURATION
+        </div>
+
+
+        <button
+          class="nav-link"
+          data-section="appearance"
+          type="button"
+        >
+          <span class="nav-icon">
+            ◐
+          </span>
+
+          <span>
+            Appearance
+          </span>
+        </button>
+
+
+        <button
+          class="nav-link"
+          data-section="settings"
+          type="button"
+        >
+          <span class="nav-icon">
+            ⚙
+          </span>
+
+          <span>
+            Settings
+          </span>
+        </button>
+
+      </nav>
+
+
+      <div class="sidebar-footer">
+
+        <div class="admin-identity">
+
+          <div class="admin-avatar">
+            A
+          </div>
+
+          <div>
+            <strong id="sidebarAdminEmail">
+              Administrator
+            </strong>
+
+            <span>
+              Active session
+            </span>
+          </div>
+
+        </div>
+
+        <button
+          id="logoutButton"
+          class="logout-button"
+          type="button"
+        >
+          Sign out
+        </button>
+
+      </div>
+
+    </aside>
+
+
+    <!-- MAIN -->
+
+    <main class="admin-main">
+
+      <header class="topbar">
+
+        <div class="topbar-left">
+
+          <button
+            id="sidebarToggle"
+            class="icon-button sidebar-toggle"
+            type="button"
+            aria-label="Open navigation"
+          >
+            ☰
+          </button>
+
+          <div>
+
+            <span
+              id="pageEyebrow"
+              class="eyebrow"
+            >
+              OVERVIEW
+            </span>
+
+            <h1 id="pageTitle">
+              Dashboard
+            </h1>
+
+          </div>
+
+        </div>
+
+        <div class="topbar-actions">
+
+          <button
+            id="refreshCurrent"
+            class="ghost-button"
+            type="button"
+          >
+            ↻ Refresh
+          </button>
+
+          <div class="status-pill">
+            <span></span>
+            Live
+          </div>
+
+        </div>
+
+      </header>
+
+
+      <div class="content-area">
+
+        <!-- =================================================
+             DASHBOARD
+        ================================================== -->
+
+        <section
+          id="sectionDashboard"
+          class="admin-section active"
+        >
+
+          <div class="stats-grid">
+
+            <article class="stat-card">
+
+              <div class="stat-icon">
+                ◎
+              </div>
+
+              <div>
+
+                <span>
+                  Total Players
+                </span>
+
+                <strong id="statPlayers">
+                  0
+                </strong>
+
+                <small>
+                  Telegram accounts
+                </small>
+
+              </div>
+
+            </article>
+
+
+            <article class="stat-card">
+
+              <div class="stat-icon">
+                ●
+              </div>
+
+              <div>
+
+                <span>
+                  Active Today
+                </span>
+
+                <strong id="statActive">
+                  0
+                </strong>
+
+                <small>
+                  Players active today
+                </small>
+
+              </div>
+
+            </article>
+
+
+            <article class="stat-card">
+
+              <div class="stat-icon">
+                ✓
+              </div>
+
+              <div>
+
+                <span>
+                  Check-ins Today
+                </span>
+
+                <strong id="statCheckins">
+                  0
+                </strong>
+
+                <small>
+                  Completed today
+                </small>
+
+              </div>
+
+            </article>
+
+
+            <article class="stat-card">
+
+              <div class="stat-icon">
+                ◆
+              </div>
+
+              <div>
+
+                <span>
+                  Points Issued
+                </span>
+
+                <strong id="statPoints">
+                  0
+                </strong>
+
+                <small>
+                  Lifetime issued
+                </small>
+
+              </div>
+
+            </article>
+
+
+            <article class="stat-card">
+
+              <div class="stat-icon">
+                ↗
+              </div>
+
+              <div>
+
+                <span>
+                  Referrals
+                </span>
+
+                <strong id="statReferrals">
+                  0
+                </strong>
+
+                <small>
+                  Recorded referrals
+                </small>
+
+              </div>
+
+            </article>
+
+
+            <article class="stat-card">
+
+              <div class="stat-icon">
+                ✦
+              </div>
+
+              <div>
+
+                <span>
+                  Rewards Claimed
+                </span>
+
+                <strong id="statClaims">
+                  0
+                </strong>
+
+                <small>
+                  Completed claims
+                </small>
+
+              </div>
+
+            </article>
+
+          </div>
+
+
+          <div class="dashboard-grid">
+
+            <section class="panel large-panel">
+
+              <div class="panel-heading">
+
+                <div>
+
+                  <span class="eyebrow">
+                    ACTIVITY
+                  </span>
+
+                  <h2>
+                    Player activity
+                  </h2>
+
+                </div>
+
+                <span class="panel-meta">
+                  Last 7 days
+                </span>
+
+              </div>
+
+              <div
+                id="activityChart"
+                class="activity-chart"
+              ></div>
+
+            </section>
+
+
+            <section class="panel">
+
+              <div class="panel-heading">
+
+                <div>
+
+                  <span class="eyebrow">
+                    SYSTEM
+                  </span>
+
+                  <h2>
+                    Community status
+                  </h2>
+
+                </div>
+
+              </div>
+
+              <div class="system-status-list">
+
+                <div>
+
+                  <span>
+                    Mini App
+                  </span>
+
+                  <strong>
+                    <i></i>
+                    Online
+                  </strong>
+
+                </div>
+
+                <div>
+
+                  <span>
+                    Database
+                  </span>
+
+                  <strong>
+                    <i></i>
+                    Connected
+                  </strong>
+
+                </div>
+
+                <div>
+
+                  <span>
+                    Admin API
+                  </span>
+
+                  <strong>
+                    <i></i>
+                    Online
+                  </strong>
+
+                </div>
+
+                <div>
+
+                  <span>
+                    Telegram
+                  </span>
+
+                  <strong id="telegramStatus">
+                    Awaiting connection
+                  </strong>
+
+                </div>
+
+              </div>
+
+            </section>
+
+          </div>
+
+
+          <section class="panel">
+
+            <div class="panel-heading">
+
+              <div>
+
+                <span class="eyebrow">
+                  LIVE FEED
+                </span>
+
+                <h2>
+                  Recent activity
+                </h2>
+
+              </div>
+
+            </div>
+
+            <div
+              id="recentActivity"
+              class="activity-feed"
+            ></div>
+
+          </section>
+
+        </section>
+
+
+        <!-- =================================================
+             PLAYERS
+        ================================================== -->
+
+        <section
+          id="sectionPlayers"
+          class="admin-section"
+        >
+
+          <div class="section-toolbar">
+
+            <div class="search-box">
+
+              <span>
+                ⌕
+              </span>
+
+              <input
+                id="playerSearch"
+                type="search"
+                placeholder="Search Telegram username, name or Telegram ID"
+              >
+
+            </div>
+
+            <button
+              id="playerSearchButton"
+              class="primary-button"
+              type="button"
+            >
+              Search
+            </button>
+
+          </div>
+
+
+          <section class="panel">
+
+            <div class="table-wrap">
+
+              <table class="data-table">
+
+                <thead>
+
+                  <tr>
+                    <th>Player</th>
+                    <th>Telegram ID</th>
+                    <th>Points</th>
+                    <th>Tier</th>
+                    <th>Streak</th>
+                    <th>Referrals</th>
+                    <th>Last Active</th>
+                    <th>Status</th>
+                  </tr>
+
+                </thead>
+
+                <tbody id="playersTable"></tbody>
+
+              </table>
+
+            </div>
+
+            <div
+              id="playersEmpty"
+              class="empty-state hidden"
+            >
+
+              <div class="empty-symbol">
+                ◎
+              </div>
+
+              <strong>
+                No players found
+              </strong>
+
+              <p>
+                Telegram users will appear here automatically after they start the Rico Club bot.
+              </p>
+
+            </div>
+
+          </section>
+
+        </section>
+
+
+        <!-- =================================================
+             MISSIONS
+        ================================================== -->
+
+        <section
+          id="sectionMissions"
+          class="admin-section"
+        >
+
+          <div class="section-action-row">
+
+            <div>
+
+              <span class="eyebrow">
+                ENGAGEMENT
+              </span>
+
+              <h2>
+                Mission management
+              </h2>
+
+            </div>
+
+            <button
+              id="createMissionButton"
+              class="primary-button"
+              type="button"
+            >
+              + Create Mission
+            </button>
+
+          </div>
+
+
+          <div
+            id="missionsGrid"
+            class="management-grid"
+          ></div>
+
+          <div
+            id="missionsEmpty"
+            class="empty-state panel hidden"
+          >
+
+            <div class="empty-symbol">
+              ◇
+            </div>
+
+            <strong>
+              No missions yet
+            </strong>
+
+            <p>
+              Create your first Rico Club mission to begin rewarding player activity.
+            </p>
+
+          </div>
+
+        </section>
+
+
+        <!-- =================================================
+             REWARDS
+        ================================================== -->
+
+        <section
+          id="sectionRewards"
+          class="admin-section"
+        >
+
+          <div class="section-action-row">
+
+            <div>
+
+              <span class="eyebrow">
+                REWARDS
+              </span>
+
+              <h2>
+                Reward catalogue
+              </h2>
+
+            </div>
+
+            <button
+              id="createRewardButton"
+              class="primary-button"
+              type="button"
+            >
+              + Create Reward
+            </button>
+
+          </div>
+
+
+          <div
+            id="rewardsGrid"
+            class="management-grid"
+          ></div>
+
+          <div
+            id="rewardsEmpty"
+            class="empty-state panel hidden"
+          >
+
+            <div class="empty-symbol">
+              ◆
+            </div>
+
+            <strong>
+              No rewards created
+            </strong>
+
+            <p>
+              Add rewards that players can unlock using their Rico Points.
+            </p>
+
+          </div>
+
+        </section>
+
+
+        <!-- =================================================
+             DROPS
+        ================================================== -->
+
+        <section
+          id="sectionDrops"
+          class="admin-section"
+        >
+
+          <div class="section-action-row">
+
+            <div>
+
+              <span class="eyebrow">
+                LIMITED EVENTS
+              </span>
+
+              <h2>
+                Reward drops
+              </h2>
+
+            </div>
+
+            <button
+              id="createDropButton"
+              class="primary-button"
+              type="button"
+            >
+              + Create Drop
+            </button>
+
+          </div>
+
+
+          <div
+            id="dropsGrid"
+            class="management-grid"
+          ></div>
+
+          <div
+            id="dropsEmpty"
+            class="empty-state panel hidden"
+          >
+
+            <div class="empty-symbol">
+              ✦
+            </div>
+
+            <strong>
+              No reward drops
+            </strong>
+
+            <p>
+              Schedule a limited reward drop when you are ready to launch one.
+            </p>
+
+          </div>
+
+        </section>
+
+
+        <!-- =================================================
+             REFERRALS
+        ================================================== -->
+
+        <section
+          id="sectionReferrals"
+          class="admin-section"
+        >
+
+          <div class="section-action-row">
+
+            <div>
+
+              <span class="eyebrow">
+                COMMUNITY GROWTH
+              </span>
+
+              <h2>
+                Referral activity
+              </h2>
+
+            </div>
+
+          </div>
+
+
+          <div class="stats-grid compact">
+
+            <article class="stat-card">
+
+              <div class="stat-icon">
+                ↗
+              </div>
+
+              <div>
+
+                <span>
+                  Total Referrals
+                </span>
+
+                <strong id="refTotal">
+                  0
+                </strong>
+
+              </div>
+
+            </article>
+
+
+            <article class="stat-card">
+
+              <div class="stat-icon">
+                ✓
+              </div>
+
+              <div>
+
+                <span>
+                  Qualified
+                </span>
+
+                <strong id="refQualified">
+                  0
+                </strong>
+
+              </div>
+
+            </article>
+
+
+            <article class="stat-card">
+
+              <div class="stat-icon">
+                ◷
+              </div>
+
+              <div>
+
+                <span>
+                  Pending
+                </span>
+
+                <strong id="refPending">
+                  0
+                </strong>
+
+              </div>
+
+            </article>
+
+          </div>
+
+
+          <section class="panel">
+
+            <div
+              id="referralsContent"
+              class="empty-state"
+            >
+
+              <div class="empty-symbol">
+                ↗
+              </div>
+
+              <strong>
+                Referral activity will appear here
+              </strong>
+
+              <p>
+                Records are created automatically from each player's unique Telegram referral link.
+              </p>
+
+            </div>
+
+          </section>
+
+        </section>
+
+
+        <!-- =================================================
+             LEADERBOARD
+        ================================================== -->
+
+        <section
+          id="sectionLeaderboard"
+          class="admin-section"
+        >
+
+          <div class="section-action-row">
+
+            <div>
+
+              <span class="eyebrow">
+                COMMUNITY RANKING
+              </span>
+
+              <h2>
+                Leaderboard
+              </h2>
+
+            </div>
+
+          </div>
+
+
+          <section class="panel">
+
+            <div class="table-wrap">
+
+              <table class="data-table">
+
+                <thead>
+
+                  <tr>
+                    <th>Rank</th>
+                    <th>Player</th>
+                    <th>Tier</th>
+                    <th>Points</th>
+                    <th>Streak</th>
+                  </tr>
+
+                </thead>
+
+                <tbody id="leaderboardTable"></tbody>
+
+              </table>
+
+            </div>
+
+            <div
+              id="leaderboardEmpty"
+              class="empty-state hidden"
+            >
+
+              <div class="empty-symbol">
+                ♛
+              </div>
+
+              <strong>
+                Leaderboard is empty
+              </strong>
+
+              <p>
+                Ranking positions will appear after real players begin earning Rico Points.
+              </p>
+
+            </div>
+
+          </section>
+
+        </section>
+
+
+        <!-- =================================================
+             MESSAGES
+        ================================================== -->
+
+        <section
+          id="sectionMessages"
+          class="admin-section"
+        >
+
+          <div class="message-layout">
+
+            <section class="panel">
+
+              <div class="panel-heading">
+
+                <div>
+
+                  <span class="eyebrow">
+                    TELEGRAM
+                  </span>
+
+                  <h2>
+                    Player messaging
+                  </h2>
+
+                </div>
+
+              </div>
+
+              <p class="panel-description">
+                Search for a player from the Players page and open their profile to send an individual Telegram message.
+              </p>
+
+              <button
+                id="openPlayersFromMessages"
+                class="primary-button"
+                type="button"
+              >
+                Open Players
+              </button>
+
+            </section>
+
+
+            <section class="panel">
+
+              <div class="panel-heading">
+
+                <div>
+
+                  <span class="eyebrow">
+                    DELIVERY
+                  </span>
+
+                  <h2>
+                    Message tracking
+                  </h2>
+
+                </div>
+
+              </div>
+
+              <div class="info-list">
+
+                <div>
+                  <span>Message sent</span>
+                  <strong>Recorded</strong>
+                </div>
+
+                <div>
+                  <span>Telegram message ID</span>
+                  <strong>Recorded</strong>
+                </div>
+
+                <div>
+                  <span>CTA button</span>
+                  <strong>Supported</strong>
+                </div>
+
+                <div>
+                  <span>Open/read status</span>
+                  <strong>Not provided by Telegram</strong>
+                </div>
+
+              </div>
+
+            </section>
+
+          </div>
+
+        </section>
+
+
+        <!-- =================================================
+             APPEARANCE
+        ================================================== -->
+
+        <section
+          id="sectionAppearance"
+          class="admin-section"
+        >
+
+          <div class="section-action-row">
+
+            <div>
+
+              <span class="eyebrow">
+                MINI APP
+              </span>
+
+              <h2>
+                Appearance
+              </h2>
+
+            </div>
+
+          </div>
+
+
+          <section class="panel">
+
+            <div class="appearance-layout">
+
+              <div>
+
+                <label class="field">
+
+                  <span>
+                    Application Name
+                  </span>
+
+                  <input
+                    id="appearanceAppName"
+                    type="text"
+                    value="Rico Club"
+                    disabled
+                  >
+
+                </label>
+
+
+                <label class="field">
+
+                  <span>
+                    Primary Colour
+                  </span>
+
+                  <div class="colour-preview-row">
+
+                    <div
+                      class="colour-preview pink"
+                    ></div>
+
+                    <input
+                      type="text"
+                      value="#FA59A9"
+                      disabled
+                    >
+
+                  </div>
+
+                </label>
+
+
+                <label class="field">
+
+                  <span>
+                    Secondary Colour
+                  </span>
+
+                  <div class="colour-preview-row">
+
+                    <div
+                      class="colour-preview blue"
+                    ></div>
+
+                    <input
+                      type="text"
+                      value="#64D6FA"
+                      disabled
+                    >
+
+                  </div>
+
+                </label>
+
+              </div>
+
+
+              <div class="appearance-preview">
+
+                <div class="preview-phone">
+
+                  <div class="preview-phone-head">
+                    RICO CLUB
+                  </div>
+
+                  <div class="preview-balance">
+
+                    <small>
+                      RICO POINTS
+                    </small>
+
+                    <strong>
+                      ◆ 0
+                    </strong>
+
+                    <span>
+                      ROOKIE
+                    </span>
+
+                  </div>
+
+                  <div class="preview-button">
+                    CHECK IN
+                  </div>
+
+                </div>
+
+              </div>
+
+            </div>
+
+            <div class="info-banner">
+              Appearance controls are connected to the existing Rico Club design system. Editable branding controls will be activated after the Telegram connection is completed.
+            </div>
+
+          </section>
+
+        </section>
+
+
+        <!-- =================================================
+             SETTINGS
+        ================================================== -->
+
+        <section
+          id="sectionSettings"
+          class="admin-section"
+        >
+
+          <div class="settings-grid">
+
+            <section class="panel">
+
+              <div class="panel-heading">
+
+                <div>
+
+                  <span class="eyebrow">
+                    POINTS
+                  </span>
+
+                  <h2>
+                    Check-in rules
+                  </h2>
+
+                </div>
+
+              </div>
+
+              <div class="setting-row">
+
+                <div>
+                  <strong>
+                    Daily Check-in
+                  </strong>
+
+                  <span>
+                    Points awarded each day
+                  </span>
+                </div>
+
+                <b>
+                  +20
+                </b>
+
+              </div>
+
+
+              <div class="setting-row">
+
+                <div>
+                  <strong>
+                    7-Day Streak
+                  </strong>
+
+                  <span>
+                    Milestone reward
+                  </span>
+                </div>
+
+                <b>
+                  +50
+                </b>
+
+              </div>
+
+
+              <div class="setting-row">
+
+                <div>
+                  <strong>
+                    14-Day Streak
+                  </strong>
+
+                  <span>
+                    Milestone reward
+                  </span>
+                </div>
+
+                <b>
+                  +150
+                </b>
+
+              </div>
+
+
+              <div class="setting-row">
+
+                <div>
+                  <strong>
+                    28-Day Streak
+                  </strong>
+
+                  <span>
+                    Milestone reward
+                  </span>
+                </div>
+
+                <b>
+                  +300
+                </b>
+
+              </div>
+
+            </section>
+
+
+            <section class="panel">
+
+              <div class="panel-heading">
+
+                <div>
+
+                  <span class="eyebrow">
+                    REFERRALS
+                  </span>
+
+                  <h2>
+                    Referral rules
+                  </h2>
+
+                </div>
+
+              </div>
+
+              <div class="setting-row">
+
+                <div>
+                  <strong>
+                    Qualified Referral
+                  </strong>
+
+                  <span>
+                    Default reward
+                  </span>
+                </div>
+
+                <b>
+                  +100
+                </b>
+
+              </div>
+
+
+              <div class="setting-row">
+
+                <div>
+                  <strong>
+                    Player Identity
+                  </strong>
+
+                  <span>
+                    Primary account identifier
+                  </span>
+                </div>
+
+                <b>
+                  Telegram ID
+                </b>
+
+              </div>
+
+
+              <div class="setting-row">
+
+                <div>
+                  <strong>
+                    Referral Link
+                  </strong>
+
+                  <span>
+                    Unique per player
+                  </span>
+                </div>
+
+                <b>
+                  Enabled
+                </b>
+
+              </div>
+
+            </section>
+
+          </div>
+
+        </section>
+
+      </div>
+
+    </main>
+
+  </div>
+
+
+  <!-- =====================================================
+       PLAYER DRAWER
+  ====================================================== -->
+
+  <div
+    id="drawerOverlay"
+    class="drawer-overlay hidden"
+  ></div>
+
+  <aside
+    id="playerDrawer"
+    class="player-drawer"
+  >
+
+    <div class="drawer-head">
+
+      <button
+        id="closePlayerDrawer"
+        class="icon-button"
+        type="button"
+      >
+        ×
+      </button>
+
+    </div>
+
+    <div id="playerDrawerContent"></div>
+
+  </aside>
+
+
+  <!-- =====================================================
+       GENERIC MODAL
+  ====================================================== -->
+
+  <div
+    id="modalOverlay"
+    class="modal-overlay hidden"
+  >
+
+    <div
+      id="modalCard"
+      class="modal-card"
+    >
+
+      <div class="modal-head">
+
+        <div>
+
+          <span
+            id="modalEyebrow"
+            class="eyebrow"
+          >
+            RICO CLUB
+          </span>
+
+          <h2 id="modalTitle">
+            Create
+          </h2>
+
+        </div>
+
+        <button
+          id="closeModal"
+          class="icon-button"
+          type="button"
+        >
+          ×
+        </button>
+
+      </div>
+
+      <div id="modalBody"></div>
+
+    </div>
+
+  </div>
+
+
+  <!-- =====================================================
+       TOAST
+  ====================================================== -->
+
+  <div
+    id="adminToast"
+    class="admin-toast"
+  ></div>
+
+
+  <script src="/admin.js"></script>
+
+</body>
+</html>
