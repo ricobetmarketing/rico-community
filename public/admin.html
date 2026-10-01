@@ -10,10 +10,10 @@
 
   <meta
     name="theme-color"
-    content="#0d0c1b"
+    content="#090a0f"
   >
 
-  <title>Rico Club Admin</title>
+  <title>Rico Community OS</title>
 
   <link
     rel="stylesheet"
@@ -23,21 +23,14 @@
 
 <body>
 
-  <!-- =====================================================
-       LOGIN
-  ====================================================== -->
+  <!-- LOGIN -->
 
   <section
     id="loginScreen"
     class="login-screen"
   >
 
-    <div class="login-background">
-      <div class="login-orb login-orb-one"></div>
-      <div class="login-orb login-orb-two"></div>
-    </div>
-
-    <div class="login-card">
+    <div class="login-panel">
 
       <div class="login-brand">
 
@@ -46,33 +39,36 @@
         </div>
 
         <div>
+
           <strong>
-            RICO CLUB
+            RICO
           </strong>
 
           <span>
-            Administration
+            Community OS
           </span>
+
         </div>
 
       </div>
 
-      <div class="login-heading">
+
+      <div class="login-copy">
 
         <span class="eyebrow">
-          SECURE ACCESS
+          ADMINISTRATION
         </span>
 
         <h1>
-          Welcome back
+          Sign in
         </h1>
 
         <p>
-          Sign in to manage Rico Club players, missions,
-          rewards and Telegram activity.
+          Manage players, missions, rewards and Telegram activity.
         </p>
 
       </div>
+
 
       <form id="loginForm">
 
@@ -84,13 +80,13 @@
 
           <input
             id="loginEmail"
+            required
             type="email"
             autocomplete="username"
-            required
-            placeholder="admin@ricobet.com"
           >
 
         </label>
+
 
         <label class="field">
 
@@ -102,16 +98,14 @@
 
             <input
               id="loginPassword"
+              required
               type="password"
               autocomplete="current-password"
-              required
-              placeholder="Enter password"
             >
 
             <button
               id="togglePassword"
               type="button"
-              class="password-toggle"
             >
               Show
             </button>
@@ -119,6 +113,7 @@
           </div>
 
         </label>
+
 
         <button
           id="loginButton"
@@ -128,9 +123,10 @@
           Sign in
         </button>
 
+
         <div
           id="loginError"
-          class="form-error hidden"
+          class="login-error hidden"
         ></div>
 
       </form>
@@ -140,13 +136,11 @@
   </section>
 
 
-  <!-- =====================================================
-       ADMIN APPLICATION
-  ====================================================== -->
+  <!-- APP -->
 
   <div
     id="adminApp"
-    class="admin-shell hidden"
+    class="admin-app hidden"
   >
 
     <!-- SIDEBAR -->
@@ -156,33 +150,29 @@
       class="sidebar"
     >
 
-      <div class="sidebar-head">
+      <div class="sidebar-brand">
 
-        <div class="sidebar-brand">
+        <div class="brand-mark small">
+          R
+        </div>
 
-          <div class="brand-mark small">
-            R
-          </div>
+        <div>
 
-          <div class="sidebar-brand-text">
+          <strong>
+            RICO
+          </strong>
 
-            <strong>
-              RICO CLUB
-            </strong>
-
-            <span>
-              Administration
-            </span>
-
-          </div>
+          <span>
+            Community OS
+          </span>
 
         </div>
 
+
         <button
           id="sidebarClose"
-          class="icon-button sidebar-close"
+          class="sidebar-close"
           type="button"
-          aria-label="Close navigation"
         >
           ×
         </button>
@@ -192,199 +182,157 @@
 
       <nav class="sidebar-nav">
 
+        <span class="nav-heading">
+          OVERVIEW
+        </span>
+
+
         <button
-          class="nav-link active"
+          class="nav-item active"
           data-section="dashboard"
           type="button"
         >
-          <span class="nav-icon">
-            ◫
-          </span>
-
-          <span>
-            Dashboard
-          </span>
+          <b>▣</b>
+          Dashboard
         </button>
 
 
+        <span class="nav-heading">
+          COMMUNITY
+        </span>
+
+
         <button
-          class="nav-link"
+          class="nav-item"
           data-section="players"
           type="button"
         >
-          <span class="nav-icon">
-            ◎
-          </span>
-
-          <span>
-            Players
-          </span>
-        </button>
-
-
-        <div class="nav-label">
-          ENGAGEMENT
-        </div>
-
-
-        <button
-          class="nav-link"
-          data-section="missions"
-          type="button"
-        >
-          <span class="nav-icon">
-            ◇
-          </span>
-
-          <span>
-            Missions
-          </span>
+          <b>◎</b>
+          Players
         </button>
 
 
         <button
-          class="nav-link"
-          data-section="rewards"
-          type="button"
-        >
-          <span class="nav-icon">
-            ◆
-          </span>
-
-          <span>
-            Rewards
-          </span>
-        </button>
-
-
-        <button
-          class="nav-link"
-          data-section="drops"
-          type="button"
-        >
-          <span class="nav-icon">
-            ✦
-          </span>
-
-          <span>
-            Reward Drops
-          </span>
-        </button>
-
-
-        <button
-          class="nav-link"
+          class="nav-item"
           data-section="referrals"
           type="button"
         >
-          <span class="nav-icon">
-            ↗
-          </span>
-
-          <span>
-            Referrals
-          </span>
+          <b>↗</b>
+          Referrals
         </button>
 
 
         <button
-          class="nav-link"
+          class="nav-item"
           data-section="leaderboard"
           type="button"
         >
-          <span class="nav-icon">
-            ♛
-          </span>
-
-          <span>
-            Leaderboard
-          </span>
+          <b>♛</b>
+          Leaderboard
         </button>
 
 
-        <div class="nav-label">
-          COMMUNICATION
-        </div>
+        <span class="nav-heading">
+          ENGAGEMENT
+        </span>
 
 
         <button
-          class="nav-link"
+          class="nav-item"
+          data-section="missions"
+          type="button"
+        >
+          <b>◇</b>
+          Missions
+        </button>
+
+
+        <button
+          class="nav-item"
+          data-section="drops"
+          type="button"
+        >
+          <b>✦</b>
+          Drops
+        </button>
+
+
+        <button
+          class="nav-item"
+          data-section="rewards"
+          type="button"
+        >
+          <b>◆</b>
+          Rewards
+        </button>
+
+
+        <span class="nav-heading">
+          COMMUNICATION
+        </span>
+
+
+        <button
+          class="nav-item"
           data-section="messages"
           type="button"
         >
-          <span class="nav-icon">
-            ✉
-          </span>
-
-          <span>
-            Messages
-          </span>
+          <b>✉</b>
+          Messages
         </button>
 
 
-        <div class="nav-label">
-          CONFIGURATION
-        </div>
+        <span class="nav-heading">
+          PLATFORM
+        </span>
 
 
         <button
-          class="nav-link"
+          class="nav-item"
           data-section="appearance"
           type="button"
         >
-          <span class="nav-icon">
-            ◐
-          </span>
-
-          <span>
-            Appearance
-          </span>
+          <b>◐</b>
+          Appearance
         </button>
 
 
         <button
-          class="nav-link"
+          class="nav-item"
           data-section="settings"
           type="button"
         >
-          <span class="nav-icon">
-            ⚙
-          </span>
-
-          <span>
-            Settings
-          </span>
+          <b>⚙</b>
+          Settings
         </button>
 
       </nav>
 
 
-      <div class="sidebar-footer">
+      <div class="sidebar-user">
 
-        <div class="admin-identity">
+        <div class="admin-avatar">
+          A
+        </div>
 
-          <div class="admin-avatar">
-            A
-          </div>
+        <div>
 
-          <div>
-            <strong id="sidebarAdminEmail">
-              Administrator
-            </strong>
+          <strong id="sidebarAdminEmail">
+            Administrator
+          </strong>
 
-            <span>
-              Active session
-            </span>
-          </div>
+          <span>
+            Active session
+          </span>
 
         </div>
 
         <button
           id="logoutButton"
-          class="logout-button"
           type="button"
+          title="Sign out"
         >
-          Sign out
+          ↗
         </button>
 
       </div>
@@ -392,7 +340,7 @@
     </aside>
 
 
-    <!-- MAIN -->
+    <!-- CONTENT -->
 
     <main class="admin-main">
 
@@ -402,9 +350,8 @@
 
           <button
             id="sidebarToggle"
-            class="icon-button sidebar-toggle"
+            class="mobile-menu-button"
             type="button"
-            aria-label="Open navigation"
           >
             ☰
           </button>
@@ -426,18 +373,19 @@
 
         </div>
 
-        <div class="topbar-actions">
+
+        <div class="topbar-right">
 
           <button
             id="refreshCurrent"
-            class="ghost-button"
+            class="secondary-button"
             type="button"
           >
             ↻ Refresh
           </button>
 
-          <div class="status-pill">
-            <span></span>
+          <div class="live-indicator">
+            <i></i>
             Live
           </div>
 
@@ -446,192 +394,157 @@
       </header>
 
 
-      <div class="content-area">
+      <div class="admin-content">
 
-        <!-- =================================================
-             DASHBOARD
-        ================================================== -->
+        <!-- DASHBOARD -->
 
         <section
           id="sectionDashboard"
           class="admin-section active"
         >
 
-          <div class="stats-grid">
+          <div class="dashboard-welcome">
 
-            <article class="stat-card">
+            <div>
 
-              <div class="stat-icon">
-                ◎
-              </div>
+              <span class="eyebrow">
+                RICO COMMUNITY
+              </span>
 
-              <div>
+              <h2>
+                Community overview
+              </h2>
 
-                <span>
-                  Total Players
-                </span>
+              <p id="dashboardDate"></p>
 
-                <strong id="statPlayers">
-                  0
-                </strong>
+            </div>
 
-                <small>
-                  Telegram accounts
-                </small>
-
-              </div>
-
-            </article>
+          </div>
 
 
-            <article class="stat-card">
+          <div class="kpi-grid">
 
-              <div class="stat-icon">
-                ●
-              </div>
+            <article class="kpi-card">
 
-              <div>
+              <span>
+                TOTAL PLAYERS
+              </span>
 
-                <span>
-                  Active Today
-                </span>
+              <strong id="statPlayers">
+                0
+              </strong>
 
-                <strong id="statActive">
-                  0
-                </strong>
-
-                <small>
-                  Players active today
-                </small>
-
-              </div>
+              <small>
+                Telegram accounts
+              </small>
 
             </article>
 
 
-            <article class="stat-card">
+            <article class="kpi-card">
 
-              <div class="stat-icon">
-                ✓
-              </div>
+              <span>
+                ACTIVE TODAY
+              </span>
 
-              <div>
+              <strong id="statActive">
+                0
+              </strong>
 
-                <span>
-                  Check-ins Today
-                </span>
-
-                <strong id="statCheckins">
-                  0
-                </strong>
-
-                <small>
-                  Completed today
-                </small>
-
-              </div>
+              <small>
+                Active community members
+              </small>
 
             </article>
 
 
-            <article class="stat-card">
+            <article class="kpi-card">
 
-              <div class="stat-icon">
-                ◆
-              </div>
+              <span>
+                CHECK-INS TODAY
+              </span>
 
-              <div>
+              <strong id="statCheckins">
+                0
+              </strong>
 
-                <span>
-                  Points Issued
-                </span>
-
-                <strong id="statPoints">
-                  0
-                </strong>
-
-                <small>
-                  Lifetime issued
-                </small>
-
-              </div>
+              <small>
+                Daily check-ins completed
+              </small>
 
             </article>
 
 
-            <article class="stat-card">
+            <article class="kpi-card">
 
-              <div class="stat-icon">
-                ↗
-              </div>
+              <span>
+                POINTS ISSUED
+              </span>
 
-              <div>
+              <strong id="statPoints">
+                0
+              </strong>
 
-                <span>
-                  Referrals
-                </span>
-
-                <strong id="statReferrals">
-                  0
-                </strong>
-
-                <small>
-                  Recorded referrals
-                </small>
-
-              </div>
+              <small>
+                Lifetime issued
+              </small>
 
             </article>
 
 
-            <article class="stat-card">
+            <article class="kpi-card">
 
-              <div class="stat-icon">
-                ✦
-              </div>
+              <span>
+                REFERRALS
+              </span>
 
-              <div>
+              <strong id="statReferrals">
+                0
+              </strong>
 
-                <span>
-                  Rewards Claimed
-                </span>
+              <small>
+                Recorded referrals
+              </small>
 
-                <strong id="statClaims">
-                  0
-                </strong>
+            </article>
 
-                <small>
-                  Completed claims
-                </small>
 
-              </div>
+            <article class="kpi-card">
+
+              <span>
+                REWARDS CLAIMED
+              </span>
+
+              <strong id="statClaims">
+                0
+              </strong>
+
+              <small>
+                Completed claims
+              </small>
 
             </article>
 
           </div>
 
 
-          <div class="dashboard-grid">
+          <div class="dashboard-layout">
 
-            <section class="panel large-panel">
+            <section class="panel">
 
-              <div class="panel-heading">
+              <div class="panel-head">
 
                 <div>
 
                   <span class="eyebrow">
-                    ACTIVITY
+                    COMMUNITY ACTIVITY
                   </span>
 
-                  <h2>
-                    Player activity
-                  </h2>
+                  <h3>
+                    Last 7 days
+                  </h3>
 
                 </div>
-
-                <span class="panel-meta">
-                  Last 7 days
-                </span>
 
               </div>
 
@@ -645,73 +558,42 @@
 
             <section class="panel">
 
-              <div class="panel-heading">
+              <div class="panel-head">
 
                 <div>
 
                   <span class="eyebrow">
-                    SYSTEM
+                    PLATFORM STATUS
                   </span>
 
-                  <h2>
-                    Community status
-                  </h2>
+                  <h3>
+                    Systems
+                  </h3>
 
                 </div>
 
               </div>
 
-              <div class="system-status-list">
+              <div class="status-list">
 
                 <div>
-
-                  <span>
-                    Mini App
-                  </span>
-
-                  <strong>
-                    <i></i>
-                    Online
-                  </strong>
-
+                  <span>Mini App</span>
+                  <strong><i></i> Online</strong>
                 </div>
 
                 <div>
-
-                  <span>
-                    Database
-                  </span>
-
-                  <strong>
-                    <i></i>
-                    Connected
-                  </strong>
-
+                  <span>D1 Database</span>
+                  <strong><i></i> Connected</strong>
                 </div>
 
                 <div>
-
-                  <span>
-                    Admin API
-                  </span>
-
-                  <strong>
-                    <i></i>
-                    Online
-                  </strong>
-
+                  <span>Admin API</span>
+                  <strong><i></i> Online</strong>
                 </div>
 
                 <div>
-
-                  <span>
-                    Telegram
-                  </span>
-
-                  <strong id="telegramStatus">
-                    Awaiting connection
-                  </strong>
-
+                  <span>Telegram Bot</span>
+                  <strong><i></i> Connected</strong>
                 </div>
 
               </div>
@@ -723,7 +605,7 @@
 
           <section class="panel">
 
-            <div class="panel-heading">
+            <div class="panel-head">
 
               <div>
 
@@ -731,9 +613,9 @@
                   LIVE FEED
                 </span>
 
-                <h2>
+                <h3>
                   Recent activity
-                </h2>
+                </h3>
 
               </div>
 
@@ -749,9 +631,7 @@
         </section>
 
 
-        <!-- =================================================
-             PLAYERS
-        ================================================== -->
+        <!-- PLAYERS -->
 
         <section
           id="sectionPlayers"
@@ -760,7 +640,7 @@
 
           <div class="section-toolbar">
 
-            <div class="search-box">
+            <div class="search-bar">
 
               <span>
                 ⌕
@@ -769,10 +649,11 @@
               <input
                 id="playerSearch"
                 type="search"
-                placeholder="Search Telegram username, name or Telegram ID"
+                placeholder="Search username, Telegram ID or player name"
               >
 
             </div>
+
 
             <button
               id="playerSearchButton"
@@ -787,21 +668,21 @@
 
           <section class="panel">
 
-            <div class="table-wrap">
+            <div class="table-scroll">
 
-              <table class="data-table">
+              <table>
 
                 <thead>
 
                   <tr>
-                    <th>Player</th>
-                    <th>Telegram ID</th>
-                    <th>Points</th>
-                    <th>Tier</th>
-                    <th>Streak</th>
-                    <th>Referrals</th>
-                    <th>Last Active</th>
-                    <th>Status</th>
+                    <th>PLAYER</th>
+                    <th>TELEGRAM ID</th>
+                    <th>POINTS</th>
+                    <th>TIER</th>
+                    <th>STREAK</th>
+                    <th>REFERRALS</th>
+                    <th>LAST ACTIVE</th>
+                    <th>STATUS</th>
                   </tr>
 
                 </thead>
@@ -812,21 +693,18 @@
 
             </div>
 
+
             <div
               id="playersEmpty"
               class="empty-state hidden"
             >
-
-              <div class="empty-symbol">
-                ◎
-              </div>
 
               <strong>
                 No players found
               </strong>
 
               <p>
-                Telegram users will appear here automatically after they start the Rico Club bot.
+                Players appear here automatically after they start the Rico Club bot.
               </p>
 
             </div>
@@ -836,16 +714,14 @@
         </section>
 
 
-        <!-- =================================================
-             MISSIONS
-        ================================================== -->
+        <!-- MISSIONS -->
 
         <section
           id="sectionMissions"
           class="admin-section"
         >
 
-          <div class="section-action-row">
+          <div class="section-title-row">
 
             <div>
 
@@ -854,17 +730,18 @@
               </span>
 
               <h2>
-                Mission management
+                Missions
               </h2>
 
             </div>
+
 
             <button
               id="createMissionButton"
               class="primary-button"
               type="button"
             >
-              + Create Mission
+              + New Mission
             </button>
 
           </div>
@@ -875,57 +752,47 @@
             class="management-grid"
           ></div>
 
+
           <div
             id="missionsEmpty"
             class="empty-state panel hidden"
           >
-
-            <div class="empty-symbol">
-              ◇
-            </div>
-
             <strong>
-              No missions yet
+              No missions created
             </strong>
-
-            <p>
-              Create your first Rico Club mission to begin rewarding player activity.
-            </p>
-
           </div>
 
         </section>
 
 
-        <!-- =================================================
-             REWARDS
-        ================================================== -->
+        <!-- REWARDS -->
 
         <section
           id="sectionRewards"
           class="admin-section"
         >
 
-          <div class="section-action-row">
+          <div class="section-title-row">
 
             <div>
 
               <span class="eyebrow">
-                REWARDS
+                LOYALTY
               </span>
 
               <h2>
-                Reward catalogue
+                Rewards
               </h2>
 
             </div>
+
 
             <button
               id="createRewardButton"
               class="primary-button"
               type="button"
             >
-              + Create Reward
+              + New Reward
             </button>
 
           </div>
@@ -936,38 +803,27 @@
             class="management-grid"
           ></div>
 
+
           <div
             id="rewardsEmpty"
             class="empty-state panel hidden"
           >
-
-            <div class="empty-symbol">
-              ◆
-            </div>
-
             <strong>
               No rewards created
             </strong>
-
-            <p>
-              Add rewards that players can unlock using their Rico Points.
-            </p>
-
           </div>
 
         </section>
 
 
-        <!-- =================================================
-             DROPS
-        ================================================== -->
+        <!-- DROPS -->
 
         <section
           id="sectionDrops"
           class="admin-section"
         >
 
-          <div class="section-action-row">
+          <div class="section-title-row">
 
             <div>
 
@@ -976,17 +832,18 @@
               </span>
 
               <h2>
-                Reward drops
+                Reward Drops
               </h2>
 
             </div>
+
 
             <button
               id="createDropButton"
               class="primary-button"
               type="button"
             >
-              + Create Drop
+              + New Drop
             </button>
 
           </div>
@@ -997,38 +854,27 @@
             class="management-grid"
           ></div>
 
+
           <div
             id="dropsEmpty"
             class="empty-state panel hidden"
           >
-
-            <div class="empty-symbol">
-              ✦
-            </div>
-
             <strong>
               No reward drops
             </strong>
-
-            <p>
-              Schedule a limited reward drop when you are ready to launch one.
-            </p>
-
           </div>
 
         </section>
 
 
-        <!-- =================================================
-             REFERRALS
-        ================================================== -->
+        <!-- REFERRALS -->
 
         <section
           id="sectionReferrals"
           class="admin-section"
         >
 
-          <div class="section-action-row">
+          <div class="section-title-row">
 
             <div>
 
@@ -1037,7 +883,7 @@
               </span>
 
               <h2>
-                Referral activity
+                Referrals
               </h2>
 
             </div>
@@ -1045,68 +891,21 @@
           </div>
 
 
-          <div class="stats-grid compact">
+          <div class="kpi-grid small">
 
-            <article class="stat-card">
-
-              <div class="stat-icon">
-                ↗
-              </div>
-
-              <div>
-
-                <span>
-                  Total Referrals
-                </span>
-
-                <strong id="refTotal">
-                  0
-                </strong>
-
-              </div>
-
+            <article class="kpi-card">
+              <span>TOTAL</span>
+              <strong id="refTotal">0</strong>
             </article>
 
-
-            <article class="stat-card">
-
-              <div class="stat-icon">
-                ✓
-              </div>
-
-              <div>
-
-                <span>
-                  Qualified
-                </span>
-
-                <strong id="refQualified">
-                  0
-                </strong>
-
-              </div>
-
+            <article class="kpi-card">
+              <span>QUALIFIED</span>
+              <strong id="refQualified">0</strong>
             </article>
 
-
-            <article class="stat-card">
-
-              <div class="stat-icon">
-                ◷
-              </div>
-
-              <div>
-
-                <span>
-                  Pending
-                </span>
-
-                <strong id="refPending">
-                  0
-                </strong>
-
-              </div>
-
+            <article class="kpi-card">
+              <span>PENDING</span>
+              <strong id="refPending">0</strong>
             </article>
 
           </div>
@@ -1114,21 +913,14 @@
 
           <section class="panel">
 
-            <div
-              id="referralsContent"
-              class="empty-state"
-            >
-
-              <div class="empty-symbol">
-                ↗
-              </div>
+            <div class="empty-state">
 
               <strong>
-                Referral activity will appear here
+                Referral records appear automatically
               </strong>
 
               <p>
-                Records are created automatically from each player's unique Telegram referral link.
+                Each player's unique Telegram referral link is tracked here.
               </p>
 
             </div>
@@ -1138,21 +930,19 @@
         </section>
 
 
-        <!-- =================================================
-             LEADERBOARD
-        ================================================== -->
+        <!-- LEADERBOARD -->
 
         <section
           id="sectionLeaderboard"
           class="admin-section"
         >
 
-          <div class="section-action-row">
+          <div class="section-title-row">
 
             <div>
 
               <span class="eyebrow">
-                COMMUNITY RANKING
+                RANKING
               </span>
 
               <h2>
@@ -1166,20 +956,18 @@
 
           <section class="panel">
 
-            <div class="table-wrap">
+            <div class="table-scroll">
 
-              <table class="data-table">
+              <table>
 
                 <thead>
-
                   <tr>
-                    <th>Rank</th>
-                    <th>Player</th>
-                    <th>Tier</th>
-                    <th>Points</th>
-                    <th>Streak</th>
+                    <th>RANK</th>
+                    <th>PLAYER</th>
+                    <th>TIER</th>
+                    <th>POINTS</th>
+                    <th>STREAK</th>
                   </tr>
-
                 </thead>
 
                 <tbody id="leaderboardTable"></tbody>
@@ -1188,23 +976,14 @@
 
             </div>
 
+
             <div
               id="leaderboardEmpty"
               class="empty-state hidden"
             >
-
-              <div class="empty-symbol">
-                ♛
-              </div>
-
               <strong>
                 Leaderboard is empty
               </strong>
-
-              <p>
-                Ranking positions will appear after real players begin earning Rico Points.
-              </p>
-
             </div>
 
           </section>
@@ -1212,69 +991,74 @@
         </section>
 
 
-        <!-- =================================================
-             MESSAGES
-        ================================================== -->
+        <!-- MESSAGES -->
 
         <section
           id="sectionMessages"
           class="admin-section"
         >
 
-          <div class="message-layout">
+          <div class="section-title-row">
+
+            <div>
+
+              <span class="eyebrow">
+                TELEGRAM
+              </span>
+
+              <h2>
+                Messages
+              </h2>
+
+            </div>
+
+          </div>
+
+
+          <div class="message-grid">
 
             <section class="panel">
 
-              <div class="panel-heading">
+              <div class="panel-head">
 
                 <div>
-
-                  <span class="eyebrow">
-                    TELEGRAM
-                  </span>
-
-                  <h2>
-                    Player messaging
-                  </h2>
-
+                  <span class="eyebrow">PLAYER MESSAGE</span>
+                  <h3>Direct messaging</h3>
                 </div>
 
               </div>
 
-              <p class="panel-description">
-                Search for a player from the Players page and open their profile to send an individual Telegram message.
-              </p>
+              <div class="panel-body">
 
-              <button
-                id="openPlayersFromMessages"
-                class="primary-button"
-                type="button"
-              >
-                Open Players
-              </button>
+                <p class="panel-copy">
+                  Open a player profile to send an individual Telegram message.
+                </p>
+
+                <button
+                  id="openPlayersFromMessages"
+                  class="primary-button"
+                  type="button"
+                >
+                  Open Players
+                </button>
+
+              </div>
 
             </section>
 
 
             <section class="panel">
 
-              <div class="panel-heading">
+              <div class="panel-head">
 
                 <div>
-
-                  <span class="eyebrow">
-                    DELIVERY
-                  </span>
-
-                  <h2>
-                    Message tracking
-                  </h2>
-
+                  <span class="eyebrow">TRACKING</span>
+                  <h3>Message data</h3>
                 </div>
 
               </div>
 
-              <div class="info-list">
+              <div class="status-list">
 
                 <div>
                   <span>Message sent</span>
@@ -1282,18 +1066,13 @@
                 </div>
 
                 <div>
-                  <span>Telegram message ID</span>
+                  <span>Telegram ID</span>
                   <strong>Recorded</strong>
                 </div>
 
                 <div>
                   <span>CTA button</span>
                   <strong>Supported</strong>
-                </div>
-
-                <div>
-                  <span>Open/read status</span>
-                  <strong>Not provided by Telegram</strong>
                 </div>
 
               </div>
@@ -1305,16 +1084,14 @@
         </section>
 
 
-        <!-- =================================================
-             APPEARANCE
-        ================================================== -->
+        <!-- APPEARANCE -->
 
         <section
           id="sectionAppearance"
           class="admin-section"
         >
 
-          <div class="section-action-row">
+          <div class="section-title-row">
 
             <div>
 
@@ -1335,38 +1112,25 @@
 
             <div class="appearance-layout">
 
-              <div>
+              <div class="appearance-fields">
 
                 <label class="field">
-
-                  <span>
-                    Application Name
-                  </span>
-
+                  <span>Application Name</span>
                   <input
-                    id="appearanceAppName"
-                    type="text"
                     value="Rico Club"
                     disabled
                   >
-
                 </label>
 
 
                 <label class="field">
+                  <span>Primary Accent</span>
 
-                  <span>
-                    Primary Colour
-                  </span>
+                  <div class="colour-row">
 
-                  <div class="colour-preview-row">
-
-                    <div
-                      class="colour-preview pink"
-                    ></div>
+                    <i class="colour pink"></i>
 
                     <input
-                      type="text"
                       value="#FA59A9"
                       disabled
                     >
@@ -1377,19 +1141,13 @@
 
 
                 <label class="field">
+                  <span>Secondary Accent</span>
 
-                  <span>
-                    Secondary Colour
-                  </span>
+                  <div class="colour-row">
 
-                  <div class="colour-preview-row">
-
-                    <div
-                      class="colour-preview blue"
-                    ></div>
+                    <i class="colour blue"></i>
 
                     <input
-                      type="text"
                       value="#64D6FA"
                       disabled
                     >
@@ -1401,33 +1159,23 @@
               </div>
 
 
-              <div class="appearance-preview">
+              <div class="mini-preview">
 
-                <div class="preview-phone">
+                <div class="preview-card">
 
-                  <div class="preview-phone-head">
-                    RICO CLUB
-                  </div>
+                  <span>
+                    RICO POINTS
+                  </span>
 
-                  <div class="preview-balance">
+                  <strong>
+                    ◆ 20
+                  </strong>
 
-                    <small>
-                      RICO POINTS
-                    </small>
+                  <div></div>
 
-                    <strong>
-                      ◆ 0
-                    </strong>
-
-                    <span>
-                      ROOKIE
-                    </span>
-
-                  </div>
-
-                  <div class="preview-button">
+                  <button>
                     CHECK IN
-                  </div>
+                  </button>
 
                 </div>
 
@@ -1435,18 +1183,12 @@
 
             </div>
 
-            <div class="info-banner">
-              Appearance controls are connected to the existing Rico Club design system. Editable branding controls will be activated after the Telegram connection is completed.
-            </div>
-
           </section>
 
         </section>
 
 
-        <!-- =================================================
-             SETTINGS
-        ================================================== -->
+        <!-- SETTINGS -->
 
         <section
           id="sectionSettings"
@@ -1457,94 +1199,36 @@
 
             <section class="panel">
 
-              <div class="panel-heading">
+              <div class="panel-head">
 
                 <div>
-
-                  <span class="eyebrow">
-                    POINTS
-                  </span>
-
-                  <h2>
-                    Check-in rules
-                  </h2>
-
+                  <span class="eyebrow">POINTS</span>
+                  <h3>Check-in rules</h3>
                 </div>
 
               </div>
 
-              <div class="setting-row">
+              <div class="setting-list">
 
                 <div>
-                  <strong>
-                    Daily Check-in
-                  </strong>
-
-                  <span>
-                    Points awarded each day
-                  </span>
+                  <span>Daily check-in</span>
+                  <strong>+20</strong>
                 </div>
-
-                <b>
-                  +20
-                </b>
-
-              </div>
-
-
-              <div class="setting-row">
 
                 <div>
-                  <strong>
-                    7-Day Streak
-                  </strong>
-
-                  <span>
-                    Milestone reward
-                  </span>
+                  <span>7-day streak</span>
+                  <strong>+50</strong>
                 </div>
-
-                <b>
-                  +50
-                </b>
-
-              </div>
-
-
-              <div class="setting-row">
 
                 <div>
-                  <strong>
-                    14-Day Streak
-                  </strong>
-
-                  <span>
-                    Milestone reward
-                  </span>
+                  <span>14-day streak</span>
+                  <strong>+150</strong>
                 </div>
-
-                <b>
-                  +150
-                </b>
-
-              </div>
-
-
-              <div class="setting-row">
 
                 <div>
-                  <strong>
-                    28-Day Streak
-                  </strong>
-
-                  <span>
-                    Milestone reward
-                  </span>
+                  <span>28-day streak</span>
+                  <strong>+300</strong>
                 </div>
-
-                <b>
-                  +300
-                </b>
 
               </div>
 
@@ -1553,75 +1237,26 @@
 
             <section class="panel">
 
-              <div class="panel-heading">
+              <div class="panel-head">
 
                 <div>
-
-                  <span class="eyebrow">
-                    REFERRALS
-                  </span>
-
-                  <h2>
-                    Referral rules
-                  </h2>
-
+                  <span class="eyebrow">REFERRALS</span>
+                  <h3>Referral rules</h3>
                 </div>
 
               </div>
 
-              <div class="setting-row">
+              <div class="setting-list">
 
                 <div>
-                  <strong>
-                    Qualified Referral
-                  </strong>
-
-                  <span>
-                    Default reward
-                  </span>
+                  <span>Qualified referral</span>
+                  <strong>+100</strong>
                 </div>
-
-                <b>
-                  +100
-                </b>
-
-              </div>
-
-
-              <div class="setting-row">
 
                 <div>
-                  <strong>
-                    Player Identity
-                  </strong>
-
-                  <span>
-                    Primary account identifier
-                  </span>
+                  <span>Identity</span>
+                  <strong>Telegram ID</strong>
                 </div>
-
-                <b>
-                  Telegram ID
-                </b>
-
-              </div>
-
-
-              <div class="setting-row">
-
-                <div>
-                  <strong>
-                    Referral Link
-                  </strong>
-
-                  <span>
-                    Unique per player
-                  </span>
-                </div>
-
-                <b>
-                  Enabled
-                </b>
 
               </div>
 
@@ -1638,25 +1273,27 @@
   </div>
 
 
-  <!-- =====================================================
-       PLAYER DRAWER
-  ====================================================== -->
+  <!-- PLAYER DRAWER -->
 
   <div
     id="drawerOverlay"
     class="drawer-overlay hidden"
   ></div>
 
+
   <aside
     id="playerDrawer"
     class="player-drawer"
   >
 
-    <div class="drawer-head">
+    <div class="drawer-top">
+
+      <span class="eyebrow">
+        PLAYER PROFILE
+      </span>
 
       <button
         id="closePlayerDrawer"
-        class="icon-button"
         type="button"
       >
         ×
@@ -1669,19 +1306,14 @@
   </aside>
 
 
-  <!-- =====================================================
-       GENERIC MODAL
-  ====================================================== -->
+  <!-- MODAL -->
 
   <div
     id="modalOverlay"
     class="modal-overlay hidden"
   >
 
-    <div
-      id="modalCard"
-      class="modal-card"
-    >
+    <div class="modal-card">
 
       <div class="modal-head">
 
@@ -1691,7 +1323,7 @@
             id="modalEyebrow"
             class="eyebrow"
           >
-            RICO CLUB
+            RICO
           </span>
 
           <h2 id="modalTitle">
@@ -1702,7 +1334,6 @@
 
         <button
           id="closeModal"
-          class="icon-button"
           type="button"
         >
           ×
@@ -1710,16 +1341,13 @@
 
       </div>
 
+
       <div id="modalBody"></div>
 
     </div>
 
   </div>
 
-
-  <!-- =====================================================
-       TOAST
-  ====================================================== -->
 
   <div
     id="adminToast"
