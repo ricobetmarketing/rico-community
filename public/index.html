@@ -5,53 +5,2677 @@
 
   <meta
     name="viewport"
-    content="width=device-width,initial-scale=1,viewport-fit=cover"
+    content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no"
   >
 
   <meta
     name="theme-color"
-    content="#090a10"
+    content="#09090c"
   >
 
   <title>Rico Club</title>
 
-  <link
-    rel="stylesheet"
-    href="/styles.css"
-  >
-
   <script src="https://telegram.org/js/telegram-web-app.js?63"></script>
+
+  <style>
+    /* =========================================================
+       ROOT
+    ========================================================= */
+
+    :root {
+      --bg: #09090c;
+      --bg-soft: #0d0d12;
+
+      --surface: #111116;
+      --surface-2: #15151b;
+      --surface-3: #1b1b22;
+
+      --line: rgba(255,255,255,.075);
+      --line-strong: rgba(255,255,255,.13);
+
+      --text: #f5f5f7;
+      --muted: #9999a3;
+      --muted-2: #656570;
+
+      --pink: #ed58ad;
+      --blue: #72c8ea;
+      --violet: #a59add;
+
+      --green: #59d99e;
+      --gold: #f0c976;
+      --red: #ff777f;
+
+      --brand:
+        linear-gradient(
+          135deg,
+          var(--pink) 0%,
+          var(--violet) 47%,
+          var(--blue) 100%
+        );
+
+      --shadow:
+        0 28px 80px rgba(0,0,0,.35);
+
+      --safe-bottom:
+        env(safe-area-inset-bottom);
+
+      --safe-top:
+        env(safe-area-inset-top);
+    }
+
+
+    * {
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+
+    html {
+      min-height: 100%;
+      background: var(--bg);
+    }
+
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+
+      color: var(--text);
+
+      background:
+        radial-gradient(
+          circle at 0% -10%,
+          rgba(237,88,173,.10),
+          transparent 28rem
+        ),
+        radial-gradient(
+          circle at 100% 2%,
+          rgba(114,200,234,.07),
+          transparent 30rem
+        ),
+        var(--bg);
+
+      font-family:
+        Inter,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+
+      -webkit-font-smoothing: antialiased;
+
+      overflow-x: hidden;
+    }
+
+
+    button,
+    input,
+    textarea {
+      font: inherit;
+    }
+
+
+    button {
+      cursor: pointer;
+    }
+
+
+    img {
+      display: block;
+    }
+
+
+    .hidden {
+      display: none !important;
+    }
+
+
+    /* =========================================================
+       AMBIENT BACKGROUND
+    ========================================================= */
+
+    .ambient {
+      position: fixed;
+      inset: 0;
+
+      overflow: hidden;
+      pointer-events: none;
+
+      z-index: -1;
+    }
+
+
+    .ambient-orb {
+      position: absolute;
+
+      width: 280px;
+      height: 280px;
+
+      border-radius: 50%;
+
+      filter: blur(80px);
+
+      opacity: .11;
+
+      animation:
+        ambientFloat 12s ease-in-out infinite alternate;
+    }
+
+
+    .ambient-orb.one {
+      left: -140px;
+      top: 170px;
+
+      background: var(--pink);
+    }
+
+
+    .ambient-orb.two {
+      right: -150px;
+      top: 40px;
+
+      background: var(--blue);
+
+      animation-delay: -5s;
+    }
+
+
+    .ambient-orb.three {
+      left: 30%;
+      bottom: -220px;
+
+      background: var(--violet);
+
+      animation-delay: -8s;
+    }
+
+
+    @keyframes ambientFloat {
+      from {
+        transform:
+          translate3d(0,0,0)
+          scale(1);
+      }
+
+      to {
+        transform:
+          translate3d(30px,-24px,0)
+          scale(1.12);
+      }
+    }
+
+
+    /* =========================================================
+       LOADING
+    ========================================================= */
+
+    .loader {
+      position: fixed;
+      inset: 0;
+
+      z-index: 1000;
+
+      display: grid;
+      place-items: center;
+
+      background: var(--bg);
+
+      transition:
+        opacity .4s ease,
+        visibility .4s ease;
+    }
+
+
+    .loader.hide {
+      opacity: 0;
+      visibility: hidden;
+    }
+
+
+    .loader-inner {
+      text-align: center;
+    }
+
+
+    .loader-logo {
+      width: 86px;
+      height: 86px;
+
+      margin: 0 auto;
+
+      object-fit: contain;
+
+      animation:
+        logoPulse 1.8s ease-in-out infinite;
+    }
+
+
+    .loader-title {
+      margin-top: 18px;
+
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: .22em;
+    }
+
+
+    .loader-sub {
+      margin-top: 7px;
+
+      color: var(--muted);
+
+      font-size: 9px;
+    }
+
+
+    .loader-track {
+      width: 140px;
+      height: 3px;
+
+      margin:
+        22px auto 0;
+
+      overflow: hidden;
+
+      border-radius: 99px;
+
+      background:
+        rgba(255,255,255,.06);
+    }
+
+
+    .loader-track::before {
+      content: "";
+
+      display: block;
+
+      width: 45%;
+      height: 100%;
+
+      border-radius: inherit;
+
+      background: var(--brand);
+
+      animation:
+        loaderSlide 1.1s ease-in-out infinite;
+    }
+
+
+    @keyframes logoPulse {
+      50% {
+        transform: scale(1.05);
+      }
+    }
+
+
+    @keyframes loaderSlide {
+      from {
+        transform: translateX(-120%);
+      }
+
+      to {
+        transform: translateX(340%);
+      }
+    }
+
+
+    /* =========================================================
+       TELEGRAM REQUIRED
+    ========================================================= */
+
+    .telegram-required {
+      min-height: 100vh;
+
+      display: grid;
+      place-items: center;
+
+      padding: 25px;
+    }
+
+
+    .telegram-required-card {
+      width:
+        min(
+          100%,
+          420px
+        );
+
+      padding: 34px;
+
+      text-align: center;
+
+      border:
+        1px solid var(--line);
+
+      border-radius: 30px;
+
+      background:
+        linear-gradient(
+          145deg,
+          rgba(255,255,255,.035),
+          rgba(255,255,255,.012)
+        );
+
+      box-shadow: var(--shadow);
+    }
+
+
+    .telegram-required-card img {
+      width: 82px;
+
+      margin:
+        0 auto 22px;
+    }
+
+
+    .telegram-required-card h1 {
+      margin: 0;
+
+      font-size: 28px;
+      letter-spacing: -.04em;
+    }
+
+
+    .telegram-required-card p {
+      margin:
+        12px 0 0;
+
+      color: var(--muted);
+
+      font-size: 11px;
+      line-height: 1.65;
+    }
+
+
+    /* =========================================================
+       APP
+    ========================================================= */
+
+    .app {
+      width:
+        min(
+          100%,
+          680px
+        );
+
+      margin: 0 auto;
+
+      padding:
+        0 17px
+        calc(
+          105px +
+          var(--safe-bottom)
+        );
+    }
+
+
+    /* =========================================================
+       HEADER
+    ========================================================= */
+
+    .topbar {
+      position: sticky;
+
+      top: 0;
+
+      z-index: 100;
+
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      gap: 15px;
+
+      min-height: 72px;
+
+      padding:
+        calc(
+          12px +
+          var(--safe-top)
+        )
+        1px
+        10px;
+
+      background:
+        linear-gradient(
+          180deg,
+          rgba(9,9,12,.96) 68%,
+          rgba(9,9,12,0)
+        );
+
+      backdrop-filter:
+        blur(22px);
+    }
+
+
+    .brand {
+      display: flex;
+      align-items: center;
+
+      gap: 11px;
+    }
+
+
+    .brand-logo {
+      width: 38px;
+      height: 38px;
+
+      object-fit: contain;
+
+      filter:
+        drop-shadow(
+          0 9px 22px
+          rgba(114,200,234,.14)
+        );
+    }
+
+
+    .brand-copy strong {
+      display: block;
+
+      font-size: 12px;
+      letter-spacing: .15em;
+    }
+
+
+    .brand-copy span {
+      display: block;
+
+      margin-top: 3px;
+
+      color: var(--muted);
+
+      font-size: 8px;
+    }
+
+
+    .profile-trigger {
+      position: relative;
+
+      width: 43px;
+      height: 43px;
+
+      padding: 2px;
+
+      border: 0;
+      border-radius: 15px;
+
+      background: var(--brand);
+    }
+
+
+    .profile-trigger img,
+    .profile-trigger .avatar-fallback {
+      width: 100%;
+      height: 100%;
+
+      object-fit: cover;
+
+      border:
+        2px solid var(--bg);
+
+      border-radius: 13px;
+    }
+
+
+    .avatar-fallback {
+      display: grid;
+      place-items: center;
+
+      color: white;
+
+      background: var(--surface-3);
+
+      font-size: 13px;
+      font-weight: 900;
+    }
+
+
+    .online-dot {
+      position: absolute;
+
+      right: -1px;
+      bottom: -1px;
+
+      width: 10px;
+      height: 10px;
+
+      border:
+        2px solid var(--bg);
+
+      border-radius: 50%;
+
+      background: var(--green);
+    }
+
+
+    /* =========================================================
+       PAGE
+    ========================================================= */
+
+    .page {
+      display: none;
+
+      animation:
+        pageEnter .35s cubic-bezier(.2,.75,.25,1);
+    }
+
+
+    .page.active {
+      display: block;
+    }
+
+
+    @keyframes pageEnter {
+      from {
+        opacity: 0;
+
+        transform:
+          translateY(10px)
+          scale(.995);
+      }
+
+      to {
+        opacity: 1;
+
+        transform:
+          translateY(0)
+          scale(1);
+      }
+    }
+
+
+    /* =========================================================
+       TYPOGRAPHY
+    ========================================================= */
+
+    .eyebrow {
+      color: var(--muted-2);
+
+      font-size: 8px;
+      font-weight: 900;
+      letter-spacing: .18em;
+    }
+
+
+    .section-title {
+      margin:
+        5px 0 0;
+
+      font-size: 20px;
+      letter-spacing: -.04em;
+    }
+
+
+    .section-head {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+
+      gap: 16px;
+
+      margin-bottom: 13px;
+    }
+
+
+    .section-link {
+      border: 0;
+
+      color: var(--blue);
+
+      background: transparent;
+
+      font-size: 9px;
+      font-weight: 800;
+    }
+
+
+    /* =========================================================
+       GREETING
+    ========================================================= */
+
+    .home-intro {
+      padding:
+        22px 2px 18px;
+    }
+
+
+    .home-intro-row {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+
+      gap: 20px;
+    }
+
+
+    .home-intro h1 {
+      margin:
+        5px 0 0;
+
+      font-size:
+        clamp(
+          29px,
+          8vw,
+          39px
+        );
+
+      line-height: .98;
+
+      letter-spacing: -.06em;
+    }
+
+
+    .home-intro h1 span {
+      color: var(--muted);
+    }
+
+
+    .streak-pill {
+      display: flex;
+      align-items: center;
+
+      gap: 7px;
+
+      padding:
+        9px 12px;
+
+      border:
+        1px solid
+        rgba(240,201,118,.14);
+
+      border-radius: 999px;
+
+      color: var(--gold);
+
+      background:
+        rgba(240,201,118,.04);
+
+      font-size: 10px;
+      font-weight: 800;
+    }
+
+
+    /* =========================================================
+       ANNOUNCEMENT
+    ========================================================= */
+
+    .announcement {
+      position: relative;
+
+      overflow: hidden;
+
+      margin-bottom: 17px;
+
+      padding:
+        13px 15px;
+
+      border:
+        1px solid var(--line);
+
+      border-radius: 16px;
+
+      color: #c6c6cf;
+
+      background:
+        rgba(255,255,255,.024);
+
+      font-size: 10px;
+      line-height: 1.5;
+    }
+
+
+    .announcement::before {
+      content: "";
+
+      position: absolute;
+
+      left: 0;
+      top: 0;
+      bottom: 0;
+
+      width: 2px;
+
+      background: var(--brand);
+    }
+
+
+    /* =========================================================
+       HERO WALLET
+    ========================================================= */
+
+    .wallet {
+      position: relative;
+
+      overflow: hidden;
+
+      padding: 25px;
+
+      border:
+        1px solid var(--line);
+
+      border-radius: 30px;
+
+      background:
+        linear-gradient(
+          145deg,
+          rgba(255,255,255,.045),
+          rgba(255,255,255,.012)
+        );
+
+      box-shadow:
+        0 30px 90px
+        rgba(0,0,0,.30);
+
+      transform-style: preserve-3d;
+
+      transition:
+        transform .25s ease,
+        border-color .25s ease;
+    }
+
+
+    .wallet:active {
+      transform: scale(.992);
+    }
+
+
+    .wallet-glow {
+      position: absolute;
+
+      width: 260px;
+      height: 260px;
+
+      right: -120px;
+      top: -130px;
+
+      border-radius: 50%;
+
+      background:
+        radial-gradient(
+          circle,
+          rgba(114,200,234,.16),
+          transparent 67%
+        );
+
+      filter: blur(5px);
+
+      pointer-events: none;
+    }
+
+
+    .wallet-glow.two {
+      left: -150px;
+      right: auto;
+
+      top: auto;
+      bottom: -160px;
+
+      background:
+        radial-gradient(
+          circle,
+          rgba(237,88,173,.12),
+          transparent 67%
+        );
+    }
+
+
+    .wallet-head {
+      position: relative;
+
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+
+      gap: 20px;
+    }
+
+
+    .wallet-label {
+      color: var(--muted);
+
+      font-size: 9px;
+      font-weight: 900;
+      letter-spacing: .17em;
+    }
+
+
+    .balance {
+      display: flex;
+      align-items: center;
+
+      gap: 10px;
+
+      margin-top: 10px;
+    }
+
+
+    .balance-mark {
+      width: 28px;
+      height: 28px;
+
+      display: grid;
+      place-items: center;
+
+      border-radius: 9px;
+
+      color: white;
+
+      background: var(--brand);
+
+      font-size: 11px;
+      font-weight: 900;
+
+      box-shadow:
+        0 11px 30px
+        rgba(114,200,234,.15);
+    }
+
+
+    .balance strong {
+      font-size:
+        clamp(
+          43px,
+          12vw,
+          62px
+        );
+
+      line-height: .95;
+
+      letter-spacing: -.07em;
+    }
+
+
+    .tier-pill {
+      display: inline-flex;
+      align-items: center;
+
+      min-height: 31px;
+
+      padding:
+        0 11px;
+
+      border:
+        1px solid
+        rgba(240,201,118,.15);
+
+      border-radius: 999px;
+
+      color: var(--gold);
+
+      background:
+        rgba(240,201,118,.04);
+
+      font-size: 8px;
+      font-weight: 900;
+      letter-spacing: .08em;
+    }
+
+
+    .progress-copy {
+      position: relative;
+
+      display: flex;
+      justify-content: space-between;
+
+      gap: 15px;
+
+      margin-top: 25px;
+
+      color: var(--muted);
+
+      font-size: 9px;
+    }
+
+
+    .progress-copy strong {
+      color: white;
+    }
+
+
+    .progress-track {
+      position: relative;
+
+      height: 6px;
+
+      margin-top: 10px;
+
+      overflow: hidden;
+
+      border-radius: 99px;
+
+      background:
+        rgba(255,255,255,.055);
+    }
+
+
+    .progress-track span {
+      display: block;
+
+      width: 0;
+      height: 100%;
+
+      border-radius: inherit;
+
+      background: var(--brand);
+
+      transition:
+        width .8s cubic-bezier(.2,.8,.2,1);
+    }
+
+
+    .wallet-stats {
+      position: relative;
+
+      display: grid;
+      grid-template-columns:
+        repeat(3,1fr);
+
+      gap: 12px;
+
+      margin-top: 22px;
+
+      padding-top: 18px;
+
+      border-top:
+        1px solid var(--line);
+    }
+
+
+    .wallet-stat span {
+      display: block;
+
+      color: var(--muted-2);
+
+      font-size: 7px;
+      font-weight: 900;
+      letter-spacing: .12em;
+    }
+
+
+    .wallet-stat strong {
+      display: block;
+
+      margin-top: 5px;
+
+      font-size: 13px;
+    }
+
+
+    /* =========================================================
+       QUICK ACTIONS
+    ========================================================= */
+
+    .quick-actions {
+      display: grid;
+      grid-template-columns:
+        repeat(4,1fr);
+
+      gap: 8px;
+
+      margin-top: 11px;
+    }
+
+
+    .quick-action {
+      padding:
+        13px 4px;
+
+      border:
+        1px solid var(--line);
+
+      border-radius: 16px;
+
+      color: var(--muted);
+
+      background:
+        rgba(255,255,255,.018);
+
+      text-align: center;
+
+      transition:
+        transform .18s ease,
+        background .18s ease,
+        border-color .18s ease;
+    }
+
+
+    .quick-action:active {
+      transform: scale(.95);
+
+      background:
+        rgba(255,255,255,.045);
+    }
+
+
+    .quick-action-icon {
+      width: 29px;
+      height: 29px;
+
+      display: grid;
+      place-items: center;
+
+      margin:
+        0 auto 7px;
+
+      border-radius: 10px;
+
+      color: white;
+
+      background:
+        rgba(255,255,255,.055);
+
+      font-size: 12px;
+    }
+
+
+    .quick-action small {
+      display: block;
+
+      font-size: 7px;
+      font-weight: 800;
+    }
+
+
+    /* =========================================================
+       SECTION
+    ========================================================= */
+
+    .home-section {
+      margin-top: 34px;
+    }
+
+
+    /* =========================================================
+       CHECK IN
+    ========================================================= */
+
+    .checkin {
+      position: relative;
+
+      overflow: hidden;
+
+      padding: 20px;
+
+      border:
+        1px solid var(--line);
+
+      border-radius: 22px;
+
+      background:
+        linear-gradient(
+          145deg,
+          rgba(255,255,255,.032),
+          rgba(255,255,255,.012)
+        );
+    }
+
+
+    .checkin-top {
+      display: flex;
+      align-items: center;
+
+      gap: 13px;
+    }
+
+
+    .checkin-symbol {
+      width: 43px;
+      height: 43px;
+
+      display: grid;
+      place-items: center;
+
+      flex: 0 0 auto;
+
+      border-radius: 14px;
+
+      color: var(--green);
+
+      background:
+        rgba(89,217,158,.06);
+
+      border:
+        1px solid
+        rgba(89,217,158,.14);
+
+      font-weight: 900;
+    }
+
+
+    .checkin-copy {
+      flex: 1;
+    }
+
+
+    .checkin-copy strong {
+      display: block;
+
+      font-size: 13px;
+    }
+
+
+    .checkin-copy p {
+      margin:
+        4px 0 0;
+
+      color: var(--muted);
+
+      font-size: 9px;
+      line-height: 1.45;
+    }
+
+
+    .checkin-reward {
+      display: block;
+
+      margin-top: 6px;
+
+      color: var(--blue);
+
+      font-size: 9px;
+      font-weight: 800;
+    }
+
+
+    .checkin-button {
+      width: 100%;
+
+      min-height: 47px;
+
+      margin-top: 17px;
+
+      border: 0;
+
+      border-radius: 14px;
+
+      color: white;
+
+      background: var(--brand);
+
+      font-size: 9px;
+      font-weight: 900;
+      letter-spacing: .07em;
+
+      box-shadow:
+        0 13px 35px
+        rgba(111,143,225,.14);
+
+      transition:
+        transform .18s ease,
+        filter .18s ease;
+    }
+
+
+    .checkin-button:active {
+      transform: scale(.985);
+
+      filter: brightness(.94);
+    }
+
+
+    .checkin-button:disabled {
+      color: var(--muted);
+
+      background:
+        rgba(255,255,255,.05);
+
+      box-shadow: none;
+    }
+
+
+    .week {
+      display: grid;
+      grid-template-columns:
+        repeat(7,1fr);
+
+      gap: 6px;
+
+      margin-top: 11px;
+    }
+
+
+    .day {
+      padding:
+        8px 2px;
+
+      text-align: center;
+
+      border:
+        1px solid var(--line);
+
+      border-radius: 12px;
+
+      background:
+        rgba(255,255,255,.013);
+    }
+
+
+    .day span {
+      display: block;
+
+      color: var(--muted-2);
+
+      font-size: 7px;
+      font-weight: 900;
+    }
+
+
+    .day i {
+      display: block;
+
+      width: 5px;
+      height: 5px;
+
+      margin:
+        6px auto 0;
+
+      border-radius: 50%;
+
+      background:
+        rgba(255,255,255,.11);
+    }
+
+
+    .day.today i {
+      background: var(--blue);
+
+      box-shadow:
+        0 0 0 4px
+        rgba(114,200,234,.07);
+    }
+
+
+    /* =========================================================
+       MISSION
+    ========================================================= */
+
+    .mission-list {
+      display: grid;
+
+      gap: 9px;
+    }
+
+
+    .mission {
+      display: grid;
+      grid-template-columns:
+        44px 1fr auto;
+
+      align-items: center;
+
+      gap: 13px;
+
+      padding: 15px;
+
+      border:
+        1px solid var(--line);
+
+      border-radius: 18px;
+
+      background:
+        rgba(255,255,255,.018);
+
+      transition:
+        transform .2s ease,
+        border-color .2s ease;
+    }
+
+
+    .mission:active {
+      transform: scale(.99);
+
+      border-color:
+        var(--line-strong);
+    }
+
+
+    .mission-icon {
+      width: 44px;
+      height: 44px;
+
+      display: grid;
+      place-items: center;
+
+      border-radius: 14px;
+
+      color: var(--pink);
+
+      background:
+        rgba(237,88,173,.055);
+
+      font-size: 13px;
+    }
+
+
+    .mission h3 {
+      margin: 0;
+
+      font-size: 12px;
+    }
+
+
+    .mission p {
+      margin:
+        4px 0 0;
+
+      color: var(--muted);
+
+      font-size: 8px;
+      line-height: 1.4;
+    }
+
+
+    .mission-reward {
+      color: var(--blue);
+
+      font-size: 9px;
+      font-weight: 900;
+
+      white-space: nowrap;
+    }
+
+
+    /* =========================================================
+       INVITE
+    ========================================================= */
+
+    .invite {
+      position: relative;
+
+      overflow: hidden;
+
+      margin-top: 34px;
+
+      padding: 25px;
+
+      border:
+        1px solid var(--line);
+
+      border-radius: 25px;
+
+      background:
+        radial-gradient(
+          circle at 100% 0,
+          rgba(114,200,234,.075),
+          transparent 42%
+        ),
+        rgba(255,255,255,.018);
+    }
+
+
+    .invite-mark {
+      width: 42px;
+      height: 42px;
+
+      display: grid;
+      place-items: center;
+
+      margin-bottom: 17px;
+
+      border-radius: 14px;
+
+      color: white;
+
+      background: var(--brand);
+
+      font-weight: 900;
+    }
+
+
+    .invite h2 {
+      margin:
+        7px 0 8px;
+
+      font-size: 23px;
+      letter-spacing: -.045em;
+    }
+
+
+    .invite p {
+      margin: 0;
+
+      color: var(--muted);
+
+      font-size: 10px;
+      line-height: 1.55;
+    }
+
+
+    .invite button {
+      width: 100%;
+
+      min-height: 45px;
+
+      margin-top: 19px;
+
+      border:
+        1px solid var(--line-strong);
+
+      border-radius: 14px;
+
+      color: white;
+
+      background:
+        rgba(255,255,255,.035);
+
+      font-size: 9px;
+      font-weight: 900;
+    }
+
+
+    /* =========================================================
+       GENERIC PAGE HEADER
+    ========================================================= */
+
+    .page-head {
+      padding:
+        31px 3px 21px;
+    }
+
+
+    .page-head h1 {
+      margin:
+        6px 0 0;
+
+      font-size: 33px;
+      letter-spacing: -.055em;
+    }
+
+
+    .page-head p {
+      max-width: 420px;
+
+      margin:
+        9px 0 0;
+
+      color: var(--muted);
+
+      font-size: 10px;
+      line-height: 1.55;
+    }
+
+
+    /* =========================================================
+       REWARDS
+    ========================================================= */
+
+    .reward-balance {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      gap: 15px;
+
+      margin-bottom: 14px;
+
+      padding: 16px;
+
+      border:
+        1px solid var(--line);
+
+      border-radius: 17px;
+
+      background:
+        rgba(255,255,255,.018);
+    }
+
+
+    .reward-balance span {
+      color: var(--muted-2);
+
+      font-size: 8px;
+      font-weight: 900;
+      letter-spacing: .12em;
+    }
+
+
+    .reward-balance strong {
+      font-size: 21px;
+    }
+
+
+    .reward-grid {
+      display: grid;
+      grid-template-columns:
+        repeat(2,minmax(0,1fr));
+
+      gap: 10px;
+    }
+
+
+    .reward {
+      overflow: hidden;
+
+      border:
+        1px solid var(--line);
+
+      border-radius: 21px;
+
+      background:
+        rgba(255,255,255,.018);
+
+      transition:
+        transform .22s ease;
+    }
+
+
+    .reward:active {
+      transform: scale(.985);
+    }
+
+
+    .reward-visual {
+      position: relative;
+
+      min-height: 130px;
+
+      display: grid;
+      place-items: center;
+
+      overflow: hidden;
+
+      background:
+        radial-gradient(
+          circle at 50% 20%,
+          rgba(114,200,234,.09),
+          transparent 55%
+        ),
+        #0d0d12;
+    }
+
+
+    .reward-visual img {
+      position: absolute;
+      inset: 0;
+
+      width: 100%;
+      height: 100%;
+
+      object-fit: cover;
+    }
+
+
+    .reward-symbol {
+      font-size: 37px;
+
+      color: var(--blue);
+    }
+
+
+    .reward-content {
+      padding: 14px;
+    }
+
+
+    .reward-content h3 {
+      margin: 0;
+
+      font-size: 12px;
+    }
+
+
+    .reward-content p {
+      min-height: 35px;
+
+      margin:
+        6px 0 0;
+
+      color: var(--muted);
+
+      font-size: 8px;
+      line-height: 1.45;
+    }
+
+
+    .reward-foot {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      gap: 8px;
+
+      margin-top: 13px;
+    }
+
+
+    .reward-cost {
+      color: var(--blue);
+
+      font-size: 10px;
+      font-weight: 900;
+    }
+
+
+    .reward-foot button {
+      min-height: 31px;
+
+      padding:
+        0 9px;
+
+      border:
+        1px solid var(--line);
+
+      border-radius: 9px;
+
+      color: white;
+
+      background:
+        rgba(255,255,255,.035);
+
+      font-size: 7px;
+      font-weight: 900;
+    }
+
+
+    .reward-foot button:disabled {
+      opacity: .35;
+    }
+
+
+    /* =========================================================
+       LEADERBOARD
+    ========================================================= */
+
+    .podium {
+      display: grid;
+      grid-template-columns:
+        repeat(3,minmax(0,1fr));
+
+      align-items: end;
+
+      gap: 8px;
+
+      margin-top: 8px;
+    }
+
+
+    .podium-card {
+      padding:
+        18px 8px;
+
+      text-align: center;
+
+      border:
+        1px solid var(--line);
+
+      border-radius: 19px;
+
+      background:
+        rgba(255,255,255,.018);
+    }
+
+
+    .podium-card.first {
+      padding-top: 26px;
+      padding-bottom: 26px;
+
+      border-color:
+        rgba(240,201,118,.16);
+
+      background:
+        radial-gradient(
+          circle at 50% 0,
+          rgba(240,201,118,.07),
+          transparent 50%
+        ),
+        rgba(255,255,255,.018);
+    }
+
+
+    .podium-avatar {
+      width: 48px;
+      height: 48px;
+
+      display: grid;
+      place-items: center;
+
+      margin:
+        8px auto 10px;
+
+      border-radius: 15px;
+
+      color: white;
+
+      background: var(--surface-3);
+
+      font-size: 11px;
+      font-weight: 900;
+    }
+
+
+    .podium-card.first
+    .podium-avatar {
+      background: var(--brand);
+    }
+
+
+    .podium-card span {
+      color: var(--muted-2);
+
+      font-size: 7px;
+      font-weight: 900;
+    }
+
+
+    .podium-card strong {
+      display: block;
+
+      margin-top: 6px;
+
+      overflow: hidden;
+
+      text-overflow: ellipsis;
+
+      white-space: nowrap;
+
+      font-size: 9px;
+    }
+
+
+    .podium-card b {
+      display: block;
+
+      margin-top: 7px;
+
+      font-size: 13px;
+    }
+
+
+    .rank-list {
+      margin-top: 12px;
+
+      overflow: hidden;
+
+      border:
+        1px solid var(--line);
+
+      border-radius: 18px;
+
+      background:
+        rgba(255,255,255,.012);
+    }
+
+
+    .rank-row {
+      display: grid;
+      grid-template-columns:
+        32px 1fr auto;
+
+      align-items: center;
+
+      gap: 10px;
+
+      min-height: 58px;
+
+      padding:
+        0 14px;
+
+      border-bottom:
+        1px solid var(--line);
+    }
+
+
+    .rank-row:last-child {
+      border-bottom: 0;
+    }
+
+
+    .rank-number {
+      color: var(--muted-2);
+
+      font-size: 8px;
+    }
+
+
+    .rank-player strong {
+      display: block;
+
+      font-size: 9px;
+    }
+
+
+    .rank-player small {
+      display: block;
+
+      margin-top: 3px;
+
+      color: var(--muted-2);
+
+      font-size: 7px;
+    }
+
+
+    .rank-points {
+      color: var(--blue);
+
+      font-size: 9px;
+      font-weight: 900;
+    }
+
+
+    /* =========================================================
+       PROFILE
+    ========================================================= */
+
+    .profile-hero {
+      padding:
+        30px 5px 20px;
+
+      text-align: center;
+    }
+
+
+    .profile-avatar-wrap {
+      position: relative;
+
+      width: 96px;
+      height: 96px;
+
+      margin:
+        0 auto 17px;
+
+      padding: 3px;
+
+      border-radius: 31px;
+
+      background: var(--brand);
+
+      box-shadow:
+        0 18px 55px
+        rgba(114,200,234,.12);
+    }
+
+
+    .profile-avatar {
+      width: 100%;
+      height: 100%;
+
+      object-fit: cover;
+
+      border:
+        3px solid var(--bg);
+
+      border-radius: 28px;
+
+      background: var(--surface-3);
+    }
+
+
+    .edit-avatar-button {
+      position: absolute;
+
+      right: -6px;
+      bottom: -6px;
+
+      width: 31px;
+      height: 31px;
+
+      display: grid;
+      place-items: center;
+
+      border:
+        2px solid var(--bg);
+
+      border-radius: 11px;
+
+      color: white;
+
+      background: var(--surface-3);
+
+      font-size: 11px;
+    }
+
+
+    .profile-hero h1 {
+      margin:
+        6px 0 4px;
+
+      font-size: 25px;
+      letter-spacing: -.04em;
+    }
+
+
+    .profile-hero p {
+      margin:
+        0 0 12px;
+
+      color: var(--muted);
+
+      font-size: 9px;
+    }
+
+
+    .profile-stats {
+      display: grid;
+      grid-template-columns:
+        repeat(3,1fr);
+
+      gap: 8px;
+    }
+
+
+    .profile-stat {
+      padding:
+        14px 7px;
+
+      text-align: center;
+
+      border:
+        1px solid var(--line);
+
+      border-radius: 15px;
+
+      background:
+        rgba(255,255,255,.015);
+    }
+
+
+    .profile-stat span {
+      display: block;
+
+      color: var(--muted-2);
+
+      font-size: 7px;
+      font-weight: 900;
+    }
+
+
+    .profile-stat strong {
+      display: block;
+
+      margin-top: 5px;
+
+      font-size: 14px;
+    }
+
+
+    .profile-menu {
+      margin-top: 15px;
+
+      overflow: hidden;
+
+      border:
+        1px solid var(--line);
+
+      border-radius: 19px;
+
+      background:
+        rgba(255,255,255,.012);
+    }
+
+
+    .profile-menu button {
+      width: 100%;
+
+      display: grid;
+      grid-template-columns:
+        38px 1fr auto;
+
+      align-items: center;
+
+      gap: 11px;
+
+      min-height: 65px;
+
+      padding:
+        0 14px;
+
+      text-align: left;
+
+      border: 0;
+      border-bottom:
+        1px solid var(--line);
+
+      color: white;
+
+      background: transparent;
+    }
+
+
+    .profile-menu button:last-child {
+      border-bottom: 0;
+    }
+
+
+    .profile-menu-icon {
+      width: 38px;
+      height: 38px;
+
+      display: grid;
+      place-items: center;
+
+      border-radius: 12px;
+
+      color: var(--blue);
+
+      background:
+        rgba(114,200,234,.045);
+    }
+
+
+    .profile-menu strong {
+      display: block;
+
+      font-size: 10px;
+    }
+
+
+    .profile-menu small {
+      display: block;
+
+      margin-top: 3px;
+
+      color: var(--muted);
+
+      font-size: 8px;
+    }
+
+
+    .profile-menu-arrow {
+      color: var(--muted-2);
+
+      font-size: 15px;
+    }
+
+
+    /* =========================================================
+       BOTTOM NAV
+    ========================================================= */
+
+    .nav {
+      position: fixed;
+
+      left: 50%;
+
+      bottom:
+        calc(
+          9px +
+          var(--safe-bottom)
+        );
+
+      z-index: 300;
+
+      width:
+        min(
+          calc(100% - 20px),
+          640px
+        );
+
+      transform:
+        translateX(-50%);
+
+      display: grid;
+      grid-template-columns:
+        repeat(5,1fr);
+
+      padding: 5px;
+
+      border:
+        1px solid var(--line);
+
+      border-radius: 21px;
+
+      background:
+        rgba(17,17,22,.91);
+
+      backdrop-filter:
+        blur(25px);
+
+      box-shadow:
+        0 20px 55px
+        rgba(0,0,0,.40);
+    }
+
+
+    .nav button {
+      min-height: 53px;
+
+      border: 0;
+      border-radius: 15px;
+
+      color: var(--muted);
+
+      background: transparent;
+
+      transition:
+        color .18s ease,
+        background .18s ease,
+        transform .18s ease;
+    }
+
+
+    .nav button:active {
+      transform: scale(.94);
+    }
+
+
+    .nav button.active {
+      color: white;
+
+      background:
+        linear-gradient(
+          145deg,
+          rgba(237,88,173,.065),
+          rgba(114,200,234,.045)
+        );
+    }
+
+
+    .nav-icon {
+      display: block;
+
+      font-size: 16px;
+    }
+
+
+    .nav button.active
+    .nav-icon {
+      color: var(--blue);
+    }
+
+
+    .nav small {
+      display: block;
+
+      margin-top: 3px;
+
+      font-size: 7px;
+      font-weight: 800;
+    }
+
+
+    /* =========================================================
+       AVATAR PICKER
+    ========================================================= */
+
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+
+      z-index: 1000;
+
+      display: grid;
+      align-items: end;
+
+      padding:
+        20px
+        14px
+        calc(
+          14px +
+          var(--safe-bottom)
+        );
+
+      background:
+        rgba(3,3,6,.72);
+
+      backdrop-filter:
+        blur(12px);
+
+      animation:
+        fadeIn .2s ease;
+    }
+
+
+    .sheet {
+      width:
+        min(
+          100%,
+          600px
+        );
+
+      margin: 0 auto;
+
+      overflow: hidden;
+
+      border:
+        1px solid var(--line-strong);
+
+      border-radius: 28px;
+
+      background:
+        #121217;
+
+      box-shadow: var(--shadow);
+
+      animation:
+        sheetUp .35s cubic-bezier(.2,.8,.2,1);
+    }
+
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+
+      to {
+        opacity: 1;
+      }
+    }
+
+
+    @keyframes sheetUp {
+      from {
+        transform:
+          translateY(50px);
+
+        opacity: 0;
+      }
+
+      to {
+        transform:
+          translateY(0);
+
+        opacity: 1;
+      }
+    }
+
+
+    .sheet-handle {
+      width: 38px;
+      height: 4px;
+
+      margin:
+        9px auto 0;
+
+      border-radius: 99px;
+
+      background:
+        rgba(255,255,255,.13);
+    }
+
+
+    .sheet-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      gap: 15px;
+
+      padding:
+        18px 18px 13px;
+    }
+
+
+    .sheet-head h2 {
+      margin:
+        5px 0 0;
+
+      font-size: 20px;
+      letter-spacing: -.04em;
+    }
+
+
+    .sheet-close {
+      width: 34px;
+      height: 34px;
+
+      border:
+        1px solid var(--line);
+
+      border-radius: 11px;
+
+      color: white;
+
+      background:
+        rgba(255,255,255,.025);
+
+      font-size: 18px;
+    }
+
+
+    .avatar-grid {
+      display: grid;
+      grid-template-columns:
+        repeat(5,1fr);
+
+      gap: 10px;
+
+      padding:
+        5px 18px 22px;
+    }
+
+
+    .avatar-option {
+      position: relative;
+
+      aspect-ratio: 1;
+
+      padding: 3px;
+
+      border:
+        1px solid transparent;
+
+      border-radius: 18px;
+
+      background:
+        rgba(255,255,255,.02);
+
+      transition:
+        transform .18s ease,
+        border-color .18s ease;
+    }
+
+
+    .avatar-option:active {
+      transform: scale(.93);
+    }
+
+
+    .avatar-option.selected {
+      border-color:
+        rgba(114,200,234,.55);
+
+      background:
+        rgba(114,200,234,.05);
+    }
+
+
+    .avatar-option img {
+      width: 100%;
+      height: 100%;
+
+      object-fit: cover;
+
+      border-radius: 14px;
+    }
+
+
+    .avatar-check {
+      position: absolute;
+
+      right: 1px;
+      bottom: 1px;
+
+      width: 18px;
+      height: 18px;
+
+      display: none;
+      place-items: center;
+
+      border:
+        2px solid #121217;
+
+      border-radius: 50%;
+
+      color: white;
+
+      background: var(--blue);
+
+      font-size: 8px;
+      font-weight: 900;
+    }
+
+
+    .avatar-option.selected
+    .avatar-check {
+      display: grid;
+    }
+
+
+    /* =========================================================
+       REWARD MODAL
+    ========================================================= */
+
+    .reward-success {
+      padding:
+        28px 22px 22px;
+
+      text-align: center;
+    }
+
+
+    .success-icon {
+      width: 75px;
+      height: 75px;
+
+      display: grid;
+      place-items: center;
+
+      margin:
+        0 auto 18px;
+
+      border-radius: 24px;
+
+      color: white;
+
+      background: var(--brand);
+
+      font-size: 25px;
+
+      animation:
+        successPulse 1.6s ease infinite;
+    }
+
+
+    @keyframes successPulse {
+      50% {
+        transform: scale(1.045);
+      }
+    }
+
+
+    .reward-success h2 {
+      margin:
+        8px 0 6px;
+
+      font-size: 24px;
+    }
+
+
+    .reward-success p {
+      margin: 0;
+
+      color: var(--muted);
+
+      font-size: 10px;
+      line-height: 1.5;
+    }
+
+
+    .success-button {
+      width: 100%;
+
+      min-height: 46px;
+
+      margin-top: 20px;
+
+      border: 0;
+
+      border-radius: 14px;
+
+      color: white;
+
+      background: var(--brand);
+
+      font-size: 9px;
+      font-weight: 900;
+    }
+
+
+    /* =========================================================
+       EMPTY
+    ========================================================= */
+
+    .empty {
+      padding: 26px;
+
+      text-align: center;
+
+      border:
+        1px dashed var(--line-strong);
+
+      border-radius: 18px;
+
+      color: var(--muted);
+
+      font-size: 9px;
+      line-height: 1.5;
+    }
+
+
+    .empty strong {
+      display: block;
+
+      margin-bottom: 6px;
+
+      color: white;
+
+      font-size: 11px;
+    }
+
+
+    /* =========================================================
+       TOAST
+    ========================================================= */
+
+    .toast {
+      position: fixed;
+
+      left: 50%;
+      bottom:
+        calc(
+          92px +
+          var(--safe-bottom)
+        );
+
+      z-index: 2000;
+
+      transform:
+        translate(-50%,14px);
+
+      max-width:
+        calc(100% - 35px);
+
+      padding:
+        10px 14px;
+
+      opacity: 0;
+
+      pointer-events: none;
+
+      border:
+        1px solid var(--line-strong);
+
+      border-radius: 999px;
+
+      color: white;
+
+      background:
+        rgba(22,22,28,.96);
+
+      font-size: 9px;
+      font-weight: 700;
+
+      box-shadow:
+        0 14px 40px
+        rgba(0,0,0,.4);
+
+      transition:
+        opacity .2s ease,
+        transform .2s ease;
+    }
+
+
+    .toast.show {
+      opacity: 1;
+
+      transform:
+        translate(-50%,0);
+    }
+
+
+    /* =========================================================
+       RESPONSIVE
+    ========================================================= */
+
+    @media (max-width: 390px) {
+
+      .app {
+        padding-left: 13px;
+        padding-right: 13px;
+      }
+
+
+      .wallet {
+        padding: 21px;
+      }
+
+
+      .quick-actions {
+        gap: 6px;
+      }
+
+
+      .reward-grid {
+        grid-template-columns: 1fr;
+      }
+
+
+      .avatar-grid {
+        grid-template-columns:
+          repeat(4,1fr);
+      }
+
+    }
+
+
+    @media (prefers-reduced-motion: reduce) {
+
+      *,
+      *::before,
+      *::after {
+        animation-duration:
+          .001ms !important;
+
+        animation-iteration-count:
+          1 !important;
+
+        transition-duration:
+          .001ms !important;
+      }
+
+    }
+  </style>
 </head>
+
 
 <body>
 
+  <div class="ambient">
+    <div class="ambient-orb one"></div>
+    <div class="ambient-orb two"></div>
+    <div class="ambient-orb three"></div>
+  </div>
+
+
   <!-- ======================================================
-       BOOT SCREEN
+       LOADING
   ======================================================= -->
 
   <div
-    id="appLoader"
-    class="app-loader"
+    id="loader"
+    class="loader"
   >
 
-    <div class="loader-logo">
-      R
-    </div>
+    <div class="loader-inner">
 
-    <div class="loader-copy">
+      <img
+        class="loader-logo"
+        src="/assets/logo.png"
+        alt="Rico"
+      >
 
-      <strong>
+      <div class="loader-title">
         RICO CLUB
-      </strong>
+      </div>
 
-      <span>
-        Loading your community
-      </span>
+      <div class="loader-sub">
+        Preparing your community
+      </div>
 
-    </div>
+      <div class="loader-track"></div>
 
-    <div class="loader-line">
-      <span></span>
     </div>
 
   </div>
@@ -68,21 +2692,18 @@
 
     <div class="telegram-required-card">
 
-      <div class="large-brand">
-        R
-      </div>
-
-      <span class="eyebrow">
-        RICO CLUB
-      </span>
+      <img
+        src="/assets/logo.png"
+        alt="Rico"
+      >
 
       <h1>
-        Open from Telegram
+        Open Rico Club from Telegram
       </h1>
 
       <p>
-        Rico Club uses your Telegram account to securely load your points,
-        missions, rewards and community activity.
+        Your Telegram account securely connects your Rico Points,
+        missions, rewards and community profile.
       </p>
 
     </div>
@@ -95,23 +2716,25 @@
   ======================================================= -->
 
   <main
-    id="playerApp"
-    class="player-app hidden"
+    id="app"
+    class="app hidden"
   >
 
-    <!-- TOP BAR -->
+    <!-- HEADER -->
 
-    <header class="app-header">
+    <header class="topbar">
 
-      <div class="app-brand">
+      <div class="brand">
 
-        <div class="app-brand-mark">
-          R
-        </div>
+        <img
+          src="/assets/logo.png"
+          class="brand-logo"
+          alt="Rico"
+        >
 
-        <div>
+        <div class="brand-copy">
 
-          <strong>
+          <strong id="brandName">
             RICO CLUB
           </strong>
 
@@ -125,12 +2748,27 @@
 
 
       <button
-        id="profileAvatar"
-        class="header-avatar"
+        id="profileTrigger"
+        class="profile-trigger"
         type="button"
-        aria-label="Open profile"
+        aria-label="Profile"
       >
-        R
+
+        <img
+          id="headerAvatar"
+          class="hidden"
+          alt=""
+        >
+
+        <div
+          id="headerAvatarFallback"
+          class="avatar-fallback"
+        >
+          R
+        </div>
+
+        <i class="online-dot"></i>
+
       </button>
 
     </header>
@@ -142,62 +2780,75 @@
 
     <section
       id="pageHome"
-      class="app-page active"
+      class="page active"
     >
 
-      <div class="home-greeting">
+      <div class="home-intro">
 
-        <div>
+        <div class="home-intro-row">
 
-          <span
-            id="greetingLabel"
-            class="eyebrow"
-          >
-            WELCOME BACK
-          </span>
+          <div>
 
-          <h1 id="welcomeName">
-            Rico Member
-          </h1>
+            <span
+              id="greetingLabel"
+              class="eyebrow"
+            >
+              WELCOME BACK
+            </span>
 
-        </div>
+            <h1>
+              <span>Hello,</span>
+              <br>
+              <b id="welcomeName">
+                Rico Member
+              </b>
+            </h1>
 
-        <div
-          id="streakPill"
-          class="streak-pill"
-        >
-          <span class="streak-fire">
+          </div>
+
+
+          <div class="streak-pill">
+
             🔥
-          </span>
 
-          <strong>
-            0
-          </strong>
+            <strong id="topStreak">
+              0
+            </strong>
+
+          </div>
+
         </div>
 
       </div>
 
 
-      <!-- BALANCE -->
+      <div
+        id="announcement"
+        class="announcement hidden"
+      ></div>
 
-      <section class="wallet-card">
 
-        <div class="wallet-orb wallet-orb-a"></div>
-        <div class="wallet-orb wallet-orb-b"></div>
+      <!-- WALLET -->
+
+      <section class="wallet">
+
+        <div class="wallet-glow"></div>
+        <div class="wallet-glow two"></div>
+
 
         <div class="wallet-head">
 
           <div>
 
             <span class="wallet-label">
-              RICO POINTS
+              AVAILABLE RICO POINTS
             </span>
 
-            <div class="wallet-balance">
+            <div class="balance">
 
-              <span class="wallet-diamond">
-                ◆
-              </span>
+              <div class="balance-mark">
+                R
+              </div>
 
               <strong id="pointBalance">
                 0
@@ -207,9 +2858,10 @@
 
           </div>
 
+
           <span
             id="tierBadge"
-            class="tier-badge"
+            class="tier-pill"
           >
             ROOKIE
           </span>
@@ -217,24 +2869,23 @@
         </div>
 
 
-        <div class="tier-progress-copy">
+        <div class="progress-copy">
 
           <span id="tierProgressText">
             Start earning Rico Points
           </span>
 
-          <b id="rankText">
+          <strong id="rankText">
             #—
-          </b>
+          </strong>
 
         </div>
 
 
-        <div class="tier-track">
+        <div class="progress-track">
 
           <span
             id="tierProgressBar"
-            style="width:0%"
           ></span>
 
         </div>
@@ -242,7 +2893,7 @@
 
         <div class="wallet-stats">
 
-          <div>
+          <div class="wallet-stat">
 
             <span>
               STREAK
@@ -254,7 +2905,8 @@
 
           </div>
 
-          <div>
+
+          <div class="wallet-stat">
 
             <span>
               RANK
@@ -266,7 +2918,8 @@
 
           </div>
 
-          <div>
+
+          <div class="wallet-stat">
 
             <span>
               LIFETIME
@@ -283,11 +2936,88 @@
       </section>
 
 
-      <!-- CHECK IN -->
+      <!-- QUICK ACTIONS -->
 
-      <section class="home-section">
+      <div class="quick-actions">
 
-        <div class="section-heading">
+        <button
+          class="quick-action"
+          data-open-page="missions"
+          type="button"
+        >
+
+          <span class="quick-action-icon">
+            ◇
+          </span>
+
+          <small>
+            Missions
+          </small>
+
+        </button>
+
+
+        <button
+          class="quick-action"
+          data-open-page="rewards"
+          type="button"
+        >
+
+          <span class="quick-action-icon">
+            ◆
+          </span>
+
+          <small>
+            Rewards
+          </small>
+
+        </button>
+
+
+        <button
+          id="quickInvite"
+          class="quick-action"
+          type="button"
+        >
+
+          <span class="quick-action-icon">
+            ↗
+          </span>
+
+          <small>
+            Invite
+          </small>
+
+        </button>
+
+
+        <button
+          class="quick-action"
+          data-open-page="rank"
+          type="button"
+        >
+
+          <span class="quick-action-icon">
+            ♛
+          </span>
+
+          <small>
+            Rank
+          </small>
+
+        </button>
+
+      </div>
+
+
+      <!-- CHECK-IN -->
+
+      <section
+        id="checkinSection"
+        class="home-section"
+      >
+
+        <div class="section-head">
 
           <div>
 
@@ -295,44 +3025,37 @@
               TODAY
             </span>
 
-            <h2>
+            <h2 class="section-title">
               Daily check-in
             </h2>
 
           </div>
 
-          <span
-            id="checkinStatusTag"
-            class="section-tag"
-          >
-            READY
-          </span>
-
         </div>
 
 
-        <article
-          id="checkinCard"
-          class="checkin-card"
-        >
+        <article class="checkin">
 
-          <div class="checkin-card-content">
+          <div class="checkin-top">
 
             <div class="checkin-symbol">
               ✓
             </div>
 
-            <div>
+            <div class="checkin-copy">
 
-              <strong>
+              <strong id="checkinTitle">
                 Keep your streak alive
               </strong>
 
               <p id="checkinDescription">
-                Check in today to collect your Rico Points.
+                Check in today and keep your community streak moving.
               </p>
 
-              <span class="checkin-reward">
+              <span
+                id="checkinReward"
+                class="checkin-reward"
+              >
                 +20 Rico Points
               </span>
 
@@ -343,7 +3066,7 @@
 
           <button
             id="checkinButton"
-            class="app-primary-button"
+            class="checkin-button"
             type="button"
           >
             CHECK IN
@@ -352,111 +3075,46 @@
         </article>
 
 
-        <div class="week-strip">
-
-          <div class="week-day">
-            <span>M</span>
-            <b>•</b>
-          </div>
-
-          <div class="week-day">
-            <span>T</span>
-            <b>•</b>
-          </div>
-
-          <div class="week-day">
-            <span>W</span>
-            <b>•</b>
-          </div>
-
-          <div class="week-day">
-            <span>T</span>
-            <b>•</b>
-          </div>
-
-          <div class="week-day">
-            <span>F</span>
-            <b>•</b>
-          </div>
-
-          <div class="week-day">
-            <span>S</span>
-            <b>•</b>
-          </div>
-
-          <div class="week-day">
-            <span>S</span>
-            <b>•</b>
-          </div>
-
-        </div>
-
-      </section>
-
-
-      <!-- DROP -->
-
-      <section
-        id="dropSection"
-        class="home-section hidden"
-      >
-
-        <div class="section-heading">
-
-          <div>
-
-            <span class="eyebrow">
-              RICO DROP
-            </span>
-
-            <h2>
-              Limited rewards
-            </h2>
-
-          </div>
-
-          <button
-            class="section-link"
-            data-go="rewards"
-            type="button"
-          >
-            View all
-          </button>
-
-        </div>
-
-        <div id="dropCards"></div>
+        <div
+          id="weekStrip"
+          class="week"
+        ></div>
 
       </section>
 
 
       <!-- MISSIONS -->
 
-      <section class="home-section">
+      <section
+        id="missionHomeSection"
+        class="home-section"
+      >
 
-        <div class="section-heading">
+        <div class="section-head">
 
           <div>
 
             <span class="eyebrow">
-              MISSIONS
+              YOUR JOURNEY
             </span>
 
-            <h2>
-              Your next moves
+            <h2 class="section-title">
+              Missions
             </h2>
 
           </div>
 
+
           <button
             class="section-link"
-            data-go="missions"
+            data-open-page="missions"
             type="button"
           >
             View all
           </button>
 
         </div>
+
 
         <div
           id="homeMissionList"
@@ -466,11 +3124,14 @@
       </section>
 
 
-      <!-- REFERRAL -->
+      <!-- INVITE -->
 
-      <section class="invite-card">
+      <section
+        id="inviteSection"
+        class="invite"
+      >
 
-        <div class="invite-icon">
+        <div class="invite-mark">
           ↗
         </div>
 
@@ -479,19 +3140,18 @@
         </span>
 
         <h2>
-          Grow the Rico community.
+          Bring your friends into Rico.
         </h2>
 
         <p>
-          Share your personal invitation and earn rewards when your friends qualify.
+          Every invitation has your unique Rico Club referral code.
         </p>
 
         <button
-          id="homeInviteButton"
-          class="app-primary-button wide"
+          id="inviteButton"
           type="button"
         >
-          INVITE FRIENDS
+          SHARE MY INVITE
         </button>
 
       </section>
@@ -505,13 +3165,13 @@
 
     <section
       id="pageMissions"
-      class="app-page"
+      class="page"
     >
 
-      <div class="page-intro">
+      <div class="page-head">
 
         <span class="eyebrow">
-          ENGAGEMENT
+          YOUR JOURNEY
         </span>
 
         <h1>
@@ -519,41 +3179,15 @@
         </h1>
 
         <p>
-          Complete activities, build your progress and earn more Rico Points.
+          Complete community activities and grow your Rico Points balance.
         </p>
-
-      </div>
-
-
-      <div class="pill-tabs">
-
-        <button
-          class="pill-tab active"
-          type="button"
-        >
-          Active
-        </button>
-
-        <button
-          class="pill-tab"
-          type="button"
-        >
-          Completed
-        </button>
-
-        <button
-          class="pill-tab"
-          type="button"
-        >
-          Upcoming
-        </button>
 
       </div>
 
 
       <div
         id="missionList"
-        class="mission-grid"
+        class="mission-list"
       ></div>
 
     </section>
@@ -565,10 +3199,10 @@
 
     <section
       id="pageRewards"
-      class="app-page"
+      class="page"
     >
 
-      <div class="page-intro">
+      <div class="page-head">
 
         <span class="eyebrow">
           RICO STORE
@@ -579,50 +3213,24 @@
         </h1>
 
         <p>
-          Use your Rico Points to unlock community rewards.
+          Use Rico Points to unlock available community rewards.
         </p>
 
       </div>
 
 
-      <div class="reward-balance-bar">
+      <div class="reward-balance">
 
         <span>
           AVAILABLE BALANCE
         </span>
 
         <strong>
-          ◆
+          R
           <b id="rewardBalance">
             0
           </b>
         </strong>
-
-      </div>
-
-
-      <div class="pill-tabs">
-
-        <button
-          class="pill-tab active"
-          type="button"
-        >
-          All
-        </button>
-
-        <button
-          class="pill-tab"
-          type="button"
-        >
-          Available
-        </button>
-
-        <button
-          class="pill-tab"
-          type="button"
-        >
-          Locked
-        </button>
 
       </div>
 
@@ -641,13 +3249,13 @@
 
     <section
       id="pageRank"
-      class="app-page"
+      class="page"
     >
 
-      <div class="page-intro">
+      <div class="page-head">
 
         <span class="eyebrow">
-          COMMUNITY RANKING
+          COMMUNITY
         </span>
 
         <h1>
@@ -655,26 +3263,8 @@
         </h1>
 
         <p>
-          Earn Rico Points and move up the community ranking.
+          Your Rico Points determine your position in the community ranking.
         </p>
-
-      </div>
-
-
-      <div class="rank-switch">
-
-        <button
-          class="active"
-          type="button"
-        >
-          Points
-        </button>
-
-        <button
-          type="button"
-        >
-          Referrals
-        </button>
 
       </div>
 
@@ -685,52 +3275,10 @@
       ></div>
 
 
-      <section class="ranking-list">
-
-        <div class="ranking-list-head">
-
-          <span>
-            PLAYER
-          </span>
-
-          <span>
-            POINTS
-          </span>
-
-        </div>
-
-        <div id="leaderboardRows"></div>
-
-      </section>
-
-
-      <section class="my-position-card">
-
-        <div>
-
-          <span>
-            YOUR POSITION
-          </span>
-
-          <strong id="yourRankValue">
-            #—
-          </strong>
-
-        </div>
-
-        <div>
-
-          <span>
-            YOUR POINTS
-          </span>
-
-          <strong id="yourRankPoints">
-            0
-          </strong>
-
-        </div>
-
-      </section>
+      <div
+        id="rankList"
+        class="rank-list"
+      ></div>
 
     </section>
 
@@ -741,20 +3289,34 @@
 
     <section
       id="pageProfile"
-      class="app-page"
+      class="page"
     >
 
       <div class="profile-hero">
 
-        <div
-          id="profileLargeAvatar"
-          class="profile-avatar-large"
-        >
-          R
+        <div class="profile-avatar-wrap">
+
+          <img
+            id="profileAvatar"
+            class="profile-avatar"
+            src=""
+            alt="Avatar"
+          >
+
+          <button
+            id="editAvatarButton"
+            class="edit-avatar-button"
+            type="button"
+            aria-label="Change avatar"
+          >
+            ✦
+          </button>
+
         </div>
 
+
         <span class="eyebrow">
-          YOUR ACCOUNT
+          RICO MEMBER
         </span>
 
         <h1 id="profileName">
@@ -767,7 +3329,7 @@
 
         <span
           id="profileTier"
-          class="tier-badge"
+          class="tier-pill"
         >
           ROOKIE
         </span>
@@ -777,7 +3339,7 @@
 
       <div class="profile-stats">
 
-        <div>
+        <div class="profile-stat">
 
           <span>
             POINTS
@@ -789,7 +3351,8 @@
 
         </div>
 
-        <div>
+
+        <div class="profile-stat">
 
           <span>
             STREAK
@@ -801,7 +3364,8 @@
 
         </div>
 
-        <div>
+
+        <div class="profile-stat">
 
           <span>
             RANK
@@ -816,7 +3380,35 @@
       </div>
 
 
-      <section class="profile-menu">
+      <div class="profile-menu">
+
+        <button
+          id="profileAvatarMenu"
+          type="button"
+        >
+
+          <span class="profile-menu-icon">
+            ✦
+          </span>
+
+          <div>
+
+            <strong>
+              My Avatar
+            </strong>
+
+            <small>
+              Choose your Rico Club identity
+            </small>
+
+          </div>
+
+          <span class="profile-menu-arrow">
+            ›
+          </span>
+
+        </button>
+
 
         <button
           id="profileInvite"
@@ -834,48 +3426,20 @@
             </strong>
 
             <small>
-              Share your personal invitation
+              Share your unique Rico invitation
             </small>
 
           </div>
 
-          <b>
-            →
-          </b>
-
-        </button>
-
-
-        <button
-          id="profileActivity"
-          type="button"
-        >
-
-          <span class="profile-menu-icon">
-            ◷
+          <span class="profile-menu-arrow">
+            ›
           </span>
 
-          <div>
-
-            <strong>
-              Recent Activity
-            </strong>
-
-            <small>
-              Review your latest Rico Club actions
-            </small>
-
-          </div>
-
-          <b>
-            →
-          </b>
-
         </button>
 
 
         <button
-          id="officialChannel"
+          id="profileChannel"
           type="button"
         >
 
@@ -890,35 +3454,35 @@
             </strong>
 
             <small>
-              Community news, rewards and drops
+              Community announcements and drops
             </small>
 
           </div>
 
-          <b>
-            →
-          </b>
+          <span class="profile-menu-arrow">
+            ›
+          </span>
 
         </button>
 
-      </section>
+      </div>
 
     </section>
 
 
     <!-- ====================================================
-         NAV
+         NAVIGATION
     ===================================================== -->
 
-    <nav class="bottom-navigation">
+    <nav class="nav">
 
       <button
-        class="bottom-nav-item active"
+        class="active"
         data-page="home"
         type="button"
       >
 
-        <span class="nav-glyph">
+        <span class="nav-icon">
           ⌂
         </span>
 
@@ -930,12 +3494,11 @@
 
 
       <button
-        class="bottom-nav-item"
         data-page="missions"
         type="button"
       >
 
-        <span class="nav-glyph">
+        <span class="nav-icon">
           ◇
         </span>
 
@@ -947,12 +3510,11 @@
 
 
       <button
-        class="bottom-nav-item"
         data-page="rewards"
         type="button"
       >
 
-        <span class="nav-glyph">
+        <span class="nav-icon">
           ◆
         </span>
 
@@ -964,12 +3526,11 @@
 
 
       <button
-        class="bottom-nav-item"
         data-page="rank"
         type="button"
       >
 
-        <span class="nav-glyph">
+        <span class="nav-icon">
           ♛
         </span>
 
@@ -981,12 +3542,11 @@
 
 
       <button
-        class="bottom-nav-item"
         data-page="profile"
         type="button"
       >
 
-        <span class="nav-glyph">
+        <span class="nav-icon">
           ◎
         </span>
 
@@ -1002,7 +3562,57 @@
 
 
   <!-- ======================================================
-       SUCCESS MODAL
+       AVATAR PICKER
+  ======================================================= -->
+
+  <div
+    id="avatarModal"
+    class="modal-backdrop hidden"
+  >
+
+    <div class="sheet">
+
+      <div class="sheet-handle"></div>
+
+
+      <div class="sheet-head">
+
+        <div>
+
+          <span class="eyebrow">
+            RICO IDENTITY
+          </span>
+
+          <h2>
+            Choose your avatar
+          </h2>
+
+        </div>
+
+
+        <button
+          id="closeAvatarModal"
+          class="sheet-close"
+          type="button"
+        >
+          ×
+        </button>
+
+      </div>
+
+
+      <div
+        id="avatarGrid"
+        class="avatar-grid"
+      ></div>
+
+    </div>
+
+  </div>
+
+
+  <!-- ======================================================
+       SUCCESS
   ======================================================= -->
 
   <div
@@ -1010,39 +3620,33 @@
     class="modal-backdrop hidden"
   >
 
-    <div class="success-modal">
+    <div class="sheet">
 
-      <button
-        id="closeSuccess"
-        class="modal-close"
-        type="button"
-      >
-        ×
-      </button>
+      <div class="reward-success">
 
-      <div class="success-gem">
-        ◆
+        <div class="success-icon">
+          R
+        </div>
+
+        <span class="eyebrow">
+          RICO CLUB
+        </span>
+
+        <h2 id="successTitle">
+          Reward unlocked
+        </h2>
+
+        <p id="successMessage"></p>
+
+        <button
+          id="closeSuccess"
+          class="success-button"
+          type="button"
+        >
+          CONTINUE
+        </button>
+
       </div>
-
-      <span class="eyebrow">
-        CHECK-IN COMPLETE
-      </span>
-
-      <h2 id="successTitle">
-        +20 Rico Points
-      </h2>
-
-      <p id="successSubtitle">
-        Your streak is active.
-      </p>
-
-      <button
-        id="successDone"
-        class="app-primary-button wide"
-        type="button"
-      >
-        CONTINUE
-      </button>
 
     </div>
 
@@ -1055,7 +3659,2449 @@
   ></div>
 
 
-  <script src="/app.js"></script>
+  <script>
+    (() => {
+
+      /* =====================================================
+         STATE
+      ====================================================== */
+
+      const tg =
+        window.Telegram?.WebApp ||
+        null;
+
+
+      const state = {
+        bootstrap: null,
+        user: null,
+        settings: {},
+        missions: [],
+        rewards: [],
+        drops: [],
+        leaderboard: [],
+        avatar: null
+      };
+
+
+      const AVATARS = [
+        "/assets/avatars/avatar-01.webp",
+        "/assets/avatars/avatar-02.webp",
+        "/assets/avatars/avatar-03.webp",
+        "/assets/avatars/avatar-04.webp",
+        "/assets/avatars/avatar-05.webp",
+        "/assets/avatars/avatar-06.webp",
+        "/assets/avatars/avatar-07.webp",
+        "/assets/avatars/avatar-08.webp",
+        "/assets/avatars/avatar-09.webp",
+        "/assets/avatars/avatar-10.webp"
+      ];
+
+
+      const $ = selector =>
+        document.querySelector(
+          selector
+        );
+
+
+      const $$ = selector =>
+        Array.from(
+          document.querySelectorAll(
+            selector
+          )
+        );
+
+
+      init();
+
+
+      /* =====================================================
+         INIT
+      ====================================================== */
+
+      async function init() {
+
+        bindBaseActions();
+
+
+        if (
+          !tg ||
+          !tg.initData
+        ) {
+
+          hideLoader();
+
+
+          $("#telegramRequired")
+            .classList
+            .remove("hidden");
+
+
+          return;
+
+        }
+
+
+        tg.ready();
+
+        tg.expand();
+
+
+        try {
+
+          tg.disableVerticalSwipes?.();
+
+
+          tg.setHeaderColor?.(
+            "#09090c"
+          );
+
+
+          tg.setBackgroundColor?.(
+            "#09090c"
+          );
+
+        } catch {
+          // Telegram client support varies.
+        }
+
+
+        await loadApp();
+
+      }
+
+
+      async function loadApp() {
+
+        try {
+
+          const data =
+            await api(
+              "/api/app/bootstrap",
+              {
+                method: "POST"
+              }
+            );
+
+
+          state.bootstrap =
+            data;
+
+
+          state.user =
+            data.user;
+
+
+          state.settings =
+            data.settings || {};
+
+
+          state.missions =
+            data.missions || [];
+
+
+          state.rewards =
+            data.rewards || [];
+
+
+          state.drops =
+            data.drops || [];
+
+
+          state.leaderboard =
+            data.leaderboard || [];
+
+
+          loadAvatar();
+
+          applyTheme();
+
+          applySettings();
+
+          renderUser();
+
+          renderCheckin();
+
+          renderWeek();
+
+          renderMissions();
+
+          renderRewards();
+
+          renderLeaderboard();
+
+          renderAvatarGrid();
+
+
+          $("#app")
+            .classList
+            .remove("hidden");
+
+
+          hideLoader();
+
+        } catch (error) {
+
+          hideLoader();
+
+
+          $("#telegramRequired")
+            .classList
+            .remove("hidden");
+
+
+          showToast(
+            error.message ||
+            "Unable to open Rico Club."
+          );
+
+        }
+
+      }
+
+
+      function hideLoader() {
+
+        const loader =
+          $("#loader");
+
+
+        loader
+          .classList
+          .add("hide");
+
+
+        setTimeout(
+          () =>
+            loader
+              .classList
+              .add("hidden"),
+          450
+        );
+
+      }
+
+
+      /* =====================================================
+         THEME / SETTINGS
+      ====================================================== */
+
+      function applyTheme() {
+
+        const s =
+          state.settings;
+
+
+        const primary =
+          validColor(
+            s.primary_color
+          )
+            ? s.primary_color
+            : "#ED58AD";
+
+
+        const secondary =
+          validColor(
+            s.secondary_color
+          )
+            ? s.secondary_color
+            : "#72C8EA";
+
+
+        const background =
+          validColor(
+            s.background_color
+          )
+            ? s.background_color
+            : "#09090C";
+
+
+        document.documentElement
+          .style
+          .setProperty(
+            "--pink",
+            primary
+          );
+
+
+        document.documentElement
+          .style
+          .setProperty(
+            "--blue",
+            secondary
+          );
+
+
+        document.documentElement
+          .style
+          .setProperty(
+            "--bg",
+            background
+          );
+
+
+        document.documentElement
+          .style
+          .setProperty(
+            "--brand",
+            `linear-gradient(
+              135deg,
+              ${primary} 0%,
+              #A59ADD 47%,
+              ${secondary} 100%
+            )`
+          );
+
+
+        const appName =
+          s.app_name ||
+          "Rico Club";
+
+
+        document.title =
+          appName;
+
+
+        $("#brandName")
+          .textContent =
+          appName.toUpperCase();
+
+
+        try {
+
+          tg?.setHeaderColor?.(
+            background
+          );
+
+
+          tg?.setBackgroundColor?.(
+            background
+          );
+
+        } catch {
+          // Optional.
+        }
+
+      }
+
+
+      function applySettings() {
+
+        const s =
+          state.settings;
+
+
+        const announcement =
+          String(
+            s.announcement ||
+            ""
+          )
+            .trim();
+
+
+        if (announcement) {
+
+          $("#announcement")
+            .textContent =
+            announcement;
+
+
+          $("#announcement")
+            .classList
+            .remove("hidden");
+
+        }
+
+
+        toggle(
+          "#checkinSection",
+          enabled(
+            "show_checkin"
+          )
+        );
+
+
+        toggle(
+          "#missionHomeSection",
+          enabled(
+            "show_missions"
+          )
+        );
+
+
+        toggle(
+          "#inviteSection",
+          enabled(
+            "show_referrals"
+          )
+        );
+
+
+        toggle(
+          '#nav [data-page="missions"]',
+          enabled(
+            "show_missions"
+          )
+        );
+
+
+        toggle(
+          '.nav [data-page="rewards"]',
+          enabled(
+            "show_rewards"
+          )
+        );
+
+
+        toggle(
+          '.nav [data-page="rank"]',
+          enabled(
+            "show_leaderboard"
+          )
+        );
+
+
+        toggle(
+          "#quickInvite",
+          enabled(
+            "show_referrals"
+          )
+        );
+
+
+        toggle(
+          "#profileInvite",
+          enabled(
+            "show_referrals"
+          )
+        );
+
+      }
+
+
+      function enabled(
+        key
+      ) {
+
+        return String(
+          state.settings[key] ??
+          "true"
+        ) !== "false";
+
+      }
+
+
+      function toggle(
+        selector,
+        visible
+      ) {
+
+        const element =
+          $(selector);
+
+
+        if (!element) {
+          return;
+        }
+
+
+        element
+          .classList
+          .toggle(
+            "hidden",
+            !visible
+          );
+
+      }
+
+
+      /* =====================================================
+         USER
+      ====================================================== */
+
+      function renderUser() {
+
+        const user =
+          state.user;
+
+
+        if (!user) {
+          return;
+        }
+
+
+        const firstName =
+          user.first_name ||
+          "Rico Member";
+
+
+        $("#welcomeName")
+          .textContent =
+          firstName;
+
+
+        $("#pointBalance")
+          .textContent =
+          number(
+            user.current_points
+          );
+
+
+        $("#rewardBalance")
+          .textContent =
+          number(
+            user.current_points
+          );
+
+
+        $("#lifetimePoints")
+          .textContent =
+          number(
+            user.lifetime_points
+          );
+
+
+        $("#topStreak")
+          .textContent =
+          user.current_streak ||
+          0;
+
+
+        $("#homeStreak")
+          .textContent =
+          `${user.current_streak || 0} days`;
+
+
+        $("#homeRank")
+          .textContent =
+          `#${user.rank || "—"}`;
+
+
+        $("#rankText")
+          .textContent =
+          `#${user.rank || "—"}`;
+
+
+        const tier =
+          user.tier ||
+          "Rookie";
+
+
+        $("#tierBadge")
+          .textContent =
+          tier.toUpperCase();
+
+
+        $("#profileTier")
+          .textContent =
+          tier.toUpperCase();
+
+
+        $("#profileName")
+          .textContent =
+          firstName;
+
+
+        $("#profileUsername")
+          .textContent =
+          user.telegram_username
+            ? `@${user.telegram_username}`
+            : "Telegram Member";
+
+
+        $("#profilePoints")
+          .textContent =
+          number(
+            user.current_points
+          );
+
+
+        $("#profileStreak")
+          .textContent =
+          user.current_streak ||
+          0;
+
+
+        $("#profileRank")
+          .textContent =
+          `#${user.rank || "—"}`;
+
+
+        const progress =
+          calculateTierProgress(
+            Number(
+              user.current_points ||
+              0
+            )
+          );
+
+
+        $("#tierProgressBar")
+          .style.width =
+          `${progress.percent}%`;
+
+
+        $("#tierProgressText")
+          .textContent =
+          progress.text;
+
+
+        const initial =
+          firstName
+            .charAt(0)
+            .toUpperCase();
+
+
+        $("#headerAvatarFallback")
+          .textContent =
+          initial;
+
+
+        setGreeting();
+
+        applyAvatar();
+
+      }
+
+
+      function setGreeting() {
+
+        const hour =
+          new Date()
+            .getHours();
+
+
+        let text =
+          "WELCOME BACK";
+
+
+        if (
+          hour >= 5 &&
+          hour < 12
+        ) {
+          text =
+            "GOOD MORNING";
+        }
+
+
+        if (
+          hour >= 12 &&
+          hour < 18
+        ) {
+          text =
+            "GOOD AFTERNOON";
+        }
+
+
+        if (
+          hour >= 18
+        ) {
+          text =
+            "GOOD EVENING";
+        }
+
+
+        $("#greetingLabel")
+          .textContent =
+          text;
+
+      }
+
+
+      function calculateTierProgress(
+        points
+      ) {
+
+        const s =
+          state.settings;
+
+
+        const tiers = [
+          {
+            name: "Rookie",
+            min:
+              Number(
+                s.tier_rookie ||
+                0
+              )
+          },
+          {
+            name: "Bronze",
+            min:
+              Number(
+                s.tier_bronze ||
+                500
+              )
+          },
+          {
+            name: "Silver",
+            min:
+              Number(
+                s.tier_silver ||
+                1500
+              )
+          },
+          {
+            name: "Gold",
+            min:
+              Number(
+                s.tier_gold ||
+                5000
+              )
+          },
+          {
+            name: "Diamond",
+            min:
+              Number(
+                s.tier_diamond ||
+                15000
+              )
+          }
+        ];
+
+
+        let current =
+          0;
+
+
+        for (
+          let i = 0;
+          i < tiers.length;
+          i++
+        ) {
+
+          if (
+            points >=
+            tiers[i].min
+          ) {
+
+            current =
+              i;
+
+          }
+
+        }
+
+
+        if (
+          current ===
+          tiers.length - 1
+        ) {
+
+          return {
+            percent: 100,
+            text:
+              "Diamond status unlocked"
+          };
+
+        }
+
+
+        const from =
+          tiers[current];
+
+
+        const next =
+          tiers[
+            current + 1
+          ];
+
+
+        const range =
+          next.min -
+          from.min;
+
+
+        const progress =
+          points -
+          from.min;
+
+
+        return {
+
+          percent:
+            Math.min(
+              100,
+              Math.max(
+                0,
+                progress /
+                range *
+                100
+              )
+            ),
+
+          text:
+            `${number(
+              next.min -
+              points
+            )} points to ${next.name}`
+
+        };
+
+      }
+
+
+      /* =====================================================
+         AVATAR
+      ====================================================== */
+
+      function avatarStorageKey() {
+
+        return (
+          "rico-avatar-" +
+          (
+            state.user
+              ?.telegram_id ||
+            "guest"
+          )
+        );
+
+      }
+
+
+      function loadAvatar() {
+
+        try {
+
+          state.avatar =
+            localStorage.getItem(
+              avatarStorageKey()
+            );
+
+        } catch {
+
+          state.avatar =
+            null;
+
+        }
+
+
+        if (
+          !state.avatar ||
+          !AVATARS.includes(
+            state.avatar
+          )
+        ) {
+
+          state.avatar =
+            AVATARS[0];
+
+        }
+
+      }
+
+
+      function saveAvatar(
+        avatar
+      ) {
+
+        state.avatar =
+          avatar;
+
+
+        try {
+
+          localStorage.setItem(
+            avatarStorageKey(),
+            avatar
+          );
+
+        } catch {
+          // Storage may be restricted.
+        }
+
+
+        applyAvatar();
+
+        renderAvatarGrid();
+
+
+        try {
+
+          tg?.HapticFeedback
+            ?.notificationOccurred(
+              "success"
+            );
+
+        } catch {
+          // Optional.
+        }
+
+
+        setTimeout(
+          closeAvatarModal,
+          180
+        );
+
+      }
+
+
+      function applyAvatar() {
+
+        if (!state.avatar) {
+          return;
+        }
+
+
+        $("#profileAvatar")
+          .src =
+          state.avatar;
+
+
+        $("#headerAvatar")
+          .src =
+          state.avatar;
+
+
+        $("#headerAvatar")
+          .classList
+          .remove("hidden");
+
+
+        $("#headerAvatarFallback")
+          .classList
+          .add("hidden");
+
+      }
+
+
+      function renderAvatarGrid() {
+
+        $("#avatarGrid")
+          .innerHTML =
+          AVATARS
+            .map(
+              avatar => `
+                <button
+                  class="avatar-option ${
+                    avatar ===
+                    state.avatar
+                      ? "selected"
+                      : ""
+                  }"
+                  data-avatar="${avatar}"
+                  type="button"
+                >
+
+                  <img
+                    src="${avatar}"
+                    alt=""
+                  >
+
+                  <span class="avatar-check">
+                    ✓
+                  </span>
+
+                </button>
+              `
+            )
+            .join("");
+
+
+        $$(".avatar-option")
+          .forEach(
+            button =>
+              button.addEventListener(
+                "click",
+                () =>
+                  saveAvatar(
+                    button.dataset.avatar
+                  )
+              )
+          );
+
+      }
+
+
+      function openAvatarModal() {
+
+        $("#avatarModal")
+          .classList
+          .remove("hidden");
+
+
+        hapticSelection();
+
+      }
+
+
+      function closeAvatarModal() {
+
+        $("#avatarModal")
+          .classList
+          .add("hidden");
+
+      }
+
+
+      /* =====================================================
+         CHECK-IN
+      ====================================================== */
+
+      function renderCheckin() {
+
+        const done =
+          Boolean(
+            state.bootstrap
+              ?.checked_in_today
+          );
+
+
+        const reward =
+          Number(
+            state.settings
+              .daily_checkin_points ||
+            20
+          );
+
+
+        $("#checkinReward")
+          .textContent =
+          `+${number(
+            reward
+          )} Rico Points`;
+
+
+        const button =
+          $("#checkinButton");
+
+
+        if (done) {
+
+          button.disabled =
+            true;
+
+
+          button.textContent =
+            "CHECK-IN COMPLETE";
+
+
+          $("#checkinTitle")
+            .textContent =
+            "You're checked in";
+
+
+          $("#checkinDescription")
+            .textContent =
+            "Come back tomorrow to keep your Rico streak moving.";
+
+        } else {
+
+          button.disabled =
+            false;
+
+
+          button.textContent =
+            "CHECK IN";
+
+
+          $("#checkinTitle")
+            .textContent =
+            "Keep your streak alive";
+
+
+          $("#checkinDescription")
+            .textContent =
+            `Check in today and collect ${number(
+              reward
+            )} Rico Points.`;
+
+        }
+
+      }
+
+
+      async function checkIn() {
+
+        const button =
+          $("#checkinButton");
+
+
+        button.disabled =
+          true;
+
+
+        button.textContent =
+          "CHECKING IN…";
+
+
+        try {
+
+          const result =
+            await api(
+              "/api/app/checkin",
+              {
+                method:
+                  "POST"
+              }
+            );
+
+
+          state.bootstrap
+            .checked_in_today =
+            true;
+
+
+          if (
+            !result
+              .already_checked_in
+          ) {
+
+            state.user.current_points =
+              result.balance;
+
+
+            state.user.current_streak =
+              result.streak;
+
+
+            state.user.lifetime_points =
+              Number(
+                state.user
+                  .lifetime_points ||
+                0
+              )
+              +
+              Number(
+                result.points_earned ||
+                0
+              );
+
+
+            $("#successTitle")
+              .textContent =
+              `+${number(
+                result.points_earned
+              )} Rico Points`;
+
+
+            $("#successMessage")
+              .textContent =
+              `${result.streak}-day streak active.`;
+
+
+            $("#successModal")
+              .classList
+              .remove("hidden");
+
+
+            try {
+
+              tg?.HapticFeedback
+                ?.notificationOccurred(
+                  "success"
+                );
+
+            } catch {
+              // Optional.
+            }
+
+          }
+
+
+          renderUser();
+
+          renderCheckin();
+
+          renderRewards();
+
+        } catch (error) {
+
+          button.disabled =
+            false;
+
+
+          button.textContent =
+            "CHECK IN";
+
+
+          showToast(
+            error.message
+          );
+
+        }
+
+      }
+
+
+      /* =====================================================
+         WEEK
+      ====================================================== */
+
+      function renderWeek() {
+
+        const formatter =
+          new Intl.DateTimeFormat(
+            "en-US",
+            {
+              weekday: "short"
+            }
+          );
+
+
+        const today =
+          new Date();
+
+
+        const dayIndex =
+          (
+            today.getDay() +
+            6
+          ) % 7;
+
+
+        const monday =
+          new Date(
+            today
+          );
+
+
+        monday.setDate(
+          today.getDate() -
+          dayIndex
+        );
+
+
+        const html = [];
+
+
+        for (
+          let i = 0;
+          i < 7;
+          i++
+        ) {
+
+          const day =
+            new Date(
+              monday
+            );
+
+
+          day.setDate(
+            monday.getDate() +
+            i
+          );
+
+
+          const isToday =
+            day.toDateString() ===
+            today.toDateString();
+
+
+          html.push(`
+            <div
+              class="day ${
+                isToday
+                  ? "today"
+                  : ""
+              }"
+            >
+
+              <span>
+                ${
+                  formatter
+                    .format(day)
+                    .slice(0,1)
+                }
+              </span>
+
+              <i></i>
+
+            </div>
+          `);
+
+        }
+
+
+        $("#weekStrip")
+          .innerHTML =
+          html.join("");
+
+      }
+
+
+      /* =====================================================
+         MISSIONS
+      ====================================================== */
+
+      function renderMissions() {
+
+        const missions =
+          state.missions ||
+          [];
+
+
+        if (!missions.length) {
+
+          const empty = `
+            <div class="empty">
+
+              <strong>
+                No active missions
+              </strong>
+
+              New Rico Club missions will appear here when they go live.
+
+            </div>
+          `;
+
+
+          $("#homeMissionList")
+            .innerHTML =
+            empty;
+
+
+          $("#missionList")
+            .innerHTML =
+            empty;
+
+
+          return;
+
+        }
+
+
+        const markup =
+          missions
+            .map(
+              mission =>
+                missionMarkup(
+                  mission
+                )
+            )
+            .join("");
+
+
+        $("#missionList")
+          .innerHTML =
+          markup;
+
+
+        $("#homeMissionList")
+          .innerHTML =
+          missions
+            .slice(
+              0,
+              3
+            )
+            .map(
+              mission =>
+                missionMarkup(
+                  mission
+                )
+            )
+            .join("");
+
+
+        bindMissionButtons();
+
+      }
+
+
+      function missionMarkup(
+        mission
+      ) {
+
+        return `
+          <article
+            class="mission"
+            ${
+              mission.button_url
+                ? `data-mission-url="${escapeAttr(
+                    mission.button_url
+                  )}"`
+                : ""
+            }
+          >
+
+            <div class="mission-icon">
+              ${missionIcon(
+                mission.mission_type
+              )}
+            </div>
+
+
+            <div>
+
+              <h3>
+                ${escapeHtml(
+                  mission.title
+                )}
+              </h3>
+
+              <p>
+                ${escapeHtml(
+                  mission.description ||
+                  "Complete this Rico Club mission."
+                )}
+              </p>
+
+            </div>
+
+
+            <span class="mission-reward">
+              +${number(
+                mission.reward_points
+              )}
+            </span>
+
+          </article>
+        `;
+
+      }
+
+
+      function bindMissionButtons() {
+
+        $$("[data-mission-url]")
+          .forEach(
+            card =>
+              card.addEventListener(
+                "click",
+                () =>
+                  openExternal(
+                    card.dataset
+                      .missionUrl
+                  )
+              )
+          );
+
+      }
+
+
+      function missionIcon(
+        type
+      ) {
+
+        const icons = {
+          checkin: "✓",
+          referral: "↗",
+          channel: "◉",
+          promo: "◆",
+          custom: "◇"
+        };
+
+
+        return (
+          icons[type] ||
+          "◇"
+        );
+
+      }
+
+
+      /* =====================================================
+         REWARDS
+      ====================================================== */
+
+      function renderRewards() {
+
+        const rewards =
+          state.rewards ||
+          [];
+
+
+        if (!rewards.length) {
+
+          $("#rewardList")
+            .innerHTML = `
+              <div class="empty">
+
+                <strong>
+                  No rewards available
+                </strong>
+
+                New community rewards will appear here.
+
+              </div>
+            `;
+
+
+          return;
+
+        }
+
+
+        $("#rewardList")
+          .innerHTML =
+          rewards
+            .map(
+              reward => {
+
+                const cost =
+                  Number(
+                    reward.points_cost ||
+                    0
+                  );
+
+
+                const affordable =
+                  Number(
+                    state.user
+                      ?.current_points ||
+                    0
+                  ) >=
+                  cost;
+
+
+                const soldOut =
+                  reward.stock !==
+                    null &&
+                  Number(
+                    reward.redeemed_count ||
+                    0
+                  ) >=
+                  Number(
+                    reward.stock
+                  );
+
+
+                return `
+                  <article class="reward">
+
+                    <div class="reward-visual">
+
+                      ${
+                        reward.image_url
+                          ? `
+                            <img
+                              src="${escapeAttr(
+                                reward.image_url
+                              )}"
+                              alt=""
+                            >
+                          `
+                          : `
+                            <span class="reward-symbol">
+                              ◆
+                            </span>
+                          `
+                      }
+
+                    </div>
+
+
+                    <div class="reward-content">
+
+                      <h3>
+                        ${escapeHtml(
+                          reward.title
+                        )}
+                      </h3>
+
+                      <p>
+                        ${escapeHtml(
+                          reward.description ||
+                          "Rico Club reward."
+                        )}
+                      </p>
+
+
+                      <div class="reward-foot">
+
+                        <span class="reward-cost">
+                          R ${number(
+                            cost
+                          )}
+                        </span>
+
+                        <button
+                          data-reward-id="${reward.id}"
+                          type="button"
+                          ${
+                            !affordable ||
+                            soldOut
+                              ? "disabled"
+                              : ""
+                          }
+                        >
+                          ${
+                            soldOut
+                              ? "SOLD OUT"
+                              : affordable
+                                ? "REDEEM"
+                                : "LOCKED"
+                          }
+                        </button>
+
+                      </div>
+
+                    </div>
+
+                  </article>
+                `;
+
+              }
+            )
+            .join("");
+
+
+        $$("[data-reward-id]")
+          .forEach(
+            button =>
+              button.addEventListener(
+                "click",
+                () =>
+                  redeemReward(
+                    Number(
+                      button.dataset
+                        .rewardId
+                    )
+                  )
+              )
+          );
+
+      }
+
+
+      async function redeemReward(
+        rewardId
+      ) {
+
+        const reward =
+          state.rewards
+            .find(
+              item =>
+                Number(
+                  item.id
+                ) ===
+                rewardId
+            );
+
+
+        if (!reward) {
+          return;
+        }
+
+
+        const confirmed =
+          confirm(
+            `Redeem ${reward.title} for ${number(
+              reward.points_cost
+            )} Rico Points?`
+          );
+
+
+        if (!confirmed) {
+          return;
+        }
+
+
+        try {
+
+          const result =
+            await api(
+              "/api/app/redeem",
+              {
+                method: "POST",
+
+                body:
+                  JSON.stringify({
+                    reward_id:
+                      rewardId
+                  })
+              }
+            );
+
+
+          state.user.current_points =
+            Number(
+              state.user
+                .current_points
+            )
+            -
+            Number(
+              result.points_spent
+            );
+
+
+          $("#successTitle")
+            .textContent =
+            result.reward;
+
+
+          $("#successMessage")
+            .innerHTML =
+            result.code
+              ? `Your reward code:<br><br><strong style="font-size:18px;color:white">${escapeHtml(
+                  result.code
+                )}</strong>`
+              : "Your reward has been successfully redeemed.";
+
+
+          $("#successModal")
+            .classList
+            .remove("hidden");
+
+
+          renderUser();
+
+          renderRewards();
+
+
+          try {
+
+            tg?.HapticFeedback
+              ?.notificationOccurred(
+                "success"
+              );
+
+          } catch {
+            // Optional.
+          }
+
+        } catch (error) {
+
+          showToast(
+            error.message
+          );
+
+        }
+
+      }
+
+
+      /* =====================================================
+         LEADERBOARD
+      ====================================================== */
+
+      function renderLeaderboard() {
+
+        const rows =
+          state.leaderboard ||
+          [];
+
+
+        if (!rows.length) {
+
+          $("#podium")
+            .innerHTML =
+            "";
+
+
+          $("#rankList")
+            .innerHTML = `
+              <div class="empty">
+
+                <strong>
+                  Leaderboard is empty
+                </strong>
+
+                Rankings will appear as members earn Rico Points.
+
+              </div>
+            `;
+
+
+          return;
+
+        }
+
+
+        const top =
+          rows.slice(
+            0,
+            3
+          );
+
+
+        const order = [
+          top[1],
+          top[0],
+          top[2]
+        ]
+          .filter(Boolean);
+
+
+        $("#podium")
+          .innerHTML =
+          order
+            .map(
+              user => `
+                <article
+                  class="podium-card ${
+                    user.rank === 1
+                      ? "first"
+                      : ""
+                  }"
+                >
+
+                  <span>
+                    #${user.rank}
+                  </span>
+
+                  <div class="podium-avatar">
+                    ${initial(
+                      user
+                    )}
+                  </div>
+
+                  <strong>
+                    ${escapeHtml(
+                      maskedName(
+                        user
+                      )
+                    )}
+                  </strong>
+
+                  <b>
+                    ${number(
+                      user.current_points
+                    )}
+                  </b>
+
+                </article>
+              `
+            )
+            .join("");
+
+
+        $("#rankList")
+          .innerHTML =
+          rows
+            .slice(3)
+            .map(
+              user => `
+                <div class="rank-row">
+
+                  <span class="rank-number">
+                    #${user.rank}
+                  </span>
+
+                  <div class="rank-player">
+
+                    <strong>
+                      ${escapeHtml(
+                        maskedName(
+                          user
+                        )
+                      )}
+                    </strong>
+
+                    <small>
+                      ${escapeHtml(
+                        user.tier ||
+                        "Rookie"
+                      )}
+                    </small>
+
+                  </div>
+
+                  <span class="rank-points">
+                    ${number(
+                      user.current_points
+                    )}
+                  </span>
+
+                </div>
+              `
+            )
+            .join("");
+
+      }
+
+
+      /* =====================================================
+         NAVIGATION
+      ====================================================== */
+
+      function openPage(
+        page
+      ) {
+
+        const restrictions = {
+          missions:
+            "show_missions",
+
+          rewards:
+            "show_rewards",
+
+          rank:
+            "show_leaderboard"
+        };
+
+
+        if (
+          restrictions[page] &&
+          !enabled(
+            restrictions[page]
+          )
+        ) {
+
+          page =
+            "home";
+
+        }
+
+
+        $$(".page")
+          .forEach(
+            section =>
+              section
+                .classList
+                .remove(
+                  "active"
+                )
+          );
+
+
+        $$(".nav button")
+          .forEach(
+            button =>
+              button
+                .classList
+                .remove(
+                  "active"
+                )
+          );
+
+
+        const pageElement =
+          $(
+            "#page" +
+            page
+              .charAt(0)
+              .toUpperCase()
+            +
+            page.slice(1)
+          );
+
+
+        pageElement
+          ?.classList
+          .add("active");
+
+
+        $(
+          `.nav button[data-page="${page}"]`
+        )
+          ?.classList
+          .add("active");
+
+
+        window.scrollTo({
+          top: 0,
+          behavior: "smooth"
+        });
+
+
+        hapticSelection();
+
+      }
+
+
+      /* =====================================================
+         REFERRAL
+      ====================================================== */
+
+      function shareReferral() {
+
+        const code =
+          state.user
+            ?.referral_code;
+
+
+        const bot =
+          String(
+            state.settings
+              .bot_username ||
+            ""
+          )
+            .replace(
+              /^@/,
+              ""
+            );
+
+
+        if (
+          !code ||
+          !bot
+        ) {
+
+          showToast(
+            "Your invitation link is not configured yet."
+          );
+
+
+          return;
+
+        }
+
+
+        const link =
+          `https://t.me/${bot}?start=ref_${code}`;
+
+
+        const share =
+          `https://t.me/share/url?url=${
+            encodeURIComponent(
+              link
+            )
+          }&text=${
+            encodeURIComponent(
+              "Join me on Rico Club"
+            )
+          }`;
+
+
+        openExternal(
+          share
+        );
+
+      }
+
+
+      /* =====================================================
+         EVENTS
+      ====================================================== */
+
+      function bindBaseActions() {
+
+        $(".nav")
+          ?.addEventListener(
+            "click",
+            event => {
+
+              const button =
+                event.target
+                  .closest(
+                    "[data-page]"
+                  );
+
+
+              if (!button) {
+                return;
+              }
+
+
+              openPage(
+                button.dataset.page
+              );
+
+            }
+          );
+
+
+        document
+          .addEventListener(
+            "click",
+            event => {
+
+              const button =
+                event.target
+                  .closest(
+                    "[data-open-page]"
+                  );
+
+
+              if (!button) {
+                return;
+              }
+
+
+              openPage(
+                button.dataset
+                  .openPage
+              );
+
+            }
+          );
+
+
+        $("#profileTrigger")
+          ?.addEventListener(
+            "click",
+            () =>
+              openPage(
+                "profile"
+              )
+          );
+
+
+        $("#checkinButton")
+          ?.addEventListener(
+            "click",
+            checkIn
+          );
+
+
+        $("#inviteButton")
+          ?.addEventListener(
+            "click",
+            shareReferral
+          );
+
+
+        $("#quickInvite")
+          ?.addEventListener(
+            "click",
+            shareReferral
+          );
+
+
+        $("#profileInvite")
+          ?.addEventListener(
+            "click",
+            shareReferral
+          );
+
+
+        $("#editAvatarButton")
+          ?.addEventListener(
+            "click",
+            openAvatarModal
+          );
+
+
+        $("#profileAvatarMenu")
+          ?.addEventListener(
+            "click",
+            openAvatarModal
+          );
+
+
+        $("#closeAvatarModal")
+          ?.addEventListener(
+            "click",
+            closeAvatarModal
+          );
+
+
+        $("#avatarModal")
+          ?.addEventListener(
+            "click",
+            event => {
+
+              if (
+                event.target ===
+                $("#avatarModal")
+              ) {
+                closeAvatarModal();
+              }
+
+            }
+          );
+
+
+        $("#closeSuccess")
+          ?.addEventListener(
+            "click",
+            () =>
+              $("#successModal")
+                .classList
+                .add("hidden")
+          );
+
+
+        $("#profileChannel")
+          ?.addEventListener(
+            "click",
+            () => {
+
+              const url =
+                state.settings
+                  .official_channel_url;
+
+
+              if (!url) {
+
+                showToast(
+                  "Official channel is not configured."
+                );
+
+
+                return;
+
+              }
+
+
+              openExternal(
+                url
+              );
+
+            }
+          );
+
+      }
+
+
+      /* =====================================================
+         TELEGRAM EFFECTS
+      ====================================================== */
+
+      function hapticSelection() {
+
+        try {
+
+          tg?.HapticFeedback
+            ?.selectionChanged();
+
+        } catch {
+          // Optional.
+        }
+
+      }
+
+
+      /* =====================================================
+         API
+      ====================================================== */
+
+      async function api(
+        path,
+        options = {}
+      ) {
+
+        const response =
+          await fetch(
+            path,
+            {
+              ...options,
+
+              headers: {
+                "content-type":
+                  "application/json",
+
+                "X-Telegram-Init-Data":
+                  tg?.initData ||
+                  "",
+
+                ...(
+                  options.headers ||
+                  {}
+                )
+              }
+            }
+          );
+
+
+        let data = {};
+
+
+        try {
+
+          data =
+            await response.json();
+
+        } catch {
+          data = {};
+        }
+
+
+        if (!response.ok) {
+
+          throw new Error(
+            data.error ||
+            "Request failed"
+          );
+
+        }
+
+
+        return data;
+
+      }
+
+
+      /* =====================================================
+         EXTERNAL
+      ====================================================== */
+
+      function openExternal(
+        url
+      ) {
+
+        if (!url) {
+          return;
+        }
+
+
+        if (
+          /^https:\/\/t\.me\//i
+            .test(url) &&
+          tg?.openTelegramLink
+        ) {
+
+          tg.openTelegramLink(
+            url
+          );
+
+
+          return;
+
+        }
+
+
+        if (
+          tg?.openLink
+        ) {
+
+          tg.openLink(
+            url
+          );
+
+
+          return;
+
+        }
+
+
+        location.href =
+          url;
+
+      }
+
+
+      /* =====================================================
+         HELPERS
+      ====================================================== */
+
+      function number(
+        value
+      ) {
+
+        return new Intl
+          .NumberFormat(
+            "en-US"
+          )
+          .format(
+            Number(
+              value ||
+              0
+            )
+          );
+
+      }
+
+
+      function validColor(
+        value
+      ) {
+
+        return /^#[0-9a-fA-F]{6}$/
+          .test(
+            String(
+              value ||
+              ""
+            )
+          );
+
+      }
+
+
+      function initial(
+        user
+      ) {
+
+        return String(
+          user.first_name ||
+          user.telegram_username ||
+          "R"
+        )
+          .charAt(0)
+          .toUpperCase();
+
+      }
+
+
+      function maskedName(
+        user
+      ) {
+
+        const name =
+          user.telegram_username ||
+          user.first_name ||
+          "Rico Member";
+
+
+        if (
+          name.length <=
+          4
+        ) {
+          return name;
+        }
+
+
+        return (
+          name.slice(0,3) +
+          "***" +
+          name.slice(-2)
+        );
+
+      }
+
+
+      function escapeHtml(
+        value
+      ) {
+
+        const div =
+          document.createElement(
+            "div"
+          );
+
+
+        div.textContent =
+          String(
+            value ??
+            ""
+          );
+
+
+        return div.innerHTML;
+
+      }
+
+
+      function escapeAttr(
+        value
+      ) {
+
+        return escapeHtml(
+          value
+        )
+          .replace(
+            /"/g,
+            "&quot;"
+          );
+
+      }
+
+
+      function showToast(
+        message
+      ) {
+
+        const toast =
+          $("#toast");
+
+
+        toast.textContent =
+          message;
+
+
+        toast
+          .classList
+          .add("show");
+
+
+        clearTimeout(
+          showToast.timer
+        );
+
+
+        showToast.timer =
+          setTimeout(
+            () =>
+              toast
+                .classList
+                .remove("show"),
+            2500
+          );
+
+      }
+
+    })();
+  </script>
 
 </body>
 </html>
