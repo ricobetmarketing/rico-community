@@ -8,7 +8,7 @@
   content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no"
 >
 
-<meta name="theme-color" content="#08090B">
+<meta name="theme-color" content="#08090c">
 
 <title>Rico Club</title>
 
@@ -16,51 +16,47 @@
 
 <style>
 /* =========================================================
-   RICO CLUB / PREMIUM COMMUNITY
+   RICO CLUB
 ========================================================= */
 
 :root {
-  --bg: #08090b;
-  --bg2: #0c0d10;
+  --bg: #07080a;
+  --bg-soft: #0b0d10;
 
   --surface: #101216;
-  --surface2: #14171b;
-  --surface3: #191c21;
+  --surface-2: #15181d;
+  --surface-3: #1a1e24;
 
   --line: rgba(255,255,255,.065);
-  --line2: rgba(255,255,255,.12);
+  --line-strong: rgba(255,255,255,.13);
 
   --text: #f5f3ef;
-  --text2: #c4c2bd;
+  --text-soft: #cbc9c3;
 
-  --muted: #898a8d;
-  --muted2: #5e6065;
+  --muted: #8c8d91;
+  --muted-2: #5c6066;
 
-  --rico-pink: #e95da9;
-  --rico-purple: #a695d8;
-  --rico-blue: #6fc8e8;
+  --pink: #ea5eaa;
+  --violet: #a697dc;
+  --blue: #70c9e9;
 
-  --gold: #d8bb75;
-  --green: #61d49a;
-  --red: #ff787d;
+  --green: #62d99c;
+  --gold: #e5c67a;
+  --orange: #f3a96c;
+  --red: #ff7b81;
 
-  --rico-gradient:
+  --gradient:
     linear-gradient(
       135deg,
-      var(--rico-pink),
-      var(--rico-purple) 49%,
-      var(--rico-blue)
+      var(--pink) 0%,
+      var(--violet) 49%,
+      var(--blue) 100%
     );
 
-  --safe-bottom:
-    env(safe-area-inset-bottom);
+  --safe-top: env(safe-area-inset-top);
+  --safe-bottom: env(safe-area-inset-bottom);
 
-  --safe-top:
-    env(safe-area-inset-top);
-
-  --radius-xl: 30px;
-  --radius-lg: 22px;
-  --radius-md: 16px;
+  --max-width: 1180px;
 }
 
 
@@ -74,7 +70,6 @@ html,
 body {
   margin: 0;
   min-height: 100%;
-
   background: var(--bg);
 }
 
@@ -118,41 +113,39 @@ img {
 
 
 /* =========================================================
-   APP BACKGROUND
+   WORLD
 ========================================================= */
 
-.rico-world {
+.world {
   position: fixed;
   inset: 0;
 
-  z-index: -2;
-
-  pointer-events: none;
+  z-index: -5;
 
   overflow: hidden;
 
+  pointer-events: none;
+
   background:
     radial-gradient(
-      circle at 15% -10%,
-      rgba(233,93,169,.08),
-      transparent 29rem
+      circle at 12% -5%,
+      rgba(234,94,170,.11),
+      transparent 28rem
     ),
     radial-gradient(
-      circle at 100% 14%,
-      rgba(111,200,232,.065),
-      transparent 31rem
+      circle at 96% 17%,
+      rgba(112,201,233,.08),
+      transparent 30rem
     ),
     linear-gradient(
       180deg,
-      #090a0d,
-      #07080a 75%
+      #090a0d 0%,
+      #060709 80%
     );
 }
 
 
-.rico-world::after {
-  content: "";
-
+.world-grid {
   position: absolute;
   inset: 0;
 
@@ -160,67 +153,75 @@ img {
 
   background-image:
     linear-gradient(
-      rgba(255,255,255,.7) 1px,
+      rgba(255,255,255,.75) 1px,
       transparent 1px
     ),
     linear-gradient(
       90deg,
-      rgba(255,255,255,.7) 1px,
+      rgba(255,255,255,.75) 1px,
       transparent 1px
     );
 
   background-size:
-    46px 46px;
+    54px 54px;
 
   mask-image:
     linear-gradient(
       to bottom,
-      black,
-      transparent 65%
+      #000,
+      transparent 72%
     );
 }
 
 
-.orb {
+.world-orb {
   position: absolute;
 
-  width: 260px;
-  height: 260px;
+  width: 300px;
+  height: 300px;
 
-  border-radius: 999px;
+  border-radius: 50%;
 
-  filter: blur(100px);
+  filter: blur(110px);
 
-  opacity: .10;
+  opacity: .12;
 
   animation:
-    orbFloat 13s ease-in-out infinite alternate;
+    orbFloat 14s ease-in-out infinite alternate;
 }
 
 
-.orb.one {
-  top: 16%;
-  left: -180px;
-
-  background: var(--rico-pink);
+.world-orb.one {
+  top: 18%;
+  left: -210px;
+  background: var(--pink);
 }
 
 
-.orb.two {
-  top: 42%;
-  right: -190px;
-
-  background: var(--rico-blue);
+.world-orb.two {
+  top: 40%;
+  right: -220px;
+  background: var(--blue);
 
   animation-delay: -6s;
+}
+
+
+.world-orb.three {
+  bottom: -200px;
+  left: 30%;
+
+  background: var(--violet);
+
+  animation-delay: -10s;
 }
 
 
 @keyframes orbFloat {
   to {
     transform:
-      translate3d(30px,-30px,0)
-      scale(1.12);
+      translate3d(34px,-28px,0)
+      scale(1.13);
   }
 }
 
@@ -233,110 +234,114 @@ img {
   position: fixed;
   inset: 0;
 
-  z-index: 5000;
+  z-index: 9000;
 
   display: grid;
   place-items: center;
 
-  background: #08090b;
+  background: #07080a;
 
   transition:
-    opacity .38s ease,
-    visibility .38s ease;
+    opacity .4s ease,
+    visibility .4s ease;
 }
 
 
-.loader.out {
+.loader.hide {
   opacity: 0;
   visibility: hidden;
 }
 
 
-.loader-box {
+.loader-inner {
   text-align: center;
 }
 
 
 .loader-logo {
-  width: 92px;
+  width: 94px;
+  margin: auto;
 
-  margin: 0 auto;
-
-  object-fit: contain;
+  filter:
+    drop-shadow(
+      0 18px 45px
+      rgba(112,201,233,.17)
+    );
 
   animation:
-    logoBreath 1.8s ease-in-out infinite;
+    loaderLogo 1.8s ease-in-out infinite;
 }
 
 
-.loader-box strong {
+@keyframes loaderLogo {
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+
+.loader-inner strong {
   display: block;
 
-  margin-top: 21px;
+  margin-top: 22px;
 
   font-size: 11px;
-  letter-spacing: .24em;
+  letter-spacing: .25em;
 }
 
 
-.loader-box span {
+.loader-inner span {
   display: block;
 
   margin-top: 7px;
 
   color: var(--muted);
 
-  font-size: 8px;
+  font-size: 7px;
+  letter-spacing: .08em;
 }
 
 
-.loader-line {
-  width: 140px;
+.loader-progress {
+  width: 150px;
   height: 3px;
 
   margin:
-    20px auto 0;
+    22px auto 0;
 
   overflow: hidden;
 
-  border-radius: 10px;
+  border-radius: 20px;
 
   background:
-    rgba(255,255,255,.05);
+    rgba(255,255,255,.055);
 }
 
 
-.loader-line::after {
+.loader-progress::before {
   content: "";
 
   display: block;
 
-  width: 42%;
+  width: 38%;
   height: 100%;
 
   border-radius: inherit;
 
-  background: var(--rico-gradient);
+  background: var(--gradient);
 
   animation:
-    loaderMove 1s ease infinite;
+    loadingLine 1.05s ease-in-out infinite;
 }
 
 
-@keyframes loaderMove {
+@keyframes loadingLine {
   from {
-    transform: translateX(-110%);
+    transform: translateX(-120%);
   }
 
   to {
-    transform: translateX(350%);
-  }
-}
-
-
-@keyframes logoBreath {
-  50% {
-    transform: scale(1.045);
+    transform: translateX(370%);
   }
 }
 
@@ -356,38 +361,41 @@ img {
 
 
 .telegram-required-card {
-  width:
-    min(
-      100%,
-      420px
-    );
+  width: min(100%,420px);
 
-  padding: 38px;
+  padding: 36px;
 
   text-align: center;
 
-  border:
-    1px solid var(--line);
+  border: 1px solid var(--line);
 
   border-radius: 30px;
 
   background:
-    rgba(255,255,255,.018);
+    linear-gradient(
+      145deg,
+      rgba(255,255,255,.032),
+      rgba(255,255,255,.01)
+    );
+
+  box-shadow:
+    0 30px 100px
+    rgba(0,0,0,.35);
 }
 
 
 .telegram-required-card img {
-  width: 90px;
+  width: 88px;
 
   margin:
-    0 auto 23px;
+    0 auto 22px;
 }
 
 
 .telegram-required-card h1 {
   margin: 0;
 
-  font-size: 27px;
+  font-size: 26px;
   letter-spacing: -.045em;
 }
 
@@ -404,23 +412,18 @@ img {
 
 
 /* =========================================================
-   MAIN SHELL
+   SHELL
 ========================================================= */
 
-.shell {
-  width:
-    min(
-      100%,
-      1240px
-    );
+.app {
+  width: min(100%,var(--max-width));
 
-  margin: 0 auto;
+  margin: auto;
 
   padding:
-    0
-    16px
+    0 16px
     calc(
-      110px +
+      112px +
       var(--safe-bottom)
     );
 }
@@ -435,7 +438,7 @@ img {
 
   top: 0;
 
-  z-index: 200;
+  z-index: 300;
 
   min-height: 75px;
 
@@ -443,11 +446,11 @@ img {
   align-items: center;
   justify-content: space-between;
 
-  gap: 18px;
+  gap: 20px;
 
   padding:
     calc(
-      12px +
+      11px +
       var(--safe-top)
     )
     0
@@ -456,11 +459,11 @@ img {
   background:
     linear-gradient(
       180deg,
-      rgba(8,9,11,.96) 72%,
-      rgba(8,9,11,0)
+      rgba(7,8,10,.97) 66%,
+      rgba(7,8,10,0)
     );
 
-  backdrop-filter: blur(22px);
+  backdrop-filter: blur(24px);
 }
 
 
@@ -473,8 +476,8 @@ img {
 
 
 .brand img {
-  width: 42px;
-  height: 42px;
+  width: 41px;
+  height: 41px;
 
   object-fit: contain;
 }
@@ -484,7 +487,7 @@ img {
   display: block;
 
   font-size: 12px;
-  letter-spacing: .17em;
+  letter-spacing: .16em;
 }
 
 
@@ -495,11 +498,13 @@ img {
 
   color: var(--muted);
 
-  font-size: 7px;
+  font-size: 6px;
+  font-weight: 800;
+  letter-spacing: .13em;
 }
 
 
-.avatar-button {
+.profile-button {
   position: relative;
 
   width: 44px;
@@ -510,12 +515,12 @@ img {
   border: 0;
   border-radius: 15px;
 
-  background: var(--rico-gradient);
+  background: var(--gradient);
 }
 
 
-.avatar-button img,
-.avatar-fallback {
+.profile-button img,
+.profile-fallback {
   width: 100%;
   height: 100%;
 
@@ -528,20 +533,20 @@ img {
 }
 
 
-.avatar-fallback {
+.profile-fallback {
   display: grid;
   place-items: center;
 
-  color: white;
+  background: #181b20;
 
-  background: #17191d;
+  color: white;
 
   font-size: 12px;
   font-weight: 900;
 }
 
 
-.avatar-online {
+.profile-online {
   position: absolute;
 
   right: -1px;
@@ -560,14 +565,14 @@ img {
 
 
 /* =========================================================
-   PAGES
+   PAGE
 ========================================================= */
 
 .page {
   display: none;
 
   animation:
-    pageEnter .35s cubic-bezier(.2,.75,.2,1);
+    pageIn .35s cubic-bezier(.2,.8,.2,1);
 }
 
 
@@ -576,7 +581,7 @@ img {
 }
 
 
-@keyframes pageEnter {
+@keyframes pageIn {
   from {
     opacity: 0;
     transform: translateY(9px);
@@ -591,37 +596,32 @@ img {
 
 .desktop-grid {
   display: grid;
-
-  gap: 15px;
+  gap: 18px;
 }
 
 
-@media (min-width: 860px) {
-
+@media (min-width:900px) {
   .desktop-grid {
     grid-template-columns:
-      minmax(0,1.4fr)
-      minmax(320px,.6fr);
+      minmax(0,1.45fr)
+      minmax(340px,.55fr);
 
     align-items: start;
   }
 
-
-  .desktop-sticky {
+  .desktop-side {
     position: sticky;
-
-    top: 91px;
+    top: 92px;
   }
-
 }
 
 
 /* =========================================================
-   TEXT
+   TYPOGRAPHY
 ========================================================= */
 
 .eyebrow {
-  color: var(--muted2);
+  color: var(--muted-2);
 
   font-size: 7px;
   font-weight: 900;
@@ -629,51 +629,14 @@ img {
 }
 
 
-.page-title {
-  margin:
-    6px 0 0;
-
-  font-size:
-    clamp(
-      29px,
-      7vw,
-      42px
-    );
-
-  line-height: .98;
-
-  letter-spacing: -.06em;
-}
-
-
-.page-description {
-  max-width: 500px;
-
-  margin:
-    10px 0 0;
-
-  color: var(--muted);
-
-  font-size: 9px;
-  line-height: 1.6;
-}
-
-
-.page-intro {
-  padding:
-    28px 2px
-    21px;
-}
-
-
 .section-head {
   display: flex;
-  align-items: end;
+  align-items: flex-end;
   justify-content: space-between;
 
-  gap: 15px;
+  gap: 14px;
 
-  margin-bottom: 14px;
+  margin-bottom: 13px;
 }
 
 
@@ -688,27 +651,64 @@ img {
 
 .section-head button {
   border: 0;
-
-  color: var(--rico-blue);
-
   background: transparent;
 
-  font-size: 8px;
-  font-weight: 800;
+  color: var(--blue);
+
+  font-size: 7px;
+  font-weight: 900;
+  letter-spacing: .06em;
+}
+
+
+.page-intro {
+  padding:
+    28px 2px
+    21px;
+}
+
+
+.page-intro h1 {
+  margin:
+    5px 0 0;
+
+  font-size:
+    clamp(
+      31px,
+      7vw,
+      48px
+    );
+
+  line-height: .98;
+  letter-spacing: -.065em;
+}
+
+
+.page-intro p {
+  max-width: 520px;
+
+  margin:
+    10px 0 0;
+
+  color: var(--muted);
+
+  font-size: 9px;
+  line-height: 1.6;
 }
 
 
 /* =========================================================
-   HOME HERO
+   GREETING
 ========================================================= */
 
-.hello {
+.greeting {
   padding:
-    24px 2px 19px;
+    23px 2px
+    18px;
 }
 
 
-.hello-row {
+.greeting-row {
   display: flex;
   align-items: flex-end;
   justify-content: space-between;
@@ -717,49 +717,49 @@ img {
 }
 
 
-.hello h1 {
+.greeting h1 {
   margin:
     5px 0 0;
 
   font-size:
     clamp(
-      30px,
+      31px,
       8vw,
-      43px
+      45px
     );
 
-  line-height: .97;
+  line-height: .96;
 
-  letter-spacing: -.065em;
+  letter-spacing: -.067em;
 }
 
 
-.hello h1 span {
+.greeting h1 span {
   color: var(--muted);
 }
 
 
 .streak-chip {
+  min-height: 37px;
+
   display: flex;
   align-items: center;
 
-  gap: 6px;
-
-  min-height: 35px;
+  gap: 7px;
 
   padding:
     0 12px;
 
   border:
     1px solid
-    rgba(216,187,117,.13);
+    rgba(229,198,122,.14);
 
   border-radius: 999px;
 
   color: var(--gold);
 
   background:
-    rgba(216,187,117,.035);
+    rgba(229,198,122,.035);
 
   font-size: 9px;
   font-weight: 900;
@@ -773,25 +773,23 @@ img {
 .announcement {
   position: relative;
 
+  overflow: hidden;
+
   margin-bottom: 14px;
 
   padding:
-    12px
-    14px
-    12px
-    17px;
-
-  overflow: hidden;
+    13px 15px
+    13px 17px;
 
   border:
     1px solid var(--line);
 
-  border-radius: 15px;
+  border-radius: 16px;
 
-  color: var(--text2);
+  color: var(--text-soft);
 
   background:
-    rgba(255,255,255,.017);
+    rgba(255,255,255,.015);
 
   font-size: 9px;
   line-height: 1.5;
@@ -803,13 +801,12 @@ img {
 
   position: absolute;
 
-  top: 0;
-  bottom: 0;
-  left: 0;
+  inset:
+    0 auto 0 0;
 
   width: 2px;
 
-  background: var(--rico-gradient);
+  background: var(--gradient);
 }
 
 
@@ -833,21 +830,34 @@ img {
     linear-gradient(
       145deg,
       rgba(255,255,255,.038),
-      rgba(255,255,255,.009)
+      rgba(255,255,255,.008)
     );
 
   box-shadow:
     0 28px 90px
-    rgba(0,0,0,.24);
-
-  transition:
-    transform .2s ease,
-    border-color .2s ease;
+    rgba(0,0,0,.28);
 }
 
 
-.member-card:active {
-  transform: scale(.995);
+.member-card::before {
+  content: "";
+
+  position: absolute;
+
+  width: 260px;
+  height: 260px;
+
+  right: -120px;
+  top: -140px;
+
+  border-radius: 50%;
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(112,201,233,.12),
+      transparent 67%
+    );
 }
 
 
@@ -856,27 +866,24 @@ img {
 
   position: absolute;
 
-  right: -25px;
-  bottom: -78px;
+  right: -29px;
+  bottom: -86px;
 
   color:
-    rgba(255,255,255,.018);
+    rgba(255,255,255,.017);
 
-  font-size: 250px;
+  font-size: 270px;
   font-weight: 900;
   line-height: 1;
-
-  pointer-events: none;
 }
 
 
-.balance-top {
+.balance-row {
   position: relative;
-
   z-index: 2;
 
   display: flex;
-  align-items: start;
+  align-items: flex-start;
   justify-content: space-between;
 
   gap: 20px;
@@ -886,13 +893,13 @@ img {
 .balance-label {
   color: var(--muted);
 
-  font-size: 8px;
+  font-size: 7px;
   font-weight: 900;
-  letter-spacing: .15em;
+  letter-spacing: .17em;
 }
 
 
-.balance-value {
+.balance {
   display: flex;
   align-items: center;
 
@@ -902,7 +909,7 @@ img {
 }
 
 
-.balance-r {
+.balance-logo {
   width: 29px;
   height: 29px;
 
@@ -911,30 +918,29 @@ img {
 
   border-radius: 10px;
 
-  color: white;
+  background: var(--gradient);
 
-  background: var(--rico-gradient);
+  color: white;
 
   font-size: 11px;
   font-weight: 900;
 }
 
 
-.balance-value strong {
+.balance strong {
   font-size:
     clamp(
       42px,
       11vw,
-      62px
+      63px
     );
 
   line-height: .95;
-
   letter-spacing: -.075em;
 }
 
 
-.tier {
+.tier-chip {
   min-height: 31px;
 
   display: inline-flex;
@@ -945,31 +951,29 @@ img {
 
   border:
     1px solid
-    rgba(216,187,117,.15);
+    rgba(229,198,122,.15);
 
   border-radius: 999px;
 
   color: var(--gold);
 
   background:
-    rgba(216,187,117,.035);
+    rgba(229,198,122,.035);
 
   font-size: 7px;
   font-weight: 900;
-  letter-spacing: .12em;
+  letter-spacing: .11em;
 }
 
 
-.progress-row {
+.progress-meta {
   position: relative;
-
   z-index: 2;
 
   display: flex;
-  align-items: center;
   justify-content: space-between;
 
-  gap: 14px;
+  gap: 15px;
 
   margin-top: 24px;
 
@@ -979,30 +983,29 @@ img {
 }
 
 
-.progress-row strong {
+.progress-meta strong {
   color: white;
 }
 
 
-.progress-track {
+.progress {
   position: relative;
-
   z-index: 2;
 
-  height: 5px;
+  height: 6px;
 
   margin-top: 9px;
 
   overflow: hidden;
 
-  border-radius: 100px;
+  border-radius: 999px;
 
   background:
     rgba(255,255,255,.055);
 }
 
 
-.progress-track i {
+.progress span {
   display: block;
 
   width: 0;
@@ -1010,16 +1013,20 @@ img {
 
   border-radius: inherit;
 
-  background: var(--rico-gradient);
+  background: var(--gradient);
+
+  box-shadow:
+    0 0 18px
+    rgba(112,201,233,.2);
 
   transition:
-    width .9s cubic-bezier(.15,.8,.2,1);
+    width .9s
+    cubic-bezier(.2,.8,.2,1);
 }
 
 
 .member-stats {
   position: relative;
-
   z-index: 2;
 
   display: grid;
@@ -1040,7 +1047,7 @@ img {
 .member-stat span {
   display: block;
 
-  color: var(--muted2);
+  color: var(--muted-2);
 
   font-size: 6px;
   font-weight: 900;
@@ -1072,11 +1079,11 @@ img {
 }
 
 
-.quick {
+.quick-action {
   min-width: 0;
 
   padding:
-    12px 3px;
+    12px 4px;
 
   border:
     1px solid var(--line);
@@ -1086,27 +1093,30 @@ img {
   color: var(--muted);
 
   background:
-    rgba(255,255,255,.014);
+    rgba(255,255,255,.013);
 
   text-align: center;
 
   transition:
-    transform .18s ease,
-    background .18s ease;
+    transform .16s ease,
+    border-color .16s ease,
+    background .16s ease;
 }
 
 
-.quick:active {
+.quick-action:active {
   transform: scale(.94);
 
+  border-color: var(--line-strong);
+
   background:
-    rgba(255,255,255,.04);
+    rgba(255,255,255,.034);
 }
 
 
 .quick-icon {
-  width: 29px;
-  height: 29px;
+  width: 30px;
+  height: 30px;
 
   display: grid;
   place-items: center;
@@ -1119,43 +1129,84 @@ img {
   color: white;
 
   background:
-    rgba(255,255,255,.045);
+    linear-gradient(
+      145deg,
+      rgba(255,255,255,.065),
+      rgba(255,255,255,.025)
+    );
 
   font-size: 12px;
 }
 
 
-.quick small {
+.quick-action small {
   display: block;
 
   font-size: 6px;
-  font-weight: 800;
+  font-weight: 900;
 }
 
 
 /* =========================================================
-   TODAY / CHECK IN
+   SECTIONS
 ========================================================= */
 
 .home-section {
-  margin-top: 31px;
+  margin-top: 32px;
 }
 
 
-.checkin {
+/* =========================================================
+   CHECK IN
+========================================================= */
+
+.checkin-card {
+  position: relative;
+
+  overflow: hidden;
+
   padding: 19px;
 
   border:
     1px solid var(--line);
 
-  border-radius: 21px;
+  border-radius: 22px;
 
   background:
-    rgba(255,255,255,.015);
+    linear-gradient(
+      145deg,
+      rgba(255,255,255,.024),
+      rgba(255,255,255,.009)
+    );
 }
 
 
-.checkin-head {
+.checkin-card::after {
+  content: "";
+
+  position: absolute;
+
+  width: 150px;
+  height: 150px;
+
+  right: -80px;
+  top: -95px;
+
+  border-radius: 50%;
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(98,217,156,.09),
+      transparent 70%
+    );
+}
+
+
+.checkin-info {
+  position: relative;
+  z-index: 2;
+
   display: flex;
   align-items: center;
 
@@ -1164,34 +1215,27 @@ img {
 
 
 .checkin-icon {
-  width: 43px;
-  height: 43px;
+  width: 44px;
+  height: 44px;
 
   display: grid;
   place-items: center;
 
   flex: 0 0 auto;
 
+  border:
+    1px solid
+    rgba(98,217,156,.11);
+
   border-radius: 14px;
 
   color: var(--green);
 
   background:
-    rgba(97,212,154,.045);
+    rgba(98,217,156,.045);
 
-  border:
-    1px solid
-    rgba(97,212,154,.10);
-
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 900;
-}
-
-
-.checkin-copy {
-  min-width: 0;
-
-  flex: 1;
 }
 
 
@@ -1218,7 +1262,7 @@ img {
 
   margin-top: 6px;
 
-  color: var(--rico-blue);
+  color: var(--blue);
 
   font-size: 8px;
 }
@@ -1229,29 +1273,33 @@ img {
 
   min-height: 47px;
 
-  margin-top: 15px;
+  margin-top: 16px;
 
   border: 0;
   border-radius: 14px;
 
   color: white;
 
-  background: var(--rico-gradient);
+  background: var(--gradient);
 
   font-size: 8px;
   font-weight: 900;
   letter-spacing: .08em;
 
+  box-shadow:
+    0 15px 35px
+    rgba(112,201,233,.10);
+
   transition:
-    transform .18s ease,
-    filter .18s ease;
+    transform .17s ease,
+    filter .17s ease;
 }
 
 
 .primary-button:active {
   transform: scale(.985);
 
-  filter: brightness(.93);
+  filter: brightness(.94);
 }
 
 
@@ -1260,78 +1308,381 @@ img {
 
   background:
     rgba(255,255,255,.045);
-}
 
-
-.week-strip {
-  display: grid;
-  grid-template-columns:
-    repeat(7,1fr);
-
-  gap: 5px;
-
-  margin-top: 9px;
-}
-
-
-.week-day {
-  padding:
-    7px 2px;
-
-  text-align: center;
-
-  border:
-    1px solid var(--line);
-
-  border-radius: 11px;
-
-  background:
-    rgba(255,255,255,.01);
-}
-
-
-.week-day span {
-  display: block;
-
-  color: var(--muted2);
-
-  font-size: 6px;
-  font-weight: 900;
-}
-
-
-.week-day i {
-  display: block;
-
-  width: 5px;
-  height: 5px;
-
-  margin:
-    5px auto 0;
-
-  border-radius: 50%;
-
-  background:
-    rgba(255,255,255,.1);
-}
-
-
-.week-day.today i {
-  background: var(--rico-blue);
-
-  box-shadow:
-    0 0 0 4px
-    rgba(111,200,232,.06);
+  box-shadow: none;
 }
 
 
 /* =========================================================
-   MISSIONS
+   ADVANCED 7-DAY REWARD JOURNEY
+========================================================= */
+
+.daily-journey {
+  position: relative;
+
+  margin-top: 12px;
+
+  padding:
+    16px 11px 13px;
+
+  overflow: hidden;
+
+  border:
+    1px solid var(--line);
+
+  border-radius: 21px;
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255,255,255,.021),
+      rgba(255,255,255,.008)
+    );
+}
+
+
+.daily-journey-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 12px;
+
+  padding:
+    0 4px
+    13px;
+}
+
+
+.daily-journey-head span {
+  color: var(--muted);
+
+  font-size: 7px;
+  font-weight: 900;
+  letter-spacing: .13em;
+}
+
+
+.daily-journey-head strong {
+  font-size: 8px;
+}
+
+
+.day-track {
+  position: relative;
+
+  display: grid;
+  grid-template-columns:
+    repeat(7,1fr);
+
+  gap: 6px;
+}
+
+
+.day-track::before {
+  content: "";
+
+  position: absolute;
+
+  left: 6%;
+  right: 6%;
+
+  top: 31px;
+
+  height: 1px;
+
+  z-index: 0;
+
+  background:
+    linear-gradient(
+      90deg,
+      rgba(234,94,170,.18),
+      rgba(166,151,220,.16),
+      rgba(112,201,233,.18)
+    );
+}
+
+
+.day-card {
+  position: relative;
+  z-index: 2;
+
+  min-width: 0;
+
+  padding:
+    9px 3px
+    8px;
+
+  overflow: hidden;
+
+  border:
+    1px solid var(--line);
+
+  border-radius: 14px;
+
+  text-align: center;
+
+  background:
+    #0c0e11;
+
+  transition:
+    transform .18s ease,
+    border-color .18s ease,
+    background .18s ease;
+}
+
+
+.day-card::before {
+  content: "";
+
+  position: absolute;
+
+  left: 50%;
+  top: 0;
+
+  width: 60%;
+  height: 1px;
+
+  transform:
+    translateX(-50%);
+
+  opacity: 0;
+
+  background: var(--gradient);
+}
+
+
+.day-card.completed {
+  border-color:
+    rgba(98,217,156,.14);
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(98,217,156,.045),
+      rgba(255,255,255,.007)
+    );
+}
+
+
+.day-card.today {
+  transform:
+    translateY(-4px);
+
+  border-color:
+    rgba(112,201,233,.38);
+
+  background:
+    radial-gradient(
+      circle at 50% 0,
+      rgba(112,201,233,.12),
+      transparent 55%
+    ),
+    #101216;
+
+  box-shadow:
+    0 12px 30px
+    rgba(0,0,0,.28),
+    0 0 28px
+    rgba(112,201,233,.07);
+}
+
+
+.day-card.today::before {
+  opacity: 1;
+}
+
+
+.day-card.bonus {
+  border-color:
+    rgba(229,198,122,.15);
+
+  background:
+    radial-gradient(
+      circle at 50% 0,
+      rgba(229,198,122,.09),
+      transparent 58%
+    ),
+    #0c0e11;
+}
+
+
+.day-name {
+  display: block;
+
+  color: var(--muted-2);
+
+  font-size: 6px;
+  font-weight: 900;
+  letter-spacing: .08em;
+
+  text-transform: uppercase;
+}
+
+
+.day-card.today
+.day-name {
+  color: var(--blue);
+}
+
+
+.day-date {
+  display: block;
+
+  margin-top: 4px;
+
+  color: white;
+
+  font-size: 11px;
+  font-weight: 800;
+}
+
+
+.day-icon {
+  position: relative;
+
+  width: 25px;
+  height: 25px;
+
+  display: grid;
+  place-items: center;
+
+  margin:
+    8px auto 0;
+
+  border:
+    1px solid var(--line);
+
+  border-radius: 9px;
+
+  color: var(--muted);
+
+  background:
+    rgba(255,255,255,.026);
+
+  font-size: 8px;
+  font-weight: 900;
+}
+
+
+.day-card.completed
+.day-icon {
+  color: #07100b;
+
+  border-color:
+    rgba(98,217,156,.35);
+
+  background: var(--green);
+
+  box-shadow:
+    0 0 18px
+    rgba(98,217,156,.18);
+}
+
+
+.day-card.today
+.day-icon {
+  color: white;
+
+  border: 0;
+
+  background: var(--gradient);
+
+  box-shadow:
+    0 0 18px
+    rgba(112,201,233,.18);
+
+  animation:
+    todayPulse 1.8s ease-in-out infinite;
+}
+
+
+@keyframes todayPulse {
+  50% {
+    transform: scale(1.07);
+
+    box-shadow:
+      0 0 25px
+      rgba(112,201,233,.28);
+  }
+}
+
+
+.day-card.bonus
+.day-icon {
+  color: var(--gold);
+
+  border-color:
+    rgba(229,198,122,.18);
+
+  background:
+    rgba(229,198,122,.055);
+}
+
+
+.day-reward {
+  display: block;
+
+  margin-top: 7px;
+
+  overflow: hidden;
+
+  color: var(--muted);
+
+  font-size: 5.5px;
+  font-weight: 800;
+
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+
+.day-card.today
+.day-reward {
+  color: white;
+}
+
+
+.day-card.completed
+.day-reward {
+  color: var(--green);
+}
+
+
+.today-label {
+  display: none;
+
+  position: absolute;
+
+  top: 3px;
+  right: 3px;
+
+  padding:
+    2px 3px;
+
+  border-radius: 4px;
+
+  color: #071014;
+
+  background: var(--blue);
+
+  font-size: 4px;
+  font-weight: 900;
+}
+
+
+.day-card.today
+.today-label {
+  display: block;
+}
+
+
+/* =========================================================
+   MISSION
 ========================================================= */
 
 .mission-list {
   display: grid;
-
   gap: 8px;
 }
 
@@ -1339,11 +1690,11 @@ img {
 .mission {
   display: grid;
   grid-template-columns:
-    42px 1fr auto;
-
-  gap: 12px;
+    43px 1fr auto;
 
   align-items: center;
+
+  gap: 12px;
 
   padding: 14px;
 
@@ -1353,50 +1704,53 @@ img {
   border-radius: 17px;
 
   background:
-    rgba(255,255,255,.012);
+    rgba(255,255,255,.011);
 
   transition:
-    transform .18s ease,
-    background .18s ease;
+    transform .17s ease,
+    border-color .17s ease,
+    background .17s ease;
 }
 
 
 .mission:active {
   transform: scale(.99);
 
+  border-color: var(--line-strong);
+
   background:
-    rgba(255,255,255,.026);
+    rgba(255,255,255,.03);
 }
 
 
 .mission-icon {
-  width: 42px;
-  height: 42px;
+  width: 43px;
+  height: 43px;
 
   display: grid;
   place-items: center;
 
   border-radius: 13px;
 
-  color: var(--rico-pink);
+  color: var(--pink);
 
   background:
-    rgba(233,93,169,.045);
+    rgba(234,94,170,.045);
 
-  font-size: 12px;
+  font-size: 13px;
 }
 
 
 .mission h3 {
   margin: 0;
 
-  font-size: 11px;
+  font-size: 10px;
 }
 
 
 .mission p {
   margin:
-    3px 0 0;
+    4px 0 0;
 
   color: var(--muted);
 
@@ -1406,98 +1760,120 @@ img {
 
 
 .mission-points {
-  color: var(--rico-blue);
+  color: var(--blue);
 
   font-size: 8px;
   font-weight: 900;
-
-  white-space: nowrap;
 }
 
 
 /* =========================================================
-   FEATURED GAME
+   ARCADE FEATURE HERO
 ========================================================= */
 
-.featured-game {
+.arcade-hero {
   position: relative;
 
-  overflow: hidden;
-
-  min-height: 210px;
+  min-height: 265px;
 
   display: flex;
   align-items: flex-end;
 
-  padding: 22px;
+  overflow: hidden;
 
   border:
     1px solid var(--line);
 
-  border-radius: 26px;
+  border-radius: 28px;
 
   background:
-    radial-gradient(
-      circle at 82% 27%,
-      rgba(111,200,232,.11),
-      transparent 38%
-    ),
-    radial-gradient(
-      circle at 20% 90%,
-      rgba(233,93,169,.08),
-      transparent 45%
-    ),
     #101216;
+
+  box-shadow:
+    0 30px 90px
+    rgba(0,0,0,.26);
 }
 
 
-.featured-game::after {
+.arcade-hero-bg {
+  position: absolute;
+  inset: 0;
+
+  background:
+    linear-gradient(
+      90deg,
+      rgba(7,8,10,.92) 0%,
+      rgba(7,8,10,.67) 42%,
+      rgba(7,8,10,.17) 78%
+    ),
+    url("/assets/games/rico-jump-banner.webp")
+    center/cover no-repeat;
+
+  transform: scale(1.025);
+
+  transition:
+    transform .8s ease;
+}
+
+
+.arcade-hero:hover
+.arcade-hero-bg {
+  transform: scale(1.055);
+}
+
+
+.arcade-hero-bg::after {
   content: "";
 
   position: absolute;
+  inset: 0;
 
-  top: -45px;
-  right: -35px;
-
-  width: 180px;
-  height: 180px;
-
-  border:
-    25px solid
-    rgba(255,255,255,.015);
-
-  border-radius: 50%;
+  background:
+    radial-gradient(
+      circle at 85% 30%,
+      rgba(112,201,233,.13),
+      transparent 30%
+    ),
+    linear-gradient(
+      180deg,
+      transparent 50%,
+      rgba(7,8,10,.7)
+    );
 }
 
 
-.featured-content {
+.arcade-hero-copy {
   position: relative;
-
   z-index: 3;
 
-  max-width: 300px;
+  width: 100%;
+  max-width: 470px;
+
+  padding: 25px;
 }
 
 
-.game-tag {
-  display: inline-flex;
-
+.game-label {
   min-height: 25px;
 
+  display: inline-flex;
   align-items: center;
 
   padding:
     0 9px;
 
   border:
-    1px solid var(--line2);
+    1px solid
+    rgba(112,201,233,.15);
 
   border-radius: 999px;
 
-  color: var(--rico-blue);
+  color: var(--blue);
 
   background:
-    rgba(111,200,232,.035);
+    rgba(7,8,10,.58);
+
+  backdrop-filter: blur(9px);
 
   font-size: 6px;
   font-weight: 900;
@@ -1505,51 +1881,83 @@ img {
 }
 
 
-.featured-content h2 {
+.arcade-hero h2 {
   margin:
-    12px 0 6px;
+    13px 0 7px;
 
-  font-size: 27px;
-  letter-spacing: -.05em;
+  font-size:
+    clamp(
+      27px,
+      6vw,
+      42px
+    );
+
+  letter-spacing: -.055em;
 }
 
 
-.featured-content p {
+.arcade-hero p {
   margin: 0;
 
-  color: var(--muted);
+  max-width: 340px;
+
+  color: #bbbcc0;
 
   font-size: 8px;
   line-height: 1.55;
 }
 
 
-.featured-content button {
-  min-height: 40px;
+.arcade-meta {
+  display: flex;
+  gap: 15px;
 
-  margin-top: 16px;
+  margin-top: 14px;
+}
+
+
+.arcade-meta span {
+  color: var(--muted);
+
+  font-size: 6px;
+  font-weight: 800;
+}
+
+
+.arcade-meta b {
+  color: white;
+}
+
+
+.play-button {
+  min-height: 41px;
+
+  margin-top: 17px;
 
   padding:
-    0 17px;
+    0 18px;
 
   border: 0;
+
   border-radius: 12px;
 
   color: white;
 
-  background: var(--rico-gradient);
+  background: var(--gradient);
 
   font-size: 7px;
   font-weight: 900;
+  letter-spacing: .07em;
 }
 
 
 /* =========================================================
-   ARCADE
+   GAME CARDS
 ========================================================= */
 
-.arcade-grid {
+.games-grid {
   display: grid;
+
   grid-template-columns:
     repeat(2,minmax(0,1fr));
 
@@ -1560,170 +1968,254 @@ img {
 .game-card {
   position: relative;
 
+  min-height: 230px;
+
   overflow: hidden;
 
-  min-height: 173px;
-
-  padding: 17px;
+  padding: 0;
 
   border:
     1px solid var(--line);
 
-  border-radius: 21px;
+  border-radius: 23px;
 
-  background:
-    rgba(255,255,255,.015);
+  color: white;
+
+  background: #101216;
 
   text-align: left;
 
-  color: var(--text);
-
   transition:
-    transform .18s ease,
-    background .18s ease,
-    border-color .18s ease;
+    transform .2s ease,
+    border-color .2s ease;
 }
 
 
 .game-card:active {
-  transform: scale(.975);
-
-  background:
-    rgba(255,255,255,.035);
+  transform: scale(.98);
 }
 
 
-.game-art {
+.game-card:hover {
+  border-color: var(--line-strong);
+}
+
+
+.game-banner {
+  position: absolute;
+  inset: 0;
+
+  background-position: center;
+  background-size: cover;
+
+  transform: scale(1.015);
+
+  transition:
+    transform .7s ease;
+}
+
+
+.game-card:hover
+.game-banner {
+  transform: scale(1.07);
+}
+
+
+.game-card::after {
+  content: "";
+
+  position: absolute;
+  inset: 0;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(7,8,10,.04) 10%,
+      rgba(7,8,10,.32) 45%,
+      rgba(7,8,10,.96) 100%
+    );
+}
+
+
+.jump-banner {
+  background-image:
+    radial-gradient(
+      circle at 70% 20%,
+      rgba(112,201,233,.27),
+      transparent 38%
+    ),
+    url("/assets/games/rico-jump-banner.webp"),
+    linear-gradient(
+      145deg,
+      #172530,
+      #0b1014
+    );
+}
+
+
+.snake-banner {
+  background-image:
+    radial-gradient(
+      circle at 70% 25%,
+      rgba(98,217,156,.22),
+      transparent 35%
+    ),
+    url("/assets/games/rico-snake-banner.webp"),
+    linear-gradient(
+      145deg,
+      #10261f,
+      #08100d
+    );
+}
+
+
+.plinko-banner {
+  background-image:
+    radial-gradient(
+      circle at 70% 22%,
+      rgba(234,94,170,.22),
+      transparent 38%
+    ),
+    url("/assets/games/rico-plinko-banner.webp"),
+    linear-gradient(
+      145deg,
+      #281423,
+      #100b10
+    );
+}
+
+
+.stack-banner {
+  background-image:
+    radial-gradient(
+      circle at 65% 18%,
+      rgba(229,198,122,.21),
+      transparent 38%
+    ),
+    url("/assets/games/rico-stack-banner.webp"),
+    linear-gradient(
+      145deg,
+      #292414,
+      #0f0d08
+    );
+}
+
+
+.game-card-content {
   position: absolute;
 
-  width: 120px;
-  height: 120px;
+  z-index: 3;
 
-  right: -28px;
-  top: -27px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+
+  padding: 17px;
+}
+
+
+.game-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 10px;
+}
+
+
+.game-type {
+  display: inline-flex;
+
+  padding:
+    5px 7px;
+
+  border:
+    1px solid
+    rgba(255,255,255,.12);
+
+  border-radius: 999px;
+
+  color: rgba(255,255,255,.78);
+
+  background:
+    rgba(7,8,10,.4);
+
+  backdrop-filter: blur(8px);
+
+  font-size: 5px;
+  font-weight: 900;
+  letter-spacing: .1em;
+}
+
+
+.game-live {
+  display: flex;
+  align-items: center;
+
+  gap: 4px;
+
+  color: white;
+
+  font-size: 5px;
+  font-weight: 900;
+}
+
+
+.game-live i {
+  width: 5px;
+  height: 5px;
 
   border-radius: 50%;
 
-  opacity: .8;
-}
+  background: var(--green);
 
-
-.game-art.jump {
-  background:
-    radial-gradient(
-      circle,
-      rgba(111,200,232,.15),
-      transparent 68%
-    );
-}
-
-
-.game-art.snake {
-  background:
-    radial-gradient(
-      circle,
-      rgba(97,212,154,.14),
-      transparent 68%
-    );
-}
-
-
-.game-art.plinko {
-  background:
-    radial-gradient(
-      circle,
-      rgba(233,93,169,.14),
-      transparent 68%
-    );
-}
-
-
-.game-art.daily {
-  background:
-    radial-gradient(
-      circle,
-      rgba(216,187,117,.15),
-      transparent 68%
-    );
-}
-
-
-.game-symbol {
-  position: relative;
-
-  z-index: 2;
-
-  width: 38px;
-  height: 38px;
-
-  display: grid;
-  place-items: center;
-
-  border:
-    1px solid var(--line);
-
-  border-radius: 13px;
-
-  background:
-    rgba(255,255,255,.035);
-
-  font-size: 17px;
+  box-shadow:
+    0 0 10px
+    rgba(98,217,156,.7);
 }
 
 
 .game-card h3 {
-  position: relative;
-
-  z-index: 2;
-
   margin:
-    25px 0 4px;
+    12px 0 4px;
 
-  font-size: 13px;
+  font-size: 15px;
+  letter-spacing: -.025em;
 }
 
 
 .game-card p {
-  position: relative;
-
-  z-index: 2;
-
   margin: 0;
 
-  color: var(--muted);
+  color: #aeb0b4;
 
   font-size: 7px;
 }
 
 
-.game-card footer {
-  position: relative;
-
-  z-index: 2;
-
+.game-card-footer {
   display: flex;
   align-items: center;
   justify-content: space-between;
 
-  gap: 8px;
+  gap: 10px;
 
-  margin-top: 16px;
+  margin-top: 12px;
 
-  color: var(--muted2);
+  color: #8e9095;
 
   font-size: 6px;
   font-weight: 900;
-  letter-spacing: .09em;
 }
 
 
-.game-card footer b {
-  color: var(--rico-blue);
+.game-card-footer b {
+  color: var(--blue);
 }
 
 
 /* =========================================================
-   REWARDS
+   REWARD
 ========================================================= */
 
 .reward-balance {
@@ -1743,12 +2235,12 @@ img {
   border-radius: 17px;
 
   background:
-    rgba(255,255,255,.013);
+    rgba(255,255,255,.012);
 }
 
 
 .reward-balance span {
-  color: var(--muted2);
+  color: var(--muted-2);
 
   font-size: 6px;
   font-weight: 900;
@@ -1757,36 +2249,37 @@ img {
 
 
 .reward-balance strong {
-  font-size: 19px;
+  font-size: 20px;
 }
 
 
-.reward-grid {
+.rewards-grid {
   display: grid;
+
   grid-template-columns:
     repeat(2,minmax(0,1fr));
 
-  gap: 9px;
+  gap: 10px;
 }
 
 
-.reward {
+.reward-card {
   overflow: hidden;
 
   border:
     1px solid var(--line);
 
-  border-radius: 20px;
+  border-radius: 21px;
 
   background:
-    rgba(255,255,255,.013);
+    rgba(255,255,255,.012);
 }
 
 
 .reward-image {
   position: relative;
 
-  min-height: 125px;
+  min-height: 130px;
 
   display: grid;
   place-items: center;
@@ -1796,9 +2289,10 @@ img {
   background:
     radial-gradient(
       circle at 50% 25%,
-      rgba(111,200,232,.08),
-      transparent 53%
-    );
+      rgba(112,201,233,.08),
+      transparent 52%
+    ),
+    #0c0e11;
 }
 
 
@@ -1814,9 +2308,9 @@ img {
 
 
 .reward-gem {
-  color: var(--rico-blue);
+  color: var(--blue);
 
-  font-size: 34px;
+  font-size: 36px;
 }
 
 
@@ -1825,14 +2319,14 @@ img {
 }
 
 
-.reward h3 {
+.reward-body h3 {
   margin: 0;
 
   font-size: 10px;
 }
 
 
-.reward p {
+.reward-body p {
   min-height: 31px;
 
   margin:
@@ -1850,14 +2344,14 @@ img {
   align-items: center;
   justify-content: space-between;
 
-  gap: 7px;
+  gap: 8px;
 
   margin-top: 12px;
 }
 
 
 .reward-cost {
-  color: var(--rico-blue);
+  color: var(--blue);
 
   font-size: 8px;
   font-weight: 900;
@@ -1901,24 +2395,20 @@ img {
 
   align-items: end;
 
-  gap: 7px;
-
-  margin-top: 8px;
+  gap: 8px;
 }
 
 
 .podium-card {
-  min-width: 0;
-
   padding:
-    16px 7px;
+    17px 7px;
 
   text-align: center;
 
   border:
     1px solid var(--line);
 
-  border-radius: 18px;
+  border-radius: 19px;
 
   background:
     rgba(255,255,255,.012);
@@ -1926,35 +2416,41 @@ img {
 
 
 .podium-card.winner {
-  padding-top: 24px;
-  padding-bottom: 24px;
+  padding-top: 27px;
+  padding-bottom: 27px;
 
   border-color:
-    rgba(216,187,117,.16);
+    rgba(229,198,122,.17);
 
   background:
     radial-gradient(
       circle at 50% 0,
-      rgba(216,187,117,.07),
-      transparent 50%
+      rgba(229,198,122,.08),
+      transparent 52%
     ),
     rgba(255,255,255,.012);
 }
 
 
+.podium-rank {
+  color: var(--muted-2);
+
+  font-size: 6px;
+  font-weight: 900;
+}
+
+
 .podium-avatar {
-  width: 47px;
-  height: 47px;
+  width: 49px;
+  height: 49px;
 
   display: grid;
   place-items: center;
 
   margin:
-    7px auto 9px;
+    8px auto 9px;
 
   border-radius: 15px;
-
-  color: white;
 
   background: #191c21;
 
@@ -1965,29 +2461,19 @@ img {
 
 .podium-card.winner
 .podium-avatar {
-  background: var(--rico-gradient);
-}
-
-
-.podium-card span {
-  color: var(--muted2);
-
-  font-size: 6px;
-  font-weight: 900;
+  background: var(--gradient);
 }
 
 
 .podium-card strong {
   display: block;
 
-  margin-top: 5px;
-
   overflow: hidden;
+
+  font-size: 8px;
 
   text-overflow: ellipsis;
   white-space: nowrap;
-
-  font-size: 8px;
 }
 
 
@@ -2001,22 +2487,22 @@ img {
 
 
 .rank-list {
-  margin-top: 10px;
+  margin-top: 11px;
 
   overflow: hidden;
 
   border:
     1px solid var(--line);
 
-  border-radius: 17px;
+  border-radius: 18px;
 
   background:
-    rgba(255,255,255,.01);
+    rgba(255,255,255,.009);
 }
 
 
 .rank-row {
-  min-height: 56px;
+  min-height: 57px;
 
   display: grid;
   grid-template-columns:
@@ -2024,10 +2510,10 @@ img {
 
   align-items: center;
 
-  gap: 9px;
+  gap: 10px;
 
   padding:
-    0 13px;
+    0 14px;
 
   border-bottom:
     1px solid var(--line);
@@ -2040,7 +2526,7 @@ img {
 
 
 .rank-number {
-  color: var(--muted2);
+  color: var(--muted-2);
 
   font-size: 7px;
 }
@@ -2058,14 +2544,14 @@ img {
 
   margin-top: 3px;
 
-  color: var(--muted2);
+  color: var(--muted-2);
 
   font-size: 6px;
 }
 
 
 .rank-points {
-  color: var(--rico-blue);
+  color: var(--blue);
 
   font-size: 8px;
   font-weight: 900;
@@ -2076,7 +2562,7 @@ img {
    PROFILE
 ========================================================= */
 
-.profile-main {
+.profile-head {
   padding:
     31px 0
     22px;
@@ -2088,17 +2574,21 @@ img {
 .profile-avatar-wrap {
   position: relative;
 
-  width: 100px;
-  height: 100px;
+  width: 104px;
+  height: 104px;
 
   margin:
-    0 auto 17px;
+    0 auto 18px;
 
   padding: 3px;
 
-  border-radius: 32px;
+  border-radius: 34px;
 
-  background: var(--rico-gradient);
+  background: var(--gradient);
+
+  box-shadow:
+    0 20px 55px
+    rgba(112,201,233,.1);
 }
 
 
@@ -2111,7 +2601,7 @@ img {
   border:
     3px solid var(--bg);
 
-  border-radius: 29px;
+  border-radius: 31px;
 
   background: #17191d;
 }
@@ -2123,8 +2613,8 @@ img {
   right: -5px;
   bottom: -5px;
 
-  width: 32px;
-  height: 32px;
+  width: 33px;
+  height: 33px;
 
   border:
     2px solid var(--bg);
@@ -2133,20 +2623,20 @@ img {
 
   color: white;
 
-  background: #191c21;
+  background: #1a1e24;
 }
 
 
-.profile-main h1 {
+.profile-head h1 {
   margin:
-    8px 0 4px;
+    7px 0 4px;
 
   font-size: 25px;
   letter-spacing: -.045em;
 }
 
 
-.profile-main p {
+.profile-head p {
   margin:
     0 0 11px;
 
@@ -2161,18 +2651,18 @@ img {
   grid-template-columns:
     repeat(3,1fr);
 
-  gap: 7px;
+  gap: 8px;
 }
 
 
 .profile-stat {
   padding:
-    13px 5px;
+    14px 5px;
 
   border:
     1px solid var(--line);
 
-  border-radius: 15px;
+  border-radius: 16px;
 
   background:
     rgba(255,255,255,.012);
@@ -2184,7 +2674,7 @@ img {
 .profile-stat span {
   display: block;
 
-  color: var(--muted2);
+  color: var(--muted-2);
 
   font-size: 6px;
   font-weight: 900;
@@ -2201,8 +2691,8 @@ img {
 }
 
 
-.identity-panel {
-  margin-top: 13px;
+.profile-menu {
+  margin-top: 14px;
 
   overflow: hidden;
 
@@ -2212,18 +2702,18 @@ img {
   border-radius: 20px;
 
   background:
-    rgba(255,255,255,.01);
+    rgba(255,255,255,.009);
 }
 
 
-.identity-row {
+.profile-menu button {
   width: 100%;
 
-  min-height: 67px;
+  min-height: 68px;
 
   display: grid;
   grid-template-columns:
-    40px 1fr auto;
+    41px 1fr auto;
 
   align-items: center;
 
@@ -2232,11 +2722,11 @@ img {
   padding:
     0 14px;
 
-  text-align: left;
-
   border: 0;
   border-bottom:
     1px solid var(--line);
+
+  text-align: left;
 
   color: white;
 
@@ -2244,35 +2734,35 @@ img {
 }
 
 
-.identity-row:last-child {
+.profile-menu button:last-child {
   border-bottom: 0;
 }
 
 
-.identity-icon {
-  width: 40px;
-  height: 40px;
+.profile-menu-icon {
+  width: 41px;
+  height: 41px;
 
   display: grid;
   place-items: center;
 
   border-radius: 13px;
 
-  color: var(--rico-blue);
+  color: var(--blue);
 
   background:
-    rgba(111,200,232,.04);
+    rgba(112,201,233,.04);
 }
 
 
-.identity-row strong {
+.profile-menu strong {
   display: block;
 
   font-size: 9px;
 }
 
 
-.identity-row small {
+.profile-menu small {
   display: block;
 
   margin-top: 3px;
@@ -2283,21 +2773,21 @@ img {
 }
 
 
-.identity-arrow {
-  color: var(--muted2);
+.profile-arrow {
+  color: var(--muted-2);
 
-  font-size: 16px;
+  font-size: 17px;
 }
 
 
 /* =========================================================
-   NAV
+   BOTTOM NAV
 ========================================================= */
 
 .bottom-nav {
   position: fixed;
 
-  z-index: 800;
+  z-index: 1000;
 
   left: 50%;
 
@@ -2313,7 +2803,7 @@ img {
   width:
     min(
       calc(100% - 18px),
-      690px
+      700px
     );
 
   display: grid;
@@ -2328,19 +2818,18 @@ img {
   border-radius: 21px;
 
   background:
-    rgba(15,17,20,.91);
+    rgba(15,17,21,.92);
 
-  backdrop-filter:
-    blur(24px);
+  backdrop-filter: blur(25px);
 
   box-shadow:
     0 20px 55px
-    rgba(0,0,0,.36);
+    rgba(0,0,0,.4);
 }
 
 
 .bottom-nav button {
-  min-height: 52px;
+  min-height: 53px;
 
   border: 0;
   border-radius: 15px;
@@ -2350,9 +2839,9 @@ img {
   background: transparent;
 
   transition:
-    transform .16s ease,
-    color .16s ease,
-    background .16s ease;
+    color .17s ease,
+    transform .17s ease,
+    background .17s ease;
 }
 
 
@@ -2367,8 +2856,8 @@ img {
   background:
     linear-gradient(
       145deg,
-      rgba(233,93,169,.05),
-      rgba(111,200,232,.035)
+      rgba(234,94,170,.055),
+      rgba(112,201,233,.04)
     );
 }
 
@@ -2383,7 +2872,7 @@ img {
 
 
 .bottom-nav button.active i {
-  color: var(--rico-blue);
+  color: var(--blue);
 }
 
 
@@ -2398,78 +2887,86 @@ img {
 
 
 /* =========================================================
-   SHEETS / MODALS
+   MODAL / SHEET
 ========================================================= */
 
-.sheet-backdrop {
+.modal {
   position: fixed;
   inset: 0;
 
-  z-index: 3000;
+  z-index: 4000;
 
   display: grid;
   align-items: end;
 
   padding:
-    14px
-    12px
+    13px
+    11px
     calc(
-      13px +
+      12px +
       var(--safe-bottom)
     );
 
   background:
-    rgba(0,0,0,.72);
+    rgba(0,0,0,.76);
 
-  backdrop-filter:
-    blur(12px);
+  backdrop-filter: blur(13px);
 
   animation:
-    backdropIn .18s ease;
+    modalFade .18s ease;
+}
+
+
+@keyframes modalFade {
+  from {
+    opacity: 0;
+  }
 }
 
 
 .sheet {
-  width:
-    min(
-      100%,
-      680px
-    );
+  width: min(100%,740px);
 
   max-height:
-    calc(
-      100vh -
-      28px
-    );
+    calc(100vh - 26px);
 
-  margin: 0 auto;
+  margin: auto;
 
   overflow: auto;
 
   border:
-    1px solid var(--line2);
+    1px solid var(--line-strong);
 
-  border-radius: 27px;
+  border-radius: 28px;
 
-  background: #111317;
+  background: #101216;
 
   box-shadow:
-    0 35px 100px
-    rgba(0,0,0,.5);
+    0 35px 110px
+    rgba(0,0,0,.55);
 
   animation:
-    sheetIn .32s cubic-bezier(.15,.8,.2,1);
+    sheetRise .32s
+    cubic-bezier(.2,.8,.2,1);
+}
+
+
+@keyframes sheetRise {
+  from {
+    opacity: 0;
+    transform: translateY(50px);
+  }
 }
 
 
 .sheet-handle {
-  width: 38px;
+  width: 40px;
   height: 4px;
 
   margin:
     9px auto 0;
 
-  border-radius: 10px;
+  border-radius: 20px;
 
   background:
     rgba(255,255,255,.12);
@@ -2481,12 +2978,11 @@ img {
   align-items: center;
   justify-content: space-between;
 
-  gap: 14px;
+  gap: 15px;
 
   padding:
-    18px
-    18px
-    12px;
+    18px 18px
+    13px;
 }
 
 
@@ -2494,7 +2990,7 @@ img {
   margin:
     5px 0 0;
 
-  font-size: 19px;
+  font-size: 20px;
   letter-spacing: -.04em;
 }
 
@@ -2511,31 +3007,14 @@ img {
   color: white;
 
   background:
-    rgba(255,255,255,.025);
+    rgba(255,255,255,.024);
 
-  font-size: 17px;
-}
-
-
-@keyframes backdropIn {
-  from {
-    opacity: 0;
-  }
-}
-
-
-@keyframes sheetIn {
-  from {
-    opacity: 0;
-
-    transform:
-      translateY(45px);
-  }
+  font-size: 18px;
 }
 
 
 /* =========================================================
-   AVATARS
+   AVATAR
 ========================================================= */
 
 .avatar-grid {
@@ -2543,12 +3022,10 @@ img {
   grid-template-columns:
     repeat(5,1fr);
 
-  gap: 9px;
+  gap: 10px;
 
   padding:
-    7px
-    18px
-    22px;
+    7px 18px 22px;
 }
 
 
@@ -2562,19 +3039,19 @@ img {
   border:
     1px solid transparent;
 
-  border-radius: 17px;
+  border-radius: 18px;
 
   background:
-    rgba(255,255,255,.018);
+    rgba(255,255,255,.017);
 }
 
 
 .avatar-option.selected {
   border-color:
-    rgba(111,200,232,.5);
+    rgba(112,201,233,.55);
 
   background:
-    rgba(111,200,232,.05);
+    rgba(112,201,233,.05);
 }
 
 
@@ -2584,15 +3061,15 @@ img {
 
   object-fit: cover;
 
-  border-radius: 13px;
+  border-radius: 14px;
 }
 
 
-.avatar-option i {
+.avatar-option span {
   position: absolute;
 
-  right: 0;
-  bottom: 0;
+  right: 1px;
+  bottom: 1px;
 
   width: 18px;
   height: 18px;
@@ -2601,83 +3078,173 @@ img {
   place-items: center;
 
   border:
-    2px solid #111317;
+    2px solid #101216;
 
   border-radius: 50%;
 
-  color: white;
+  color: #061014;
 
-  background: var(--rico-blue);
-
-  font-style: normal;
+  background: var(--blue);
 
   font-size: 7px;
   font-weight: 900;
 }
 
 
-.avatar-option.selected i {
+.avatar-option.selected
+span {
   display: grid;
 }
 
 
 /* =========================================================
-   GAME MODAL
+   FULL GAME PLAYER
 ========================================================= */
 
 .game-sheet {
-  padding-bottom: 16px;
+  position: relative;
+
+  overflow: hidden;
+
+  background:
+    #080a0d;
 }
 
 
-.game-topline {
+.game-sheet-header {
+  position: relative;
+
+  z-index: 3;
+
   display: flex;
   align-items: center;
   justify-content: space-between;
 
-  gap: 15px;
+  gap: 10px;
 
   padding:
-    2px
-    18px
-    14px;
+    15px 16px
+    12px;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(8,10,13,.95),
+      rgba(8,10,13,.7)
+    );
 }
 
 
-.game-stat {
-  color: var(--muted);
+.game-sheet-title span {
+  display: block;
 
-  font-size: 7px;
-  font-weight: 800;
+  color: var(--muted-2);
+
+  font-size: 6px;
+  font-weight: 900;
+  letter-spacing: .15em;
 }
 
 
-.game-stat strong {
+.game-sheet-title strong {
+  display: block;
+
+  margin-top: 4px;
+
+  font-size: 14px;
+}
+
+
+.game-sheet-actions {
+  display: flex;
+  gap: 7px;
+}
+
+
+.game-sheet-actions button {
+  min-width: 36px;
+  height: 36px;
+
+  border:
+    1px solid var(--line);
+
+  border-radius: 11px;
+
   color: white;
 
-  font-size: 10px;
+  background:
+    rgba(255,255,255,.025);
 }
 
 
-.game-canvas-wrap {
+.game-hud {
+  display: grid;
+  grid-template-columns:
+    repeat(3,1fr);
+
+  gap: 7px;
+
+  padding:
+    0 13px 10px;
+}
+
+
+.hud-card {
+  padding:
+    8px;
+
+  border:
+    1px solid var(--line);
+
+  border-radius: 11px;
+
+  background:
+    rgba(255,255,255,.018);
+}
+
+
+.hud-card span {
+  display: block;
+
+  color: var(--muted-2);
+
+  font-size: 5px;
+  font-weight: 900;
+}
+
+
+.hud-card strong {
+  display: block;
+
+  margin-top: 3px;
+
+  font-size: 11px;
+}
+
+
+.game-stage {
   position: relative;
 
   width:
-    calc(100% - 22px);
+    calc(100% - 20px);
 
-  margin: 0 auto;
+  margin: auto;
 
   overflow: hidden;
 
   border:
     1px solid var(--line);
 
-  border-radius: 21px;
+  border-radius: 22px;
 
   background:
     #080a0d;
 
   touch-action: none;
+
+  box-shadow:
+    inset 0 0 80px
+    rgba(0,0,0,.5);
 }
 
 
@@ -2688,63 +3255,124 @@ img {
   display: block;
 
   aspect-ratio: 9/12;
+}
+
+
+.game-start-overlay {
+  position: absolute;
+  inset: 0;
+
+  z-index: 10;
+
+  display: grid;
+  place-items: center;
 
   background:
     linear-gradient(
       180deg,
-      #0b0e12,
-      #07090b
+      rgba(7,8,10,.18),
+      rgba(7,8,10,.78)
     );
+
+  transition:
+    opacity .25s ease;
 }
 
 
-.game-controls {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  gap: 9px;
-
-  padding:
-    14px
-    14px
-    0;
+.game-start-overlay.hidden {
+  opacity: 0;
+  pointer-events: none;
 }
 
 
-.game-controls button {
-  min-width: 100px;
-  min-height: 42px;
+.game-start-panel {
+  width: min(86%,320px);
+
+  padding: 22px;
+
+  text-align: center;
 
   border:
-    1px solid var(--line2);
+    1px solid var(--line-strong);
+
+  border-radius: 22px;
+
+  background:
+    rgba(12,14,18,.84);
+
+  backdrop-filter: blur(14px);
+
+  box-shadow:
+    0 25px 70px
+    rgba(0,0,0,.42);
+}
+
+
+.game-start-icon {
+  width: 60px;
+  height: 60px;
+
+  display: grid;
+  place-items: center;
+
+  margin:
+    0 auto 13px;
+
+  border-radius: 19px;
+
+  color: white;
+
+  background: var(--gradient);
+
+  font-size: 22px;
+  font-weight: 900;
+}
+
+
+.game-start-panel h3 {
+  margin:
+    0 0 6px;
+
+  font-size: 19px;
+}
+
+
+.game-start-panel p {
+  margin: 0;
+
+  color: var(--muted);
+
+  font-size: 8px;
+  line-height: 1.5;
+}
+
+
+.game-start-panel button {
+  width: 100%;
+
+  min-height: 43px;
+
+  margin-top: 16px;
+
+  border: 0;
 
   border-radius: 12px;
 
   color: white;
 
-  background:
-    rgba(255,255,255,.035);
+  background: var(--gradient);
 
   font-size: 7px;
   font-weight: 900;
 }
 
 
-.game-controls .game-primary {
-  border: 0;
-
-  background: var(--rico-gradient);
-}
-
-
-.game-note {
+.game-help {
   padding:
-    12px
-    18px
-    0;
+    11px 16px
+    15px;
 
-  color: var(--muted2);
+  color: var(--muted-2);
 
   text-align: center;
 
@@ -2757,10 +3385,9 @@ img {
    SUCCESS
 ========================================================= */
 
-.success-content {
+.success {
   padding:
-    28px
-    22px
+    29px 22px
     23px;
 
   text-align: center;
@@ -2768,8 +3395,8 @@ img {
 
 
 .success-logo {
-  width: 73px;
-  height: 73px;
+  width: 74px;
+  height: 74px;
 
   display: grid;
   place-items: center;
@@ -2777,26 +3404,26 @@ img {
   margin:
     0 auto 18px;
 
-  border-radius: 23px;
+  border-radius: 24px;
 
   color: white;
 
-  background: var(--rico-gradient);
+  background: var(--gradient);
 
   font-size: 24px;
   font-weight: 900;
 }
 
 
-.success-content h2 {
+.success h2 {
   margin:
     7px 0 5px;
 
-  font-size: 22px;
+  font-size: 23px;
 }
 
 
-.success-content p {
+.success p {
   margin: 0;
 
   color: var(--muted);
@@ -2807,73 +3434,16 @@ img {
 
 
 /* =========================================================
-   TOAST
-========================================================= */
-
-.toast {
-  position: fixed;
-
-  z-index: 5000;
-
-  left: 50%;
-
-  bottom:
-    calc(
-      90px +
-      var(--safe-bottom)
-    );
-
-  transform:
-    translate(-50%,13px);
-
-  max-width:
-    calc(100% - 32px);
-
-  padding:
-    10px 14px;
-
-  opacity: 0;
-
-  pointer-events: none;
-
-  border:
-    1px solid var(--line2);
-
-  border-radius: 999px;
-
-  color: white;
-
-  background:
-    rgba(20,22,26,.96);
-
-  font-size: 8px;
-  font-weight: 700;
-
-  transition:
-    opacity .2s ease,
-    transform .2s ease;
-}
-
-
-.toast.show {
-  opacity: 1;
-
-  transform:
-    translate(-50%,0);
-}
-
-
-/* =========================================================
    EMPTY
 ========================================================= */
 
 .empty {
-  padding: 26px;
+  padding: 27px;
 
   text-align: center;
 
   border:
-    1px dashed var(--line2);
+    1px dashed var(--line-strong);
 
   border-radius: 18px;
 
@@ -2896,12 +3466,89 @@ img {
 
 
 /* =========================================================
-   MOBILE
+   TOAST
 ========================================================= */
 
-@media (max-width: 410px) {
+.toast {
+  position: fixed;
 
-  .shell {
+  z-index: 9000;
+
+  left: 50%;
+
+  bottom:
+    calc(
+      92px +
+      var(--safe-bottom)
+    );
+
+  max-width:
+    calc(100% - 34px);
+
+  transform:
+    translate(-50%,14px);
+
+  padding:
+    10px 14px;
+
+  opacity: 0;
+
+  pointer-events: none;
+
+  border:
+    1px solid var(--line-strong);
+
+  border-radius: 999px;
+
+  color: white;
+
+  background:
+    rgba(18,21,25,.96);
+
+  box-shadow:
+    0 14px 45px
+    rgba(0,0,0,.4);
+
+  font-size: 8px;
+  font-weight: 700;
+
+  transition:
+    opacity .2s ease,
+    transform .2s ease;
+}
+
+
+.toast.show {
+  opacity: 1;
+
+  transform:
+    translate(-50%,0);
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (min-width:760px) {
+
+  .games-grid {
+    grid-template-columns:
+      repeat(4,minmax(0,1fr));
+  }
+
+
+  .rewards-grid {
+    grid-template-columns:
+      repeat(3,minmax(0,1fr));
+  }
+
+}
+
+
+@media (max-width:430px) {
+
+  .app {
     padding-left: 12px;
     padding-right: 12px;
   }
@@ -2912,14 +3559,61 @@ img {
   }
 
 
-  .reward-grid {
-    grid-template-columns: 1fr;
+  .games-grid {
+    grid-template-columns:
+      repeat(2,minmax(0,1fr));
+  }
+
+
+  .reward-card {
+    min-width: 0;
   }
 
 
   .avatar-grid {
     grid-template-columns:
       repeat(4,1fr);
+  }
+
+
+  .day-track {
+    gap: 4px;
+  }
+
+
+  .day-card {
+    padding-left: 1px;
+    padding-right: 1px;
+  }
+
+
+  .day-date {
+    font-size: 10px;
+  }
+
+
+  .day-icon {
+    width: 23px;
+    height: 23px;
+  }
+
+}
+
+
+@media (max-width:360px) {
+
+  .day-name {
+    font-size: 5px;
+  }
+
+
+  .day-reward {
+    font-size: 4.8px;
+  }
+
+
+  .games-grid {
+    grid-template-columns: 1fr;
   }
 
 }
@@ -2944,11 +3638,14 @@ img {
 </style>
 </head>
 
+
 <body>
 
-<div class="rico-world">
-  <div class="orb one"></div>
-  <div class="orb two"></div>
+<div class="world">
+  <div class="world-grid"></div>
+  <div class="world-orb one"></div>
+  <div class="world-orb two"></div>
+  <div class="world-orb three"></div>
 </div>
 
 
@@ -2956,9 +3653,12 @@ img {
      LOADER
 ======================================================= -->
 
-<div id="loader" class="loader">
+<div
+  id="loader"
+  class="loader"
+>
 
-  <div class="loader-box">
+  <div class="loader-inner">
 
     <img
       class="loader-logo"
@@ -2971,10 +3671,10 @@ img {
     </strong>
 
     <span>
-      Community · Rewards · Arcade
+      COMMUNITY · REWARDS · ARCADE
     </span>
 
-    <div class="loader-line"></div>
+    <div class="loader-progress"></div>
 
   </div>
 
@@ -3003,7 +3703,7 @@ img {
 
     <p>
       Your Telegram account securely connects your Rico Points,
-      missions, rewards and community identity.
+      missions, rewards, arcade and community profile.
     </p>
 
   </div>
@@ -3017,7 +3717,7 @@ img {
 
 <main
   id="app"
-  class="shell hidden"
+  class="app hidden"
 >
 
   <!-- HEADER -->
@@ -3038,7 +3738,7 @@ img {
         </strong>
 
         <span>
-          COMMUNITY
+          COMMUNITY EXPERIENCE
         </span>
 
       </div>
@@ -3047,8 +3747,8 @@ img {
 
 
     <button
-      id="headerAvatarButton"
-      class="avatar-button"
+      id="profileButton"
+      class="profile-button"
       type="button"
     >
 
@@ -3059,13 +3759,13 @@ img {
       >
 
       <div
-        id="headerAvatarFallback"
-        class="avatar-fallback"
+        id="headerFallback"
+        class="profile-fallback"
       >
         R
       </div>
 
-      <i class="avatar-online"></i>
+      <span class="profile-online"></span>
 
     </button>
 
@@ -3085,9 +3785,9 @@ img {
 
       <div>
 
-        <div class="hello">
+        <section class="greeting">
 
-          <div class="hello-row">
+          <div class="greeting-row">
 
             <div>
 
@@ -3112,7 +3812,9 @@ img {
 
             <div class="streak-chip">
 
-              🔥
+              <span>
+                🔥
+              </span>
 
               <strong id="topStreak">
                 0
@@ -3122,7 +3824,7 @@ img {
 
           </div>
 
-        </div>
+        </section>
 
 
         <div
@@ -3135,18 +3837,18 @@ img {
 
         <article class="member-card">
 
-          <div class="balance-top">
+          <div class="balance-row">
 
             <div>
 
               <span class="balance-label">
-                RICO POINTS
+                AVAILABLE RICO POINTS
               </span>
 
 
-              <div class="balance-value">
+              <div class="balance">
 
-                <span class="balance-r">
+                <span class="balance-logo">
                   R
                 </span>
 
@@ -3161,7 +3863,7 @@ img {
 
             <span
               id="tierBadge"
-              class="tier"
+              class="tier-chip"
             >
               ROOKIE
             </span>
@@ -3169,7 +3871,7 @@ img {
           </div>
 
 
-          <div class="progress-row">
+          <div class="progress-meta">
 
             <span id="tierProgressText">
               Begin your Rico journey
@@ -3182,9 +3884,9 @@ img {
           </div>
 
 
-          <div class="progress-track">
+          <div class="progress">
 
-            <i id="tierProgressBar"></i>
+            <span id="tierProgressBar"></span>
 
           </div>
 
@@ -3198,7 +3900,7 @@ img {
               </span>
 
               <strong id="homeStreak">
-                0 days
+                0 DAYS
               </strong>
 
             </div>
@@ -3234,73 +3936,81 @@ img {
         </article>
 
 
-        <!-- QUICK -->
+        <!-- QUICK ACTIONS -->
 
         <div class="quick-actions">
 
           <button
-            class="quick"
-            data-page-link="play"
+            class="quick-action"
+            data-open-page="play"
             type="button"
           >
+
             <span class="quick-icon">
               ✦
             </span>
 
             <small>
-              Play
+              ARCADE
             </small>
+
           </button>
 
 
           <button
-            class="quick"
-            data-page-link="rewards"
+            class="quick-action"
+            data-open-page="rewards"
             type="button"
           >
+
             <span class="quick-icon">
               ◆
             </span>
 
             <small>
-              Rewards
+              REWARDS
             </small>
+
           </button>
 
 
           <button
             id="quickInvite"
-            class="quick"
+            class="quick-action"
             type="button"
           >
+
             <span class="quick-icon">
               ↗
             </span>
 
             <small>
-              Invite
+              INVITE
             </small>
+
           </button>
 
 
           <button
-            class="quick"
-            data-page-link="rank"
+            class="quick-action"
+            data-open-page="rank"
             type="button"
           >
+
             <span class="quick-icon">
               ♛
             </span>
 
             <small>
-              Rank
+              RANK
             </small>
+
           </button>
 
         </div>
 
 
-        <!-- TODAY -->
+        <!-- CHECK IN -->
 
         <section
           id="checkinSection"
@@ -3312,11 +4022,11 @@ img {
             <div>
 
               <span class="eyebrow">
-                TODAY
+                DAILY JOURNEY
               </span>
 
               <h2>
-                Daily check-in
+                Check in & build your streak
               </h2>
 
             </div>
@@ -3324,9 +4034,9 @@ img {
           </div>
 
 
-          <article class="checkin">
+          <article class="checkin-card">
 
-            <div class="checkin-head">
+            <div class="checkin-info">
 
               <div class="checkin-icon">
                 ✓
@@ -3336,11 +4046,11 @@ img {
               <div class="checkin-copy">
 
                 <strong id="checkinTitle">
-                  Keep your streak moving
+                  Today's reward is ready
                 </strong>
 
                 <p id="checkinDescription">
-                  Check in today and continue your Rico journey.
+                  Keep your streak active and move closer to the weekly bonus.
                 </p>
 
                 <b id="checkinReward">
@@ -3357,16 +4067,35 @@ img {
               class="primary-button"
               type="button"
             >
-              CHECK IN
+              CHECK IN NOW
             </button>
 
           </article>
 
 
-          <div
-            id="weekStrip"
-            class="week-strip"
-          ></div>
+          <!-- ADVANCED WEEK JOURNEY -->
+
+          <div class="daily-journey">
+
+            <div class="daily-journey-head">
+
+              <span>
+                THIS WEEK
+              </span>
+
+              <strong id="weekJourneyStatus">
+                0 / 7 DAYS
+              </strong>
+
+            </div>
+
+
+            <div
+              id="dayTrack"
+              class="day-track"
+            ></div>
+
+          </div>
 
         </section>
 
@@ -3394,7 +4123,7 @@ img {
 
 
             <button
-              data-page-link="missions"
+              data-open-page="missions"
               type="button"
             >
               VIEW ALL
@@ -3415,7 +4144,7 @@ img {
 
       <!-- DESKTOP SIDE -->
 
-      <aside class="desktop-sticky">
+      <aside class="desktop-side">
 
         <section class="home-section">
 
@@ -3424,11 +4153,11 @@ img {
             <div>
 
               <span class="eyebrow">
-                FEATURED
+                RICO ARCADE
               </span>
 
               <h2>
-                Rico Arcade
+                Featured game
               </h2>
 
             </div>
@@ -3436,12 +4165,15 @@ img {
           </div>
 
 
-          <article class="featured-game">
+          <article class="arcade-hero">
 
-            <div class="featured-content">
+            <div class="arcade-hero-bg"></div>
 
-              <span class="game-tag">
-                GAME OF THE DAY
+
+            <div class="arcade-hero-copy">
+
+              <span class="game-label">
+                FEATURED TODAY
               </span>
 
               <h2>
@@ -3449,14 +4181,36 @@ img {
               </h2>
 
               <p>
-                Climb higher, beat your own best score and compete with the community.
+                Climb through the Rico skyline, land on moving platforms,
+                collect energy and push your personal record higher.
               </p>
 
+
+              <div class="arcade-meta">
+
+                <span>
+                  BEST
+                  <b id="homeJumpBest">
+                    0
+                  </b>
+                </span>
+
+                <span>
+                  MODE
+                  <b>
+                    ENDLESS
+                  </b>
+                </span>
+
+              </div>
+
+
               <button
+                class="play-button"
                 data-game="jump"
                 type="button"
               >
-                PLAY NOW
+                PLAY INSIDE RICO
               </button>
 
             </div>
@@ -3487,24 +4241,26 @@ img {
         RICO ARCADE
       </span>
 
-      <h1 class="page-title">
-        Play.
+      <h1>
+        Play your way up.
       </h1>
 
-      <p class="page-description">
-        Quick games designed for mobile and desktop.
-        Build your personal game records and compete with yourself.
+      <p>
+        Built directly inside Rico Club. Play instantly without leaving Telegram.
       </p>
 
     </div>
 
 
-    <section class="featured-game">
+    <article class="arcade-hero">
 
-      <div class="featured-content">
+      <div class="arcade-hero-bg"></div>
 
-        <span class="game-tag">
-          FEATURED TODAY
+
+      <div class="arcade-hero-copy">
+
+        <span class="game-label">
+          GAME OF THE DAY
         </span>
 
         <h2>
@@ -3512,19 +4268,34 @@ img {
         </h2>
 
         <p>
-          Keep climbing. Land on platforms and push your score higher.
+          An endless vertical challenge with moving platforms,
+          Rico energy and increasing difficulty.
         </p>
 
+
+        <div class="arcade-meta">
+
+          <span>
+            PERSONAL BEST
+            <b id="jumpBestHero">
+              0
+            </b>
+          </span>
+
+        </div>
+
+
         <button
+          class="play-button"
           data-game="jump"
           type="button"
         >
-          START GAME
+          START RICO JUMP
         </button>
 
       </div>
 
-    </section>
+    </article>
 
 
     <section class="home-section">
@@ -3534,11 +4305,11 @@ img {
         <div>
 
           <span class="eyebrow">
-            ARCADE
+            ALL GAMES
           </span>
 
           <h2>
-            Choose a game
+            Rico Arcade
           </h2>
 
         </div>
@@ -3546,7 +4317,9 @@ img {
       </div>
 
 
-      <div class="arcade-grid">
+      <div class="games-grid">
+
+        <!-- JUMP -->
 
         <button
           class="game-card"
@@ -3554,29 +4327,52 @@ img {
           type="button"
         >
 
-          <span class="game-art jump"></span>
+          <div class="game-banner jump-banner"></div>
 
-          <span class="game-symbol">
-            ↥
-          </span>
 
-          <h3>
-            Rico Jump
-          </h3>
+          <div class="game-card-content">
 
-          <p>
-            Endless platform climb.
-          </p>
+            <div class="game-card-top">
 
-          <footer>
-            SKILL
-            <b id="bestJump">
-              BEST 0
-            </b>
-          </footer>
+              <span class="game-type">
+                ENDLESS
+              </span>
+
+              <span class="game-live">
+                <i></i>
+                LIVE
+              </span>
+
+            </div>
+
+
+            <h3>
+              Rico Jump
+            </h3>
+
+            <p>
+              Climb higher. Don't fall.
+            </p>
+
+
+            <div class="game-card-footer">
+
+              <span>
+                PERSONAL BEST
+              </span>
+
+              <b id="jumpBestCard">
+                0
+              </b>
+
+            </div>
+
+          </div>
 
         </button>
 
+
+        <!-- SNAKE -->
 
         <button
           class="game-card"
@@ -3584,29 +4380,52 @@ img {
           type="button"
         >
 
-          <span class="game-art snake"></span>
+          <div class="game-banner snake-banner"></div>
 
-          <span class="game-symbol">
-            ∿
-          </span>
 
-          <h3>
-            Rico Snake
-          </h3>
+          <div class="game-card-content">
 
-          <p>
-            Classic arcade survival.
-          </p>
+            <div class="game-card-top">
 
-          <footer>
-            SKILL
-            <b id="bestSnake">
-              BEST 0
-            </b>
-          </footer>
+              <span class="game-type">
+                SURVIVAL
+              </span>
+
+              <span class="game-live">
+                <i></i>
+                LIVE
+              </span>
+
+            </div>
+
+
+            <h3>
+              Rico Snake
+            </h3>
+
+            <p>
+              Neon speed survival.
+            </p>
+
+
+            <div class="game-card-footer">
+
+              <span>
+                PERSONAL BEST
+              </span>
+
+              <b id="snakeBestCard">
+                0
+              </b>
+
+            </div>
+
+          </div>
 
         </button>
 
+
+        <!-- PLINKO -->
 
         <button
           class="game-card"
@@ -3614,56 +4433,100 @@ img {
           type="button"
         >
 
-          <span class="game-art plinko"></span>
+          <div class="game-banner plinko-banner"></div>
 
-          <span class="game-symbol">
-            ◌
-          </span>
 
-          <h3>
-            Rico Plinko
-          </h3>
+          <div class="game-card-content">
 
-          <p>
-            Drop the ball through the board.
-          </p>
+            <div class="game-card-top">
 
-          <footer>
-            ARCADE
-            <b>
-              PLAY
-            </b>
-          </footer>
+              <span class="game-type">
+                ARCADE
+              </span>
+
+              <span class="game-live">
+                <i></i>
+                LIVE
+              </span>
+
+            </div>
+
+
+            <h3>
+              Rico Plinko
+            </h3>
+
+            <p>
+              Drop, bounce and score.
+            </p>
+
+
+            <div class="game-card-footer">
+
+              <span>
+                PERSONAL BEST
+              </span>
+
+              <b id="plinkoBestCard">
+                0
+              </b>
+
+            </div>
+
+          </div>
 
         </button>
 
 
+        <!-- STACK -->
+
         <button
           class="game-card"
-          id="comingSoonGame"
+          data-game="stack"
           type="button"
         >
 
-          <span class="game-art daily"></span>
+          <div class="game-banner stack-banner"></div>
 
-          <span class="game-symbol">
-            ✦
-          </span>
 
-          <h3>
-            Mystery Game
-          </h3>
+          <div class="game-card-content">
 
-          <p>
-            A new challenge is coming.
-          </p>
+            <div class="game-card-top">
 
-          <footer>
-            UPCOMING
-            <b>
-              SOON
-            </b>
-          </footer>
+              <span class="game-type">
+                TIMING
+              </span>
+
+              <span class="game-live">
+                <i></i>
+                LIVE
+              </span>
+
+            </div>
+
+
+            <h3>
+              Rico Stack
+            </h3>
+
+            <p>
+              Build the perfect tower.
+            </p>
+
+
+            <div class="game-card-footer">
+
+              <span>
+                PERSONAL BEST
+              </span>
+
+              <b id="stackBestCard">
+                0
+              </b>
+
+            </div>
+
+          </div>
 
         </button>
 
@@ -3689,12 +4552,12 @@ img {
         YOUR JOURNEY
       </span>
 
-      <h1 class="page-title">
+      <h1>
         Missions.
       </h1>
 
-      <p class="page-description">
-        Complete community activities and build your Rico Points balance.
+      <p>
+        Complete Rico community activities and grow your points balance.
       </p>
 
     </div>
@@ -3723,12 +4586,12 @@ img {
         RICO STORE
       </span>
 
-      <h1 class="page-title">
+      <h1>
         Rewards.
       </h1>
 
-      <p class="page-description">
-        Use your Rico Points on available community rewards.
+      <p>
+        Redeem your Rico Points for currently available community rewards.
       </p>
 
     </div>
@@ -3752,7 +4615,7 @@ img {
 
     <div
       id="rewardList"
-      class="reward-grid"
+      class="rewards-grid"
     ></div>
 
   </section>
@@ -3770,15 +4633,15 @@ img {
     <div class="page-intro">
 
       <span class="eyebrow">
-        COMMUNITY
+        RICO COMMUNITY
       </span>
 
-      <h1 class="page-title">
+      <h1>
         Leaderboard.
       </h1>
 
-      <p class="page-description">
-        Rico Points determine your current community ranking.
+      <p>
+        Follow your position and see who is leading the Rico community.
       </p>
 
     </div>
@@ -3807,7 +4670,7 @@ img {
     class="page"
   >
 
-    <div class="profile-main">
+    <div class="profile-head">
 
       <div class="profile-avatar-wrap">
 
@@ -3818,7 +4681,7 @@ img {
         >
 
         <button
-          id="editAvatarButton"
+          id="editAvatar"
           class="avatar-edit"
           type="button"
         >
@@ -3843,7 +4706,7 @@ img {
 
       <span
         id="profileTier"
-        class="tier"
+        class="tier-chip"
       >
         ROOKIE
       </span>
@@ -3894,15 +4757,14 @@ img {
     </div>
 
 
-    <div class="identity-panel">
+    <div class="profile-menu">
 
       <button
         id="profileAvatarMenu"
-        class="identity-row"
         type="button"
       >
 
-        <span class="identity-icon">
+        <span class="profile-menu-icon">
           ✦
         </span>
 
@@ -3913,12 +4775,12 @@ img {
           </strong>
 
           <small>
-            Choose your Rico identity
+            Choose your Rico Club identity
           </small>
 
         </span>
 
-        <span class="identity-arrow">
+        <span class="profile-arrow">
           ›
         </span>
 
@@ -3927,11 +4789,10 @@ img {
 
       <button
         id="profileInvite"
-        class="identity-row"
         type="button"
       >
 
-        <span class="identity-icon">
+        <span class="profile-menu-icon">
           ↗
         </span>
 
@@ -3942,12 +4803,12 @@ img {
           </strong>
 
           <small>
-            Share your unique invitation
+            Share your personal invitation link
           </small>
 
         </span>
 
-        <span class="identity-arrow">
+        <span class="profile-arrow">
           ›
         </span>
 
@@ -3956,11 +4817,10 @@ img {
 
       <button
         id="profileChannel"
-        class="identity-row"
         type="button"
       >
 
-        <span class="identity-icon">
+        <span class="profile-menu-icon">
           ◉
         </span>
 
@@ -3971,12 +4831,12 @@ img {
           </strong>
 
           <small>
-            Drops, events and Rico announcements
+            Events, drops and Rico announcements
           </small>
 
         </span>
 
-        <span class="identity-arrow">
+        <span class="profile-arrow">
           ›
         </span>
 
@@ -3988,7 +4848,7 @@ img {
 
 
   <!-- ====================================================
-       NAVIGATION
+       NAV
   ===================================================== -->
 
   <nav class="bottom-nav">
@@ -3998,8 +4858,10 @@ img {
       data-nav="home"
       type="button"
     >
+
       <i>⌂</i>
       <span>Home</span>
+
     </button>
 
 
@@ -4007,8 +4869,10 @@ img {
       data-nav="play"
       type="button"
     >
+
       <i>✦</i>
       <span>Play</span>
+
     </button>
 
 
@@ -4016,8 +4880,10 @@ img {
       data-nav="rewards"
       type="button"
     >
+
       <i>◆</i>
       <span>Rewards</span>
+
     </button>
 
 
@@ -4025,8 +4891,10 @@ img {
       data-nav="rank"
       type="button"
     >
+
       <i>♛</i>
       <span>Rank</span>
+
     </button>
 
 
@@ -4034,8 +4902,10 @@ img {
       data-nav="profile"
       type="button"
     >
+
       <i>◎</i>
       <span>Me</span>
+
     </button>
 
   </nav>
@@ -4044,12 +4914,12 @@ img {
 
 
 <!-- ======================================================
-     AVATAR
+     AVATAR MODAL
 ======================================================= -->
 
 <div
   id="avatarModal"
-  class="sheet-backdrop hidden"
+  class="modal hidden"
 >
 
   <div class="sheet">
@@ -4062,18 +4932,18 @@ img {
       <div>
 
         <span class="eyebrow">
-          YOUR IDENTITY
+          RICO IDENTITY
         </span>
 
         <h2>
-          Choose an avatar
+          Choose your avatar
         </h2>
 
       </div>
 
 
       <button
-        id="closeAvatarModal"
+        id="closeAvatar"
         class="sheet-close"
         type="button"
       >
@@ -4094,68 +4964,100 @@ img {
 
 
 <!-- ======================================================
-     GAME
+     GAME MODAL
 ======================================================= -->
 
 <div
   id="gameModal"
-  class="sheet-backdrop hidden"
+  class="modal hidden"
 >
 
   <div class="sheet game-sheet">
 
-    <div class="sheet-handle"></div>
+    <div class="game-sheet-header">
 
+      <div class="game-sheet-title">
 
-    <div class="sheet-head">
-
-      <div>
-
-        <span class="eyebrow">
+        <span>
           RICO ARCADE
         </span>
 
-        <h2 id="gameTitle">
+        <strong id="gameTitle">
           Rico Game
-        </h2>
+        </strong>
 
       </div>
 
 
-      <button
-        id="closeGame"
-        class="sheet-close"
-        type="button"
-      >
-        ×
-      </button>
+      <div class="game-sheet-actions">
+
+        <button
+          id="restartGame"
+          type="button"
+          title="Restart"
+        >
+          ↻
+        </button>
+
+        <button
+          id="closeGame"
+          type="button"
+          title="Close"
+        >
+          ×
+        </button>
+
+      </div>
 
     </div>
 
 
-    <div class="game-topline">
+    <div class="game-hud">
 
-      <span class="game-stat">
-        SCORE
+      <div class="hud-card">
+
+        <span>
+          SCORE
+        </span>
+
         <strong id="gameScore">
           0
         </strong>
-      </span>
+
+      </div>
 
 
-      <span class="game-stat">
-        BEST
+      <div class="hud-card">
+
+        <span>
+          BEST
+        </span>
+
         <strong id="gameBest">
           0
         </strong>
-      </span>
+
+      </div>
+
+
+      <div class="hud-card">
+
+        <span>
+          STATUS
+        </span>
+
+        <strong id="gameStatus">
+          READY
+        </strong>
+
+      </div>
 
     </div>
 
 
     <div
-      id="gameCanvasWrap"
-      class="game-canvas-wrap"
+      id="gameStage"
+      class="game-stage"
     >
 
       <canvas
@@ -4165,27 +5067,49 @@ img {
         height="600"
       ></canvas>
 
-    </div>
 
-
-    <div class="game-controls">
-
-      <button
-        id="gameRestart"
-        class="game-primary"
-        type="button"
+      <div
+        id="gameOverlay"
+        class="game-start-overlay"
       >
-        START
-      </button>
+
+        <div class="game-start-panel">
+
+          <div
+            id="gameOverlayIcon"
+            class="game-start-icon"
+          >
+            R
+          </div>
+
+          <h3 id="gameOverlayTitle">
+            Rico Game
+          </h3>
+
+          <p id="gameOverlayText">
+            Ready?
+          </p>
+
+
+          <button
+            id="startGame"
+            type="button"
+          >
+            START GAME
+          </button>
+
+        </div>
+
+      </div>
 
     </div>
 
 
     <div
-      id="gameInstruction"
-      class="game-note"
+      id="gameHelp"
+      class="game-help"
     >
-      Tap or use keyboard controls.
+      Mobile and desktop controls supported.
     </div>
 
   </div>
@@ -4199,17 +5123,16 @@ img {
 
 <div
   id="successModal"
-  class="sheet-backdrop hidden"
+  class="modal hidden"
 >
 
   <div class="sheet">
 
-    <div class="success-content">
+    <div class="success">
 
       <div class="success-logo">
         R
       </div>
-
 
       <span class="eyebrow">
         RICO CLUB
@@ -4223,7 +5146,7 @@ img {
 
 
       <button
-        id="closeSuccess"
+        id="successClose"
         class="primary-button"
         type="button"
       >
@@ -4247,7 +5170,7 @@ img {
 (() => {
 
 /* =========================================================
-   TELEGRAM + STATE
+   STATE
 ========================================================= */
 
 const tg =
@@ -4273,9 +5196,9 @@ const state = {
 
   currentGame: null,
 
-  animationId: null,
+  running: false,
 
-  gameRunning: false
+  animationId: null
 
 };
 
@@ -4351,25 +5274,23 @@ async function init() {
 
     tg.disableVerticalSwipes?.();
 
-
     tg.setHeaderColor?.(
-      "#08090B"
+      "#07080A"
     );
 
-
     tg.setBackgroundColor?.(
-      "#08090B"
+      "#07080A"
     );
 
   } catch {}
 
 
-  await loadBootstrap();
+  await loadApp();
 
 }
 
 
-async function loadBootstrap() {
+async function loadApp() {
 
   try {
 
@@ -4377,7 +5298,8 @@ async function loadBootstrap() {
       await api(
         "/api/app/bootstrap",
         {
-          method: "POST"
+          method:
+            "POST"
         }
       );
 
@@ -4391,32 +5313,34 @@ async function loadBootstrap() {
 
 
     state.settings =
-      data.settings || {};
+      data.settings ||
+      {};
 
 
     state.missions =
-      data.missions || [];
+      data.missions ||
+      [];
 
 
     state.rewards =
-      data.rewards || [];
+      data.rewards ||
+      [];
 
 
     state.leaderboard =
-      data.leaderboard || [];
+      data.leaderboard ||
+      [];
 
 
     loadAvatar();
 
-    applyTheme();
-
-    applyVisibility();
+    applySettings();
 
     renderUser();
 
     renderCheckin();
 
-    renderWeek();
+    renderDailyJourney();
 
     renderMissions();
 
@@ -4426,7 +5350,7 @@ async function loadBootstrap() {
 
     renderAvatarGrid();
 
-    renderGameBestScores();
+    renderBestScores();
 
 
     $("#app")
@@ -4460,7 +5384,7 @@ function hideLoader() {
 
   $("#loader")
     .classList
-    .add("out");
+    .add("hide");
 
 
   setTimeout(
@@ -4468,7 +5392,7 @@ function hideLoader() {
       $("#loader")
         .classList
         .add("hidden"),
-    420
+    450
   );
 
 }
@@ -4478,7 +5402,7 @@ function hideLoader() {
    SETTINGS
 ========================================================= */
 
-function applyTheme() {
+function applySettings() {
 
   const s =
     state.settings;
@@ -4489,7 +5413,7 @@ function applyTheme() {
       s.primary_color
     )
       ? s.primary_color
-      : "#E95DA9";
+      : "#EA5EAA";
 
 
   const secondary =
@@ -4497,13 +5421,13 @@ function applyTheme() {
       s.secondary_color
     )
       ? s.secondary_color
-      : "#6FC8E8";
+      : "#70C9E9";
 
 
   document.documentElement
     .style
     .setProperty(
-      "--rico-pink",
+      "--pink",
       primary
     );
 
@@ -4511,7 +5435,7 @@ function applyTheme() {
   document.documentElement
     .style
     .setProperty(
-      "--rico-blue",
+      "--blue",
       secondary
     );
 
@@ -4519,11 +5443,11 @@ function applyTheme() {
   document.documentElement
     .style
     .setProperty(
-      "--rico-gradient",
+      "--gradient",
       `linear-gradient(
         135deg,
         ${primary},
-        #A695D8 49%,
+        #A697DC 49%,
         ${secondary}
       )`
     );
@@ -4545,7 +5469,8 @@ function applyTheme() {
 
   const announcement =
     String(
-      s.announcement || ""
+      s.announcement ||
+      ""
     ).trim();
 
 
@@ -4562,10 +5487,6 @@ function applyTheme() {
 
   }
 
-}
-
-
-function applyVisibility() {
 
   toggle(
     "#checkinSection",
@@ -4659,12 +5580,13 @@ function renderUser() {
 
   $("#topStreak")
     .textContent =
-    user.current_streak || 0;
+    user.current_streak ||
+    0;
 
 
   $("#homeStreak")
     .textContent =
-    `${user.current_streak || 0} days`;
+    `${user.current_streak || 0} DAYS`;
 
 
   $("#rankText")
@@ -4698,7 +5620,8 @@ function renderUser() {
 
   $("#profileStreak")
     .textContent =
-    user.current_streak || 0;
+    user.current_streak ||
+    0;
 
 
   $("#profileRank")
@@ -4722,9 +5645,10 @@ function renderUser() {
 
 
   const progress =
-    getTierProgress(
+    calculateTierProgress(
       Number(
-        user.current_points || 0
+        user.current_points ||
+        0
       )
     );
 
@@ -4739,7 +5663,7 @@ function renderUser() {
     progress.text;
 
 
-  $("#headerAvatarFallback")
+  $("#headerFallback")
     .textContent =
     name
       .charAt(0)
@@ -4756,10 +5680,11 @@ function renderUser() {
 function setGreeting() {
 
   const hour =
-    new Date().getHours();
+    new Date()
+      .getHours();
 
 
-  let greeting =
+  let value =
     "WELCOME BACK";
 
 
@@ -4767,7 +5692,7 @@ function setGreeting() {
     hour >= 5 &&
     hour < 12
   ) {
-    greeting =
+    value =
       "GOOD MORNING";
   }
 
@@ -4776,25 +5701,29 @@ function setGreeting() {
     hour >= 12 &&
     hour < 18
   ) {
-    greeting =
+    value =
       "GOOD AFTERNOON";
   }
 
 
-  if (hour >= 18) {
-    greeting =
+  if (
+    hour >= 18
+  ) {
+    value =
       "GOOD EVENING";
   }
 
 
   $("#greetingLabel")
     .textContent =
-    greeting;
+    value;
 
 }
 
 
-function getTierProgress(points) {
+function calculateTierProgress(
+  points
+) {
 
   const s =
     state.settings;
@@ -4802,45 +5731,45 @@ function getTierProgress(points) {
 
   const tiers = [
 
-    {
-      name: "Rookie",
-      min:
-        Number(
-          s.tier_rookie || 0
-        )
-    },
+    [
+      "Rookie",
+      Number(
+        s.tier_rookie ||
+        0
+      )
+    ],
 
-    {
-      name: "Bronze",
-      min:
-        Number(
-          s.tier_bronze || 500
-        )
-    },
+    [
+      "Bronze",
+      Number(
+        s.tier_bronze ||
+        500
+      )
+    ],
 
-    {
-      name: "Silver",
-      min:
-        Number(
-          s.tier_silver || 1500
-        )
-    },
+    [
+      "Silver",
+      Number(
+        s.tier_silver ||
+        1500
+      )
+    ],
 
-    {
-      name: "Gold",
-      min:
-        Number(
-          s.tier_gold || 5000
-        )
-    },
+    [
+      "Gold",
+      Number(
+        s.tier_gold ||
+        5000
+      )
+    ],
 
-    {
-      name: "Diamond",
-      min:
-        Number(
-          s.tier_diamond || 15000
-        )
-    }
+    [
+      "Diamond",
+      Number(
+        s.tier_diamond ||
+        15000
+      )
+    ]
 
   ];
 
@@ -4848,22 +5777,18 @@ function getTierProgress(points) {
   let index = 0;
 
 
-  for (
-    let i = 0;
-    i < tiers.length;
-    i++
-  ) {
+  tiers.forEach(
+    (tier,i) => {
 
-    if (
-      points >=
-      tiers[i].min
-    ) {
-
-      index = i;
+      if (
+        points >=
+        tier[1]
+      ) {
+        index = i;
+      }
 
     }
-
-  }
+  );
 
 
   if (
@@ -4891,23 +5816,23 @@ function getTierProgress(points) {
 
 
   const range =
-    next.min -
-    current.min;
+    next[1] -
+    current[1];
 
 
-  const earned =
+  const achieved =
     points -
-    current.min;
+    current[1];
 
 
   return {
 
     percent:
-      Math.max(
-        0,
-        Math.min(
-          100,
-          earned /
+      Math.min(
+        100,
+        Math.max(
+          0,
+          achieved /
           range *
           100
         )
@@ -4915,11 +5840,442 @@ function getTierProgress(points) {
 
     text:
       `${number(
-        next.min -
+        next[1] -
         points
-      )} points to ${next.name}`
+      )} points to ${next[0]}`
 
   };
+
+}
+
+
+/* =========================================================
+   DAILY JOURNEY
+========================================================= */
+
+function renderDailyJourney() {
+
+  const today =
+    new Date();
+
+
+  const currentIndex =
+    (
+      today.getDay() +
+      6
+    ) % 7;
+
+
+  const monday =
+    new Date(today);
+
+
+  monday.setHours(
+    12,
+    0,
+    0,
+    0
+  );
+
+
+  monday.setDate(
+    today.getDate() -
+    currentIndex
+  );
+
+
+  const names = [
+    "MON",
+    "TUE",
+    "WED",
+    "THU",
+    "FRI",
+    "SAT",
+    "SUN"
+  ];
+
+
+  const normalReward =
+    Number(
+      state.settings
+        .daily_checkin_points ||
+      20
+    );
+
+
+  const weeklyBonus =
+    Number(
+      state.settings
+        .streak_bonus_7 ||
+      50
+    );
+
+
+  const currentStreak =
+    Number(
+      state.user
+        ?.current_streak ||
+      0
+    );
+
+
+  /*
+    Existing backend currently gives us today's completion
+    and total streak rather than exact weekly check-in history.
+
+    So:
+    - days before today are visually completed according
+      to the current streak
+    - today uses checked_in_today
+    - future days remain locked
+  */
+
+
+  const completedBeforeToday =
+    Math.min(
+      currentIndex,
+      Math.max(
+        0,
+        currentStreak -
+        (
+          state.bootstrap
+            ?.checked_in_today
+            ? 1
+            : 0
+        )
+      )
+    );
+
+
+  const html = [];
+
+
+  for (
+    let i = 0;
+    i < 7;
+    i++
+  ) {
+
+    const date =
+      new Date(monday);
+
+
+    date.setDate(
+      monday.getDate() +
+      i
+    );
+
+
+    const isToday =
+      i ===
+      currentIndex;
+
+
+    const completed =
+      i <
+      currentIndex
+        ? i >=
+          currentIndex -
+          completedBeforeToday
+        : (
+            isToday &&
+            Boolean(
+              state.bootstrap
+                ?.checked_in_today
+            )
+          );
+
+
+    const bonus =
+      i === 6;
+
+
+    const classes = [
+      "day-card",
+
+      completed
+        ? "completed"
+        : "",
+
+      isToday
+        ? "today"
+        : "",
+
+      bonus
+        ? "bonus"
+        : ""
+
+    ]
+      .filter(Boolean)
+      .join(" ");
+
+
+    let icon = "R";
+
+
+    if (completed) {
+      icon = "✓";
+    }
+
+
+    if (
+      isToday &&
+      !completed
+    ) {
+      icon = "R";
+    }
+
+
+    if (
+      bonus &&
+      !completed
+    ) {
+      icon = "★";
+    }
+
+
+    html.push(`
+      <div class="${classes}">
+
+        <span class="today-label">
+          TODAY
+        </span>
+
+        <span class="day-name">
+          ${names[i]}
+        </span>
+
+        <strong class="day-date">
+          ${date.getDate()}
+        </strong>
+
+        <span class="day-icon">
+          ${icon}
+        </span>
+
+        <span class="day-reward">
+
+          ${
+            bonus
+              ? `+${number(
+                  normalReward +
+                  weeklyBonus
+                )}`
+              : `+${number(
+                  normalReward
+                )}`
+          }
+
+        </span>
+
+      </div>
+    `);
+
+  }
+
+
+  $("#dayTrack")
+    .innerHTML =
+    html.join("");
+
+
+  const weekCompleted =
+    Math.min(
+      7,
+      completedBeforeToday +
+      (
+        state.bootstrap
+          ?.checked_in_today
+          ? 1
+          : 0
+      )
+    );
+
+
+  $("#weekJourneyStatus")
+    .textContent =
+    `${weekCompleted} / 7 DAYS`;
+
+}
+
+
+/* =========================================================
+   CHECK-IN
+========================================================= */
+
+function renderCheckin() {
+
+  const done =
+    Boolean(
+      state.bootstrap
+        ?.checked_in_today
+    );
+
+
+  const reward =
+    Number(
+      state.settings
+        .daily_checkin_points ||
+      20
+    );
+
+
+  $("#checkinReward")
+    .textContent =
+    `+${number(
+      reward
+    )} Rico Points`;
+
+
+  if (done) {
+
+    $("#checkinButton")
+      .disabled =
+      true;
+
+
+    $("#checkinButton")
+      .textContent =
+      "TODAY COMPLETED";
+
+
+    $("#checkinTitle")
+      .textContent =
+      "Today's reward collected";
+
+
+    $("#checkinDescription")
+      .textContent =
+      "Your streak is active. Return tomorrow for the next reward.";
+
+  } else {
+
+    $("#checkinButton")
+      .disabled =
+      false;
+
+
+    $("#checkinButton")
+      .textContent =
+      "CHECK IN NOW";
+
+
+    $("#checkinTitle")
+      .textContent =
+      "Today's reward is ready";
+
+
+    $("#checkinDescription")
+      .textContent =
+      "Collect today's Rico Points and continue your weekly journey.";
+
+  }
+
+}
+
+
+async function checkIn() {
+
+  const button =
+    $("#checkinButton");
+
+
+  button.disabled =
+    true;
+
+
+  button.textContent =
+    "COLLECTING…";
+
+
+  try {
+
+    const result =
+      await api(
+        "/api/app/checkin",
+        {
+          method:
+            "POST"
+        }
+      );
+
+
+    state.bootstrap
+      .checked_in_today =
+      true;
+
+
+    if (
+      !result
+        .already_checked_in
+    ) {
+
+      state.user.current_points =
+        result.balance;
+
+
+      state.user.current_streak =
+        result.streak;
+
+
+      state.user.lifetime_points =
+        Number(
+          state.user
+            .lifetime_points ||
+          0
+        )
+        +
+        Number(
+          result.points_earned ||
+          0
+        );
+
+
+      $("#successTitle")
+        .textContent =
+        `+${number(
+          result.points_earned
+        )} Rico Points`;
+
+
+      $("#successMessage")
+        .textContent =
+        `${result.streak}-day streak is now active.`;
+
+
+      $("#successModal")
+        .classList
+        .remove("hidden");
+
+
+      hapticSuccess();
+
+    }
+
+
+    renderUser();
+
+    renderCheckin();
+
+    renderDailyJourney();
+
+    renderRewards();
+
+  } catch (error) {
+
+    button.disabled =
+      false;
+
+
+    button.textContent =
+      "CHECK IN NOW";
+
+
+    showToast(
+      error.message
+    );
+
+  }
 
 }
 
@@ -4928,12 +6284,13 @@ function getTierProgress(points) {
    AVATAR
 ========================================================= */
 
-function avatarKey() {
+function avatarStorageKey() {
 
   return (
     "rico-avatar:" +
     (
-      state.user?.telegram_id ||
+      state.user
+        ?.telegram_id ||
       "guest"
     )
   );
@@ -4947,7 +6304,7 @@ function loadAvatar() {
 
     state.avatar =
       localStorage.getItem(
-        avatarKey()
+        avatarStorageKey()
       );
 
   } catch {}
@@ -4977,7 +6334,7 @@ function saveAvatar(path) {
   try {
 
     localStorage.setItem(
-      avatarKey(),
+      avatarStorageKey(),
       path
     );
 
@@ -4992,8 +6349,8 @@ function saveAvatar(path) {
 
 
   setTimeout(
-    closeAvatar,
-    170
+    closeAvatarModal,
+    150
   );
 
 }
@@ -5021,7 +6378,7 @@ function applyAvatar() {
     .remove("hidden");
 
 
-  $("#headerAvatarFallback")
+  $("#headerFallback")
     .classList
     .add("hidden");
 
@@ -5037,7 +6394,8 @@ function renderAvatarGrid() {
         path => `
           <button
             class="avatar-option ${
-              path === state.avatar
+              path ===
+              state.avatar
                 ? "selected"
                 : ""
             }"
@@ -5050,9 +6408,9 @@ function renderAvatarGrid() {
               alt=""
             >
 
-            <i>
+            <span>
               ✓
-            </i>
+            </span>
 
           </button>
         `
@@ -5060,7 +6418,7 @@ function renderAvatarGrid() {
       .join("");
 
 
-  $$(".avatar-option")
+  $$("[data-avatar]")
     .forEach(
       button =>
         button
@@ -5076,7 +6434,7 @@ function renderAvatarGrid() {
 }
 
 
-function openAvatar() {
+function openAvatarModal() {
 
   $("#avatarModal")
     .classList
@@ -5088,278 +6446,11 @@ function openAvatar() {
 }
 
 
-function closeAvatar() {
+function closeAvatarModal() {
 
   $("#avatarModal")
     .classList
     .add("hidden");
-
-}
-
-
-/* =========================================================
-   CHECK IN
-========================================================= */
-
-function renderCheckin() {
-
-  const completed =
-    Boolean(
-      state.bootstrap
-        ?.checked_in_today
-    );
-
-
-  const points =
-    Number(
-      state.settings
-        .daily_checkin_points ||
-      20
-    );
-
-
-  $("#checkinReward")
-    .textContent =
-    `+${number(
-      points
-    )} Rico Points`;
-
-
-  if (completed) {
-
-    $("#checkinButton")
-      .disabled =
-      true;
-
-
-    $("#checkinButton")
-      .textContent =
-      "CHECK-IN COMPLETE";
-
-
-    $("#checkinTitle")
-      .textContent =
-      "You're checked in";
-
-
-    $("#checkinDescription")
-      .textContent =
-      "Come back tomorrow to continue your streak.";
-
-  } else {
-
-    $("#checkinButton")
-      .disabled =
-      false;
-
-
-    $("#checkinButton")
-      .textContent =
-      "CHECK IN";
-
-
-    $("#checkinTitle")
-      .textContent =
-      "Keep your streak moving";
-
-
-    $("#checkinDescription")
-      .textContent =
-      `Check in today to collect ${number(
-        points
-      )} Rico Points.`;
-
-  }
-
-}
-
-
-async function checkIn() {
-
-  const button =
-    $("#checkinButton");
-
-
-  button.disabled =
-    true;
-
-
-  button.textContent =
-    "CHECKING IN…";
-
-
-  try {
-
-    const result =
-      await api(
-        "/api/app/checkin",
-        {
-          method: "POST"
-        }
-      );
-
-
-    state.bootstrap
-      .checked_in_today =
-      true;
-
-
-    if (
-      !result
-        .already_checked_in
-    ) {
-
-      state.user.current_points =
-        result.balance;
-
-
-      state.user.current_streak =
-        result.streak;
-
-
-      state.user.lifetime_points =
-        Number(
-          state.user
-            .lifetime_points || 0
-        )
-        +
-        Number(
-          result.points_earned || 0
-        );
-
-
-      $("#successTitle")
-        .textContent =
-        `+${number(
-          result.points_earned
-        )} Rico Points`;
-
-
-      $("#successMessage")
-        .textContent =
-        `${result.streak}-day streak active.`;
-
-
-      $("#successModal")
-        .classList
-        .remove("hidden");
-
-
-      hapticSuccess();
-
-    }
-
-
-    renderUser();
-
-    renderCheckin();
-
-    renderRewards();
-
-  } catch (error) {
-
-    button.disabled =
-      false;
-
-
-    button.textContent =
-      "CHECK IN";
-
-
-    showToast(
-      error.message
-    );
-
-  }
-
-}
-
-
-function renderWeek() {
-
-  const today =
-    new Date();
-
-
-  const mondayIndex =
-    (
-      today.getDay() +
-      6
-    ) % 7;
-
-
-  const monday =
-    new Date(today);
-
-
-  monday.setDate(
-    today.getDate() -
-    mondayIndex
-  );
-
-
-  const formatter =
-    new Intl.DateTimeFormat(
-      "en-US",
-      {
-        weekday:
-          "short"
-      }
-    );
-
-
-  let html = "";
-
-
-  for (
-    let i = 0;
-    i < 7;
-    i++
-  ) {
-
-    const date =
-      new Date(monday);
-
-
-    date.setDate(
-      monday.getDate() +
-      i
-    );
-
-
-    const isToday =
-      date.toDateString() ===
-      today.toDateString();
-
-
-    html += `
-      <div
-        class="week-day ${
-          isToday
-            ? "today"
-            : ""
-        }"
-      >
-
-        <span>
-          ${
-            formatter
-              .format(date)
-              .slice(0,1)
-          }
-        </span>
-
-        <i></i>
-
-      </div>
-    `;
-
-  }
-
-
-  $("#weekStrip")
-    .innerHTML =
-    html;
 
 }
 
@@ -5381,7 +6472,7 @@ function renderMissions() {
           No active missions
         </strong>
 
-        New missions will appear here when they go live.
+        New Rico missions will appear when they go live.
 
       </div>
     `;
@@ -5410,7 +6501,7 @@ function renderMissions() {
         3
       )
       .map(
-        missionHTML
+        missionMarkup
       )
       .join("");
 
@@ -5419,7 +6510,7 @@ function renderMissions() {
     .innerHTML =
     state.missions
       .map(
-        missionHTML
+        missionMarkup
       )
       .join("");
 
@@ -5429,15 +6520,17 @@ function renderMissions() {
 }
 
 
-function missionHTML(mission) {
+function missionMarkup(
+  mission
+) {
 
   return `
     <article
       class="mission"
       ${
         mission.button_url
-          ? `data-mission-link="${
-              escapeAttr(
+          ? `data-mission-url="${
+              escapeAttribute(
                 mission.button_url
               )
             }"`
@@ -5497,7 +6590,7 @@ function missionIcon(type) {
 
 function bindMissionLinks() {
 
-  $$("[data-mission-link]")
+  $$("[data-mission-url]")
     .forEach(
       element =>
         element
@@ -5506,7 +6599,7 @@ function bindMissionLinks() {
             () =>
               openExternal(
                 element.dataset
-                  .missionLink
+                  .missionUrl
               )
           )
     );
@@ -5520,7 +6613,9 @@ function bindMissionLinks() {
 
 function renderRewards() {
 
-  if (!state.rewards.length) {
+  if (
+    !state.rewards.length
+  ) {
 
     $("#rewardList")
       .innerHTML = `
@@ -5547,35 +6642,40 @@ function renderRewards() {
       .map(
         reward => {
 
-          const price =
+          const cost =
             Number(
-              reward.points_cost || 0
+              reward.points_cost ||
+              0
             );
 
 
           const balance =
             Number(
               state.user
-                ?.current_points || 0
+                ?.current_points ||
+              0
             );
 
 
           const affordable =
-            balance >= price;
+            balance >=
+            cost;
 
 
           const soldOut =
             reward.stock !== null &&
             Number(
-              reward.redeemed_count || 0
-            ) >=
+              reward.redeemed_count ||
+              0
+            )
+            >=
             Number(
               reward.stock
             );
 
 
           return `
-            <article class="reward">
+            <article class="reward-card">
 
               <div class="reward-image">
 
@@ -5584,7 +6684,7 @@ function renderRewards() {
                     ? `
                       <img
                         src="${
-                          escapeAttr(
+                          escapeAttribute(
                             reward.image_url
                           )
                         }"
@@ -5612,7 +6712,7 @@ function renderRewards() {
                 <p>
                   ${escapeHtml(
                     reward.description ||
-                    "Rico Club reward."
+                    "Exclusive Rico Club reward."
                   )}
                 </p>
 
@@ -5620,11 +6720,11 @@ function renderRewards() {
                 <div class="reward-footer">
 
                   <span class="reward-cost">
-                    R ${number(price)}
+                    R ${number(cost)}
                   </span>
 
                   <button
-                    data-reward="${reward.id}"
+                    data-reward-id="${reward.id}"
                     type="button"
                     ${
                       soldOut ||
@@ -5654,31 +6754,36 @@ function renderRewards() {
       .join("");
 
 
-  $$("[data-reward]")
+  $$("[data-reward-id]")
     .forEach(
       button =>
-        button
-          .addEventListener(
-            "click",
-            () =>
-              redeemReward(
-                Number(
-                  button.dataset.reward
-                )
+        button.addEventListener(
+          "click",
+          () =>
+            redeemReward(
+              Number(
+                button.dataset
+                  .rewardId
               )
-          )
+            )
+        )
     );
 
 }
 
 
-async function redeemReward(id) {
+async function redeemReward(
+  rewardId
+) {
 
   const reward =
     state.rewards
       .find(
         item =>
-          Number(item.id) === id
+          Number(
+            item.id
+          ) ===
+          rewardId
       );
 
 
@@ -5687,15 +6792,13 @@ async function redeemReward(id) {
   }
 
 
-  const yes =
-    confirm(
-      `Redeem ${reward.title} for ${number(
+  if (
+    !confirm(
+      `Redeem "${reward.title}" for ${number(
         reward.points_cost
       )} Rico Points?`
-    );
-
-
-  if (!yes) {
+    )
+  ) {
     return;
   }
 
@@ -5706,11 +6809,13 @@ async function redeemReward(id) {
       await api(
         "/api/app/redeem",
         {
-          method: "POST",
+          method:
+            "POST",
 
           body:
             JSON.stringify({
-              reward_id: id
+              reward_id:
+                rewardId
             })
         }
       );
@@ -5718,7 +6823,8 @@ async function redeemReward(id) {
 
     state.user.current_points =
       Number(
-        state.user.current_points
+        state.user
+          .current_points
       )
       -
       Number(
@@ -5734,9 +6840,19 @@ async function redeemReward(id) {
     $("#successMessage")
       .innerHTML =
       result.code
-        ? `Your reward code:<br><br><strong style="color:#fff;font-size:17px">${escapeHtml(
-            result.code
-          )}</strong>`
+        ? `
+          Your reward code:
+          <br><br>
+          <strong style="
+            color:white;
+            font-size:18px;
+            letter-spacing:.04em
+          ">
+            ${escapeHtml(
+              result.code
+            )}
+          </strong>
+        `
         : "Your reward has been successfully redeemed.";
 
 
@@ -5782,10 +6898,10 @@ function renderLeaderboard() {
         <div class="empty">
 
           <strong>
-            No ranking yet
+            Leaderboard is empty
           </strong>
 
-          Rankings appear as members earn Rico Points.
+          Rankings will appear when members begin earning Rico Points.
 
         </div>
       `;
@@ -5824,12 +6940,14 @@ function renderLeaderboard() {
             }"
           >
 
-            <span>
+            <span class="podium-rank">
               #${player.rank}
             </span>
 
             <div class="podium-avatar">
-              ${initial(player)}
+              ${playerInitial(
+                player
+              )}
             </div>
 
             <strong>
@@ -5903,7 +7021,7 @@ function renderLeaderboard() {
 
 function openPage(page) {
 
-  const permissions = {
+  const required = {
 
     rewards:
       "show_rewards",
@@ -5918,9 +7036,9 @@ function openPage(page) {
 
 
   if (
-    permissions[page] &&
+    required[page] &&
     !enabled(
-      permissions[page]
+      required[page]
     )
   ) {
 
@@ -5948,7 +7066,8 @@ function openPage(page) {
     );
 
 
-  const name =
+  const target =
+    "#page" +
     page
       .charAt(0)
       .toUpperCase()
@@ -5956,7 +7075,7 @@ function openPage(page) {
     page.slice(1);
 
 
-  $(`#page${name}`)
+  $(target)
     ?.classList
     .add("active");
 
@@ -6017,13 +7136,15 @@ function shareReferral() {
   }
 
 
-  const link =
+  const invitation =
     `https://t.me/${bot}?start=ref_${code}`;
 
 
   const share =
     `https://t.me/share/url?url=${
-      encodeURIComponent(link)
+      encodeURIComponent(
+        invitation
+      )
     }&text=${
       encodeURIComponent(
         "Join me on Rico Club"
@@ -6039,7 +7160,7 @@ function shareReferral() {
 
 
 /* =========================================================
-   GAME ENGINE
+   GAME CORE
 ========================================================= */
 
 const canvas =
@@ -6051,6 +7172,21 @@ const ctx =
     "2d"
   );
 
+
+let jumpGame = null;
+
+let snakeGame = null;
+
+let plinkoGame = null;
+
+let stackGame = null;
+
+let particles = [];
+
+
+/* =========================================================
+   GAME OPEN
+========================================================= */
 
 function openGame(type) {
 
@@ -6066,96 +7202,117 @@ function openGame(type) {
     .remove("hidden");
 
 
-  $("#gameRestart")
-    .textContent =
-    "START";
-
-
-  if (
-    type ===
-    "jump"
-  ) {
-
-    $("#gameTitle")
-      .textContent =
-      "Rico Jump";
-
-
-    $("#gameInstruction")
-      .textContent =
-      "Tap left/right side of the game or use ← → / A D.";
-
-
-    $("#gameBest")
-      .textContent =
-      getBest(
-        "jump"
-      );
-
-
-    drawJumpPreview();
-
-  }
-
-
-  if (
-    type ===
-    "snake"
-  ) {
-
-    $("#gameTitle")
-      .textContent =
-      "Rico Snake";
-
-
-    $("#gameInstruction")
-      .textContent =
-      "Swipe on mobile or use arrow keys / WASD.";
-
-
-    $("#gameBest")
-      .textContent =
-      getBest(
-        "snake"
-      );
-
-
-    drawSnakePreview();
-
-  }
-
-
-  if (
-    type ===
-    "plinko"
-  ) {
-
-    $("#gameTitle")
-      .textContent =
-      "Rico Plinko";
-
-
-    $("#gameInstruction")
-      .textContent =
-      "Tap START to release the ball. Plinko score is arcade-only for now.";
-
-
-    $("#gameBest")
-      .textContent =
-      getBest(
-        "plinko"
-      );
-
-
-    drawPlinkoPreview();
-
-  }
+  $("#gameOverlay")
+    .classList
+    .remove("hidden");
 
 
   $("#gameScore")
     .textContent =
     "0";
 
+
+  $("#gameStatus")
+    .textContent =
+    "READY";
+
+
+  $("#gameBest")
+    .textContent =
+    getBest(type);
+
+
+  const config = {
+
+    jump: {
+      title:
+        "Rico Jump",
+
+      icon:
+        "↥",
+
+      text:
+        "Land on platforms, climb higher and beat your personal record.",
+
+      help:
+        "Mobile: tap left or right side of the arena. Desktop: ← → or A / D."
+    },
+
+    snake: {
+      title:
+        "Rico Snake",
+
+      icon:
+        "∿",
+
+      text:
+        "Collect Rico energy, grow longer and survive the neon arena.",
+
+      help:
+        "Mobile: swipe. Desktop: arrow keys or W / A / S / D."
+    },
+
+    plinko: {
+      title:
+        "Rico Plinko",
+
+      icon:
+        "◌",
+
+      text:
+        "Release the Rico orb and let the physics board decide your arcade score.",
+
+      help:
+        "Tap START to drop the ball. Scores are arcade scores only."
+    },
+
+    stack: {
+      title:
+        "Rico Stack",
+
+      icon:
+        "▦",
+
+      text:
+        "Time every placement perfectly and build the tallest Rico tower.",
+
+      help:
+        "Tap the arena or press Space to place the moving block."
+    }
+
+  };
+
+
+  const item =
+    config[type];
+
+
+  $("#gameTitle")
+    .textContent =
+    item.title;
+
+
+  $("#gameOverlayTitle")
+    .textContent =
+    item.title;
+
+
+  $("#gameOverlayIcon")
+    .textContent =
+    item.icon;
+
+
+  $("#gameOverlayText")
+    .textContent =
+    item.text;
+
+
+  $("#gameHelp")
+    .textContent =
+    item.help;
+
+
+  drawGamePreview(type);
 
   hapticSelection();
 
@@ -6174,7 +7331,12 @@ function closeGame() {
 }
 
 
-function startSelectedGame() {
+function startCurrentGame() {
+
+  $("#gameOverlay")
+    .classList
+    .add("hidden");
+
 
   if (
     state.currentGame ===
@@ -6199,12 +7361,27 @@ function startSelectedGame() {
     startPlinko();
   }
 
+
+  if (
+    state.currentGame ===
+    "stack"
+  ) {
+    startStack();
+  }
+
+}
+
+
+function restartCurrentGame() {
+
+  startCurrentGame();
+
 }
 
 
 function stopGame() {
 
-  state.gameRunning =
+  state.running =
     false;
 
 
@@ -6222,41 +7399,418 @@ function stopGame() {
 
   }
 
+
+  jumpGame =
+    null;
+
+
+  snakeGame =
+    null;
+
+
+  plinkoGame =
+    null;
+
+
+  stackGame =
+    null;
+
+
+  particles =
+    [];
+
 }
 
 
-function gameOver(
-  score
-) {
+function finishGame(score) {
 
-  state.gameRunning =
+  state.running =
     false;
 
 
-  const game =
-    state.currentGame;
-
-
   saveBest(
-    game,
+    state.currentGame,
     score
   );
 
 
   $("#gameBest")
     .textContent =
-    getBest(game);
+    getBest(
+      state.currentGame
+    );
 
 
-  $("#gameRestart")
+  $("#gameStatus")
+    .textContent =
+    "FINISHED";
+
+
+  $("#gameOverlayTitle")
+    .textContent =
+    "Run complete";
+
+
+  $("#gameOverlayText")
+    .textContent =
+    `Score ${number(score)} · Best ${number(
+      getBest(
+        state.currentGame
+      )
+    )}`;
+
+
+  $("#gameOverlayIcon")
+    .textContent =
+    "R";
+
+
+  $("#startGame")
     .textContent =
     "PLAY AGAIN";
 
 
-  renderGameBestScores();
+  $("#gameOverlay")
+    .classList
+    .remove("hidden");
 
+
+  renderBestScores();
 
   hapticSuccess();
+
+}
+
+
+/* =========================================================
+   GRAPHICS HELPERS
+========================================================= */
+
+function drawBackground(
+  type = "default"
+) {
+
+  ctx.clearRect(
+    0,
+    0,
+    canvas.width,
+    canvas.height
+  );
+
+
+  let top =
+    "#111720";
+
+
+  let bottom =
+    "#06080b";
+
+
+  if (
+    type ===
+    "snake"
+  ) {
+    top =
+      "#081813";
+  }
+
+
+  if (
+    type ===
+    "plinko"
+  ) {
+    top =
+      "#1b0b16";
+  }
+
+
+  if (
+    type ===
+    "stack"
+  ) {
+    top =
+      "#181309";
+  }
+
+
+  const gradient =
+    ctx.createLinearGradient(
+      0,
+      0,
+      0,
+      canvas.height
+    );
+
+
+  gradient.addColorStop(
+    0,
+    top
+  );
+
+
+  gradient.addColorStop(
+    1,
+    bottom
+  );
+
+
+  ctx.fillStyle =
+    gradient;
+
+
+  ctx.fillRect(
+    0,
+    0,
+    canvas.width,
+    canvas.height
+  );
+
+
+  const glow =
+    ctx.createRadialGradient(
+      340,
+      120,
+      20,
+      340,
+      120,
+      260
+    );
+
+
+  glow.addColorStop(
+    0,
+    "rgba(112,201,233,.08)"
+  );
+
+
+  glow.addColorStop(
+    1,
+    "rgba(112,201,233,0)"
+  );
+
+
+  ctx.fillStyle =
+    glow;
+
+
+  ctx.fillRect(
+    0,
+    0,
+    canvas.width,
+    canvas.height
+  );
+
+
+  ctx.strokeStyle =
+    "rgba(255,255,255,.025)";
+
+
+  ctx.lineWidth =
+    1;
+
+
+  for (
+    let y = 0;
+    y <
+      canvas.height;
+    y += 48
+  ) {
+
+    ctx.beginPath();
+
+    ctx.moveTo(
+      0,
+      y
+    );
+
+    ctx.lineTo(
+      canvas.width,
+      y
+    );
+
+    ctx.stroke();
+
+  }
+
+}
+
+
+function roundedRect(
+  x,
+  y,
+  w,
+  h,
+  radius
+) {
+
+  const r =
+    Math.min(
+      radius,
+      w / 2,
+      h / 2
+    );
+
+
+  ctx.beginPath();
+
+  ctx.moveTo(
+    x + r,
+    y
+  );
+
+  ctx.arcTo(
+    x + w,
+    y,
+    x + w,
+    y + h,
+    r
+  );
+
+  ctx.arcTo(
+    x + w,
+    y + h,
+    x,
+    y + h,
+    r
+  );
+
+  ctx.arcTo(
+    x,
+    y + h,
+    x,
+    y,
+    r
+  );
+
+  ctx.arcTo(
+    x,
+    y,
+    x + w,
+    y,
+    r
+  );
+
+  ctx.closePath();
+
+}
+
+
+function createParticle(
+  x,
+  y,
+  colour,
+  amount = 9
+) {
+
+  for (
+    let i = 0;
+    i < amount;
+    i++
+  ) {
+
+    particles.push({
+
+      x,
+      y,
+
+      vx:
+        (
+          Math.random() -
+          .5
+        ) * 4,
+
+      vy:
+        (
+          Math.random() -
+          .8
+        ) * 4,
+
+      life:
+        1,
+
+      size:
+        2 +
+        Math.random() *
+        3,
+
+      colour
+
+    });
+
+  }
+
+}
+
+
+function updateParticles() {
+
+  particles =
+    particles.filter(
+      particle =>
+        particle.life > 0
+    );
+
+
+  particles.forEach(
+    particle => {
+
+      particle.x +=
+        particle.vx;
+
+
+      particle.y +=
+        particle.vy;
+
+
+      particle.vy +=
+        .08;
+
+
+      particle.life -=
+        .025;
+
+    }
+  );
+
+}
+
+
+function drawParticles() {
+
+  particles.forEach(
+    particle => {
+
+      ctx.globalAlpha =
+        Math.max(
+          0,
+          particle.life
+        );
+
+
+      ctx.fillStyle =
+        particle.colour;
+
+
+      ctx.beginPath();
+
+
+      ctx.arc(
+        particle.x,
+        particle.y,
+        particle.size,
+        0,
+        Math.PI * 2
+      );
+
+
+      ctx.fill();
+
+    }
+  );
+
+
+  ctx.globalAlpha =
+    1;
 
 }
 
@@ -6265,100 +7819,71 @@ function gameOver(
    RICO JUMP
 ========================================================= */
 
-let jump = null;
-
-
-function createJumpState() {
-
-  return {
-
-    score: 0,
-
-    velocityX: 0,
-
-    player: {
-      x: 210,
-      y: 430,
-      w: 25,
-      h: 25,
-      vy: -7.6
-    },
-
-    platforms: []
-
-  };
-
-}
-
-
-function makeJumpPlatforms() {
-
-  const platforms = [];
-
-
-  for (
-    let i = 0;
-    i < 11;
-    i++
-  ) {
-
-    platforms.push({
-
-      x:
-        30 +
-        Math.random() *
-        320,
-
-      y:
-        555 -
-        i *
-        58,
-
-      w:
-        72 +
-        Math.random() *
-        22,
-
-      h: 8
-
-    });
-
-  }
-
-
-  platforms[0] = {
-    x: 170,
-    y: 530,
-    w: 110,
-    h: 8
-  };
-
-
-  return platforms;
-
-}
-
-
 function startJump() {
 
   stopGame();
 
 
-  jump =
-    createJumpState();
+  state.currentGame =
+    "jump";
 
 
-  jump.platforms =
-    makeJumpPlatforms();
-
-
-  state.gameRunning =
+  state.running =
     true;
 
 
-  $("#gameRestart")
+  $("#gameStatus")
     .textContent =
-    "RESTART";
+    "PLAYING";
+
+
+  $("#startGame")
+    .textContent =
+    "PLAY AGAIN";
+
+
+  jumpGame = {
+
+    score: 0,
+
+    speedX: 0,
+
+    player: {
+      x: 208,
+      y: 425,
+      w: 28,
+      h: 31,
+      vy: -8
+    },
+
+    platforms:
+      createJumpPlatforms(),
+
+    stars:
+      Array.from(
+        {length:45},
+        () => ({
+          x:
+            Math.random() *
+            canvas.width,
+
+          y:
+            Math.random() *
+            canvas.height,
+
+          size:
+            .5 +
+            Math.random() *
+            1.5,
+
+          alpha:
+            .15 +
+            Math.random() *
+            .4
+        })
+      )
+
+  };
 
 
   jumpLoop();
@@ -6366,12 +7891,496 @@ function startJump() {
 }
 
 
+function createJumpPlatforms() {
+
+  const result = [];
+
+
+  for (
+    let i = 0;
+    i < 12;
+    i++
+  ) {
+
+    result.push({
+
+      x:
+        30 +
+        Math.random() *
+        320,
+
+      y:
+        545 -
+        i * 54,
+
+      w:
+        70 +
+        Math.random() *
+        30,
+
+      h:
+        10,
+
+      moving:
+        Math.random() >
+        .68,
+
+      direction:
+        Math.random() >
+        .5
+          ? 1
+          : -1
+
+    });
+
+  }
+
+
+  result[0] = {
+
+    x: 165,
+    y: 535,
+    w: 120,
+    h: 10,
+    moving: false,
+    direction: 1
+
+  };
+
+
+  return result;
+
+}
+
+
+function updateJump() {
+
+  const player =
+    jumpGame.player;
+
+
+  player.vy +=
+    .27;
+
+
+  player.x +=
+    jumpGame.speedX;
+
+
+  player.y +=
+    player.vy;
+
+
+  jumpGame.speedX *=
+    .92;
+
+
+  jumpGame.platforms
+    .forEach(
+      platform => {
+
+        if (
+          platform.moving
+        ) {
+
+          platform.x +=
+            platform.direction *
+            .65;
+
+
+          if (
+            platform.x <
+              10 ||
+            platform.x +
+              platform.w >
+              canvas.width -
+              10
+          ) {
+
+            platform.direction *=
+              -1;
+
+          }
+
+        }
+
+      }
+    );
+
+
+  if (
+    player.x <
+    -player.w
+  ) {
+
+    player.x =
+      canvas.width;
+
+  }
+
+
+  if (
+    player.x >
+    canvas.width
+  ) {
+
+    player.x =
+      -player.w;
+
+  }
+
+
+  if (
+    player.vy > 0
+  ) {
+
+    for (
+      const platform
+      of jumpGame.platforms
+    ) {
+
+      const previousBottom =
+        player.y -
+        player.vy +
+        player.h;
+
+
+      const currentBottom =
+        player.y +
+        player.h;
+
+
+      if (
+        player.x +
+          player.w >
+          platform.x &&
+        player.x <
+          platform.x +
+          platform.w &&
+        previousBottom <=
+          platform.y &&
+        currentBottom >=
+          platform.y
+      ) {
+
+        player.y =
+          platform.y -
+          player.h;
+
+
+        player.vy =
+          -8.7;
+
+
+        jumpGame.score +=
+          10;
+
+
+        $("#gameScore")
+          .textContent =
+          jumpGame.score;
+
+
+        createParticle(
+          player.x +
+            player.w / 2,
+          platform.y,
+          "#70c9e9",
+          7
+        );
+
+
+        try {
+
+          tg?.HapticFeedback
+            ?.impactOccurred(
+              "light"
+            );
+
+        } catch {}
+
+
+        break;
+
+      }
+
+    }
+
+  }
+
+
+  if (
+    player.y <
+    215
+  ) {
+
+    const shift =
+      215 -
+      player.y;
+
+
+    player.y =
+      215;
+
+
+    jumpGame.platforms
+      .forEach(
+        platform =>
+          platform.y +=
+          shift
+      );
+
+
+    jumpGame.stars
+      .forEach(
+        star =>
+          star.y +=
+          shift *
+          .16
+      );
+
+
+    jumpGame.platforms
+      .forEach(
+        platform => {
+
+          if (
+            platform.y >
+            canvas.height +
+            25
+          ) {
+
+            platform.y =
+              -45 -
+              Math.random() *
+              70;
+
+
+            platform.x =
+              20 +
+              Math.random() *
+              345;
+
+
+            platform.moving =
+              Math.random() >
+              .62;
+
+          }
+
+        }
+      );
+
+  }
+
+
+  if (
+    player.y >
+    canvas.height +
+    40
+  ) {
+
+    finishGame(
+      jumpGame.score
+    );
+
+  }
+
+
+  updateParticles();
+
+}
+
+
+function drawJump() {
+
+  drawBackground(
+    "jump"
+  );
+
+
+  jumpGame.stars
+    .forEach(
+      star => {
+
+        ctx.globalAlpha =
+          star.alpha;
+
+
+        ctx.fillStyle =
+          "#dff5ff";
+
+
+        ctx.fillRect(
+          star.x,
+          star.y,
+          star.size,
+          star.size
+        );
+
+      }
+    );
+
+
+  ctx.globalAlpha =
+    1;
+
+
+  jumpGame.platforms
+    .forEach(
+      platform => {
+
+        const platformGradient =
+          ctx.createLinearGradient(
+            platform.x,
+            platform.y,
+            platform.x +
+              platform.w,
+            platform.y
+          );
+
+
+        platformGradient
+          .addColorStop(
+            0,
+            "rgba(234,94,170,.72)"
+          );
+
+
+        platformGradient
+          .addColorStop(
+            .55,
+            "rgba(166,151,220,.8)"
+          );
+
+
+        platformGradient
+          .addColorStop(
+            1,
+            "rgba(112,201,233,.78)"
+          );
+
+
+        ctx.shadowBlur =
+          13;
+
+
+        ctx.shadowColor =
+          "rgba(112,201,233,.16)";
+
+
+        ctx.fillStyle =
+          platformGradient;
+
+
+        roundedRect(
+          platform.x,
+          platform.y,
+          platform.w,
+          platform.h,
+          5
+        );
+
+
+        ctx.fill();
+
+
+        ctx.shadowBlur =
+          0;
+
+      }
+    );
+
+
+  const player =
+    jumpGame.player;
+
+
+  const characterGradient =
+    ctx.createLinearGradient(
+      player.x,
+      player.y,
+      player.x +
+        player.w,
+      player.y +
+        player.h
+    );
+
+
+  characterGradient
+    .addColorStop(
+      0,
+      "#ea5eaa"
+    );
+
+
+  characterGradient
+    .addColorStop(
+      1,
+      "#70c9e9"
+    );
+
+
+  ctx.shadowBlur =
+    22;
+
+
+  ctx.shadowColor =
+    "rgba(112,201,233,.23)";
+
+
+  ctx.fillStyle =
+    characterGradient;
+
+
+  roundedRect(
+    player.x,
+    player.y,
+    player.w,
+    player.h,
+    10
+  );
+
+
+  ctx.fill();
+
+
+  ctx.shadowBlur =
+    0;
+
+
+  ctx.fillStyle =
+    "rgba(255,255,255,.95)";
+
+
+  ctx.font =
+    "900 12px sans-serif";
+
+
+  ctx.textAlign =
+    "center";
+
+
+  ctx.fillText(
+    "R",
+    player.x +
+      player.w / 2,
+    player.y +
+      20
+  );
+
+
+  drawParticles();
+
+}
+
+
 function jumpLoop() {
 
   if (
-    !state.gameRunning ||
+    !state.running ||
     state.currentGame !==
-      "jump"
+    "jump"
   ) {
     return;
   }
@@ -6390,350 +8399,32 @@ function jumpLoop() {
 }
 
 
-function updateJump() {
-
-  const p =
-    jump.player;
-
-
-  p.vy += .27;
-
-
-  p.x +=
-    jump.velocityX;
-
-
-  p.y +=
-    p.vy;
-
-
-  jump.velocityX *=
-    .92;
-
-
-  if (
-    p.x <
-    0
-  ) {
-    p.x =
-      canvas.width -
-      p.w;
-  }
-
-
-  if (
-    p.x >
-    canvas.width
-  ) {
-    p.x = 0;
-  }
-
-
-  if (
-    p.vy > 0
-  ) {
-
-    for (
-      const platform
-      of jump.platforms
-    ) {
-
-      const oldBottom =
-        p.y -
-        p.vy +
-        p.h;
-
-
-      const newBottom =
-        p.y +
-        p.h;
-
-
-      if (
-        p.x + p.w >
-          platform.x &&
-        p.x <
-          platform.x +
-          platform.w &&
-        oldBottom <=
-          platform.y &&
-        newBottom >=
-          platform.y
-      ) {
-
-        p.y =
-          platform.y -
-          p.h;
-
-
-        p.vy =
-          -8.5;
-
-
-        jump.score +=
-          10;
-
-
-        $("#gameScore")
-          .textContent =
-          jump.score;
-
-
-        break;
-
-      }
-
-    }
-
-  }
-
-
-  if (
-    p.y <
-    220
-  ) {
-
-    const shift =
-      220 -
-      p.y;
-
-
-    p.y =
-      220;
-
-
-    jump.platforms
-      .forEach(
-        platform =>
-          platform.y +=
-          shift
-      );
-
-
-    for (
-      const platform
-      of jump.platforms
-    ) {
-
-      if (
-        platform.y >
-        canvas.height +
-        20
-      ) {
-
-        platform.y =
-          -40 -
-          Math.random() *
-          60;
-
-
-        platform.x =
-          20 +
-          Math.random() *
-          340;
-
-      }
-
-    }
-
-  }
-
-
-  if (
-    p.y >
-    canvas.height +
-    35
-  ) {
-
-    gameOver(
-      jump.score
-    );
-
-  }
-
-}
-
-
-function drawJump() {
-
-  drawGameBackground();
-
-
-  const gradient =
-    ctx.createLinearGradient(
-      0,
-      0,
-      canvas.width,
-      canvas.height
-    );
-
-
-  gradient.addColorStop(
-    0,
-    "#e95da9"
-  );
-
-
-  gradient.addColorStop(
-    1,
-    "#6fc8e8"
-  );
-
-
-  ctx.fillStyle =
-    "rgba(255,255,255,.18)";
-
-
-  for (
-    const platform
-    of jump.platforms
-  ) {
-
-    roundRect(
-      ctx,
-      platform.x,
-      platform.y,
-      platform.w,
-      platform.h,
-      4
-    );
-
-
-    ctx.fill();
-
-  }
-
-
-  ctx.fillStyle =
-    gradient;
-
-
-  roundRect(
-    ctx,
-    jump.player.x,
-    jump.player.y,
-    jump.player.w,
-    jump.player.h,
-    8
-  );
-
-
-  ctx.fill();
-
-
-  ctx.fillStyle =
-    "#fff";
-
-
-  ctx.font =
-    "900 11px sans-serif";
-
-
-  ctx.textAlign =
-    "center";
-
-
-  ctx.fillText(
-    "R",
-    jump.player.x +
-      jump.player.w / 2,
-    jump.player.y +
-      17
-  );
-
-}
-
-
-function drawJumpPreview() {
-
-  drawGameBackground();
-
-
-  ctx.fillStyle =
-    "rgba(255,255,255,.15)";
-
-
-  for (
-    let i = 0;
-    i < 7;
-    i++
-  ) {
-
-    roundRect(
-      ctx,
-      55 +
-        (
-          i % 2
-            ? 180
-            : 40
-        ),
-      520 -
-        i * 70,
-      100,
-      8,
-      4
-    );
-
-
-    ctx.fill();
-
-  }
-
-
-  const gradient =
-    ctx.createLinearGradient(
-      0,0,
-      canvas.width,
-      canvas.height
-    );
-
-
-  gradient.addColorStop(
-    0,
-    "#e95da9"
-  );
-
-
-  gradient.addColorStop(
-    1,
-    "#6fc8e8"
-  );
-
-
-  ctx.fillStyle =
-    gradient;
-
-
-  roundRect(
-    ctx,
-    210,
-    430,
-    28,
-    28,
-    9
-  );
-
-
-  ctx.fill();
-
-}
-
-
 /* =========================================================
-   SNAKE
+   RICO SNAKE
 ========================================================= */
-
-let snake = null;
-
 
 function startSnake() {
 
   stopGame();
 
 
-  snake = {
+  state.currentGame =
+    "snake";
 
-    cell: 18,
+
+  state.running =
+    true;
+
+
+  $("#gameStatus")
+    .textContent =
+    "PLAYING";
+
+
+  snakeGame = {
+
+    cell:
+      18,
 
     direction: {
       x: 1,
@@ -6746,29 +8437,20 @@ function startSnake() {
     },
 
     body: [
-      {x: 12,y: 15},
-      {x: 11,y: 15},
-      {x: 10,y: 15}
+      {x:12,y:15},
+      {x:11,y:15},
+      {x:10,y:15},
+      {x:9,y:15}
     ],
 
     food:
-      randomFood(),
+      createSnakeFood(),
 
     score: 0,
 
-    last:
-      0
+    lastStep: 0
 
   };
-
-
-  state.gameRunning =
-    true;
-
-
-  $("#gameRestart")
-    .textContent =
-    "RESTART";
 
 
   snakeLoop(
@@ -6778,9 +8460,10 @@ function startSnake() {
 }
 
 
-function randomFood() {
+function createSnakeFood() {
 
   return {
+
     x:
       Math.floor(
         Math.random() *
@@ -6792,94 +8475,61 @@ function randomFood() {
         Math.random() *
         31
       )
+
   };
-
-}
-
-
-function snakeLoop(now) {
-
-  if (
-    !state.gameRunning ||
-    state.currentGame !==
-      "snake"
-  ) {
-    return;
-  }
-
-
-  if (
-    now -
-    snake.last >
-    105
-  ) {
-
-    snake.last =
-      now;
-
-
-    updateSnake();
-
-    drawSnake();
-
-  }
-
-
-  state.animationId =
-    requestAnimationFrame(
-      snakeLoop
-    );
 
 }
 
 
 function updateSnake() {
 
-  snake.direction =
-    snake.nextDirection;
+  snakeGame.direction =
+    snakeGame.nextDirection;
 
 
   const head = {
 
     x:
-      snake.body[0].x +
-      snake.direction.x,
+      snakeGame.body[0].x +
+      snakeGame.direction.x,
 
     y:
-      snake.body[0].y +
-      snake.direction.y
+      snakeGame.body[0].y +
+      snakeGame.direction.y
 
   };
 
 
-  const cols =
+  const columns =
     Math.floor(
       canvas.width /
-      snake.cell
+      snakeGame.cell
     );
 
 
   const rows =
     Math.floor(
       canvas.height /
-      snake.cell
+      snakeGame.cell
     );
 
 
   if (
     head.x < 0 ||
     head.y < 0 ||
-    head.x >= cols ||
+    head.x >= columns ||
     head.y >= rows ||
-    snake.body.some(
+    snakeGame.body.some(
       part =>
-        part.x === head.x &&
-        part.y === head.y
+        part.x ===
+          head.x &&
+        part.y ===
+          head.y
     )
   ) {
 
-    gameOver(
-      snake.score
+    finishGame(
+      snakeGame.score
     );
 
 
@@ -6888,64 +8538,133 @@ function updateSnake() {
   }
 
 
-  snake.body.unshift(
+  snakeGame.body.unshift(
     head
   );
 
 
   if (
     head.x ===
-      snake.food.x &&
+      snakeGame.food.x &&
     head.y ===
-      snake.food.y
+      snakeGame.food.y
   ) {
 
-    snake.score +=
+    snakeGame.score +=
       10;
 
 
-    snake.food =
-      randomFood();
+    snakeGame.food =
+      createSnakeFood();
 
 
     $("#gameScore")
       .textContent =
-      snake.score;
+      snakeGame.score;
+
+
+    createParticle(
+      head.x *
+        snakeGame.cell +
+        9,
+      head.y *
+        snakeGame.cell +
+        9,
+      "#62d99c",
+      13
+    );
+
+
+    hapticSelection();
 
   } else {
 
-    snake.body.pop();
+    snakeGame.body.pop();
 
   }
+
+
+  updateParticles();
 
 }
 
 
 function drawSnake() {
 
-  drawGameBackground();
+  drawBackground(
+    "snake"
+  );
 
 
   const cell =
-    snake.cell;
+    snakeGame.cell;
 
 
-  ctx.fillStyle =
-    "#61d49a";
+  ctx.strokeStyle =
+    "rgba(98,217,156,.035)";
 
 
-  snake.body
+  for (
+    let x = 0;
+    x <
+      canvas.width;
+    x += cell
+  ) {
+
+    ctx.beginPath();
+
+    ctx.moveTo(
+      x,
+      0
+    );
+
+    ctx.lineTo(
+      x,
+      canvas.height
+    );
+
+    ctx.stroke();
+
+  }
+
+
+  snakeGame.body
     .forEach(
       (part,index) => {
 
+        const alpha =
+          Math.max(
+            .25,
+            1 -
+            index /
+            (
+              snakeGame.body.length *
+              1.3
+            )
+          );
+
+
         ctx.globalAlpha =
+          alpha;
+
+
+        ctx.shadowBlur =
           index === 0
-            ? 1
-            : .72;
+            ? 18
+            : 8;
 
 
-        roundRect(
-          ctx,
+        ctx.shadowColor =
+          "#62d99c";
+
+
+        ctx.fillStyle =
+          index === 0
+            ? "#9affc6"
+            : "#62d99c";
+
+
+        roundedRect(
           part.x *
             cell +
             1,
@@ -6968,72 +8687,28 @@ function drawSnake() {
     1;
 
 
+  ctx.shadowBlur =
+    20;
+
+
+  ctx.shadowColor =
+    "#ea5eaa";
+
+
   ctx.fillStyle =
-    "#e95da9";
+    "#ea5eaa";
 
 
   ctx.beginPath();
 
 
   ctx.arc(
-    snake.food.x *
+    snakeGame.food.x *
       cell +
       cell / 2,
-    snake.food.y *
+    snakeGame.food.y *
       cell +
       cell / 2,
-    6,
-    0,
-    Math.PI * 2
-  );
-
-
-  ctx.fill();
-
-}
-
-
-function drawSnakePreview() {
-
-  drawGameBackground();
-
-
-  ctx.fillStyle =
-    "#61d49a";
-
-
-  for (
-    let i = 0;
-    i < 8;
-    i++
-  ) {
-
-    roundRect(
-      ctx,
-      140 +
-        i * 19,
-      300,
-      15,
-      15,
-      5
-    );
-
-
-    ctx.fill();
-
-  }
-
-
-  ctx.fillStyle =
-    "#e95da9";
-
-
-  ctx.beginPath();
-
-
-  ctx.arc(
-    330,
-    307,
     7,
     0,
     Math.PI * 2
@@ -7042,6 +8717,86 @@ function drawSnakePreview() {
 
   ctx.fill();
 
+
+  ctx.shadowBlur =
+    0;
+
+
+  drawParticles();
+
+}
+
+
+function snakeLoop(time) {
+
+  if (
+    !state.running ||
+    state.currentGame !==
+    "snake"
+  ) {
+    return;
+  }
+
+
+  const speed =
+    Math.max(
+      65,
+      115 -
+      snakeGame.score *
+      .2
+    );
+
+
+  if (
+    time -
+    snakeGame.lastStep >
+    speed
+  ) {
+
+    snakeGame.lastStep =
+      time;
+
+
+    updateSnake();
+
+    drawSnake();
+
+  }
+
+
+  state.animationId =
+    requestAnimationFrame(
+      snakeLoop
+    );
+
+}
+
+
+function setSnakeDirection(
+  x,
+  y
+) {
+
+  if (!snakeGame) {
+    return;
+  }
+
+
+  if (
+    snakeGame.direction.x +
+      x === 0 &&
+    snakeGame.direction.y +
+      y === 0
+  ) {
+    return;
+  }
+
+
+  snakeGame.nextDirection = {
+    x,
+    y
+  };
+
 }
 
 
@@ -7049,61 +8804,7 @@ function drawSnakePreview() {
    PLINKO
 ========================================================= */
 
-let plinko = null;
-
-
-function startPlinko() {
-
-  stopGame();
-
-
-  plinko = {
-
-    ball: {
-      x:
-        canvas.width / 2 +
-        (
-          Math.random() -
-          .5
-        ) *
-        30,
-
-      y: 35,
-
-      vx:
-        (
-          Math.random() -
-          .5
-        ) * 1.3,
-
-      vy: 0,
-
-      r: 8
-    },
-
-    pegs:
-      createPegs(),
-
-    score: 0
-
-  };
-
-
-  state.gameRunning =
-    true;
-
-
-  $("#gameRestart")
-    .textContent =
-    "DROP AGAIN";
-
-
-  plinkoLoop();
-
-}
-
-
-function createPegs() {
+function createPlinkoPegs() {
 
   const pegs = [];
 
@@ -7119,7 +8820,7 @@ function createPegs() {
 
 
     const spacing =
-      32;
+      31;
 
 
     const total =
@@ -7141,15 +8842,18 @@ function createPegs() {
     ) {
 
       pegs.push({
+
         x:
           start +
           i * spacing,
 
         y:
-          115 +
+          120 +
           row * 43,
 
-        r: 4
+        r:
+          4.5
+
       });
 
     }
@@ -7162,26 +8866,65 @@ function createPegs() {
 }
 
 
-function plinkoLoop() {
+function startPlinko() {
 
-  if (
-    !state.gameRunning ||
-    state.currentGame !==
-      "plinko"
-  ) {
-    return;
-  }
+  stopGame();
 
 
-  updatePlinko();
+  state.currentGame =
+    "plinko";
 
-  drawPlinko();
+
+  state.running =
+    true;
 
 
-  state.animationId =
-    requestAnimationFrame(
-      plinkoLoop
-    );
+  $("#gameStatus")
+    .textContent =
+    "DROPPING";
+
+
+  plinkoGame = {
+
+    score: 0,
+
+    pegs:
+      createPlinkoPegs(),
+
+    ball: {
+
+      x:
+        canvas.width / 2 +
+        (
+          Math.random() -
+          .5
+        ) *
+        28,
+
+      y:
+        44,
+
+      vx:
+        (
+          Math.random() -
+          .5
+        ) *
+        1.15,
+
+      vy:
+        0,
+
+      r:
+        9
+
+    },
+
+    trail: []
+
+  };
+
+
+  plinkoLoop();
 
 }
 
@@ -7189,7 +8932,7 @@ function plinkoLoop() {
 function updatePlinko() {
 
   const ball =
-    plinko.ball;
+    plinkoGame.ball;
 
 
   ball.vy +=
@@ -7204,17 +8947,40 @@ function updatePlinko() {
     ball.vy;
 
 
+  plinkoGame.trail.unshift({
+
+    x:
+      ball.x,
+
+    y:
+      ball.y
+
+  });
+
+
+  if (
+    plinkoGame.trail.length >
+    15
+  ) {
+
+    plinkoGame.trail.pop();
+
+  }
+
+
   if (
     ball.x <
-    ball.r
+    ball.r +
+    4
   ) {
 
     ball.x =
-      ball.r;
+      ball.r +
+      4;
 
 
     ball.vx *=
-      -.65;
+      -.68;
 
   }
 
@@ -7222,114 +8988,124 @@ function updatePlinko() {
   if (
     ball.x >
     canvas.width -
-    ball.r
+    ball.r -
+    4
   ) {
 
     ball.x =
       canvas.width -
-      ball.r;
+      ball.r -
+      4;
 
 
     ball.vx *=
-      -.65;
+      -.68;
 
   }
 
 
-  for (
-    const peg
-    of plinko.pegs
-  ) {
+  plinkoGame.pegs
+    .forEach(
+      peg => {
 
-    const dx =
-      ball.x -
-      peg.x;
-
-
-    const dy =
-      ball.y -
-      peg.y;
+        const dx =
+          ball.x -
+          peg.x;
 
 
-    const distance =
-      Math.sqrt(
-        dx * dx +
-        dy * dy
-      );
+        const dy =
+          ball.y -
+          peg.y;
 
 
-    const minDistance =
-      ball.r +
-      peg.r;
+        const distance =
+          Math.sqrt(
+            dx * dx +
+            dy * dy
+          );
 
 
-    if (
-      distance <
-      minDistance
-    ) {
-
-      const nx =
-        dx /
-        (
-          distance ||
-          1
-        );
+        const minimum =
+          ball.r +
+          peg.r;
 
 
-      const ny =
-        dy /
-        (
-          distance ||
-          1
-        );
+        if (
+          distance <
+          minimum
+        ) {
+
+          const nx =
+            dx /
+            (
+              distance ||
+              1
+            );
 
 
-      ball.x =
-        peg.x +
-        nx *
-        minDistance;
+          const ny =
+            dy /
+            (
+              distance ||
+              1
+            );
 
 
-      ball.y =
-        peg.y +
-        ny *
-        minDistance;
+          ball.x =
+            peg.x +
+            nx *
+            minimum;
 
 
-      const dot =
-        ball.vx *
-          nx +
-        ball.vy *
-          ny;
+          ball.y =
+            peg.y +
+            ny *
+            minimum;
 
 
-      ball.vx -=
-        1.6 *
-        dot *
-        nx;
+          const dot =
+            ball.vx *
+              nx +
+            ball.vy *
+              ny;
 
 
-      ball.vy -=
-        1.6 *
-        dot *
-        ny;
+          ball.vx -=
+            1.65 *
+            dot *
+            nx;
 
 
-      ball.vx +=
-        (
-          Math.random() -
-          .5
-        ) *
-        .7;
+          ball.vy -=
+            1.65 *
+            dot *
+            ny;
 
-    }
 
-  }
+          ball.vx +=
+            (
+              Math.random() -
+              .5
+            ) *
+            .65;
+
+
+          createParticle(
+            peg.x,
+            peg.y,
+            "#a697dc",
+            3
+          );
+
+        }
+
+      }
+    );
 
 
   if (
     ball.y >
-    550
+    548
   ) {
 
     const slot =
@@ -7348,29 +9124,932 @@ function updatePlinko() {
       );
 
 
-    const values =
-      [
-        20,
-        40,
-        70,
-        100,
-        70,
-        40,
-        20
-      ];
+    const values = [
+      20,
+      40,
+      70,
+      100,
+      70,
+      40,
+      20
+    ];
 
 
-    const score =
+    const result =
       values[slot];
 
 
     $("#gameScore")
       .textContent =
-      score;
+      result;
 
 
-    gameOver(
-      score
+    finishGame(
+      result
+    );
+
+  }
+
+
+  updateParticles();
+
+}
+
+
+function drawPlinko() {
+
+  drawBackground(
+    "plinko"
+  );
+
+
+  const slotWidth =
+    canvas.width /
+    7;
+
+
+  const values = [
+    20,
+    40,
+    70,
+    100,
+    70,
+    40,
+    20
+  ];
+
+
+  for (
+    let i = 0;
+    i < 7;
+    i++
+  ) {
+
+    ctx.fillStyle =
+      i === 3
+        ? "rgba(112,201,233,.12)"
+        : "rgba(255,255,255,.035)";
+
+
+    roundedRect(
+      i *
+        slotWidth +
+        3,
+      550,
+      slotWidth -
+        6,
+      37,
+      6
+    );
+
+
+    ctx.fill();
+
+
+    ctx.fillStyle =
+      i === 3
+        ? "#70c9e9"
+        : "#777b80";
+
+
+    ctx.font =
+      "800 10px sans-serif";
+
+
+    ctx.textAlign =
+      "center";
+
+
+    ctx.fillText(
+      values[i],
+      i *
+        slotWidth +
+        slotWidth / 2,
+      573
+    );
+
+  }
+
+
+  plinkoGame.pegs
+    .forEach(
+      peg => {
+
+        ctx.shadowBlur =
+          10;
+
+
+        ctx.shadowColor =
+          "rgba(166,151,220,.35)";
+
+
+        ctx.fillStyle =
+          "rgba(235,232,255,.65)";
+
+
+        ctx.beginPath();
+
+
+        ctx.arc(
+          peg.x,
+          peg.y,
+          peg.r,
+          0,
+          Math.PI * 2
+        );
+
+
+        ctx.fill();
+
+      }
+    );
+
+
+  ctx.shadowBlur =
+    0;
+
+
+  plinkoGame.trail
+    .forEach(
+      (point,index) => {
+
+        ctx.globalAlpha =
+          (
+            plinkoGame.trail.length -
+            index
+          )
+          /
+          plinkoGame.trail.length *
+          .35;
+
+
+        ctx.fillStyle =
+          "#70c9e9";
+
+
+        ctx.beginPath();
+
+
+        ctx.arc(
+          point.x,
+          point.y,
+          Math.max(
+            2,
+            7 -
+            index *
+            .3
+          ),
+          0,
+          Math.PI * 2
+        );
+
+
+        ctx.fill();
+
+      }
+    );
+
+
+  ctx.globalAlpha =
+    1;
+
+
+  const ball =
+    plinkoGame.ball;
+
+
+  const ballGradient =
+    ctx.createRadialGradient(
+      ball.x - 3,
+      ball.y - 3,
+      2,
+      ball.x,
+      ball.y,
+      12
+    );
+
+
+  ballGradient.addColorStop(
+    0,
+    "#fff"
+  );
+
+
+  ballGradient.addColorStop(
+    .28,
+    "#a697dc"
+  );
+
+
+  ballGradient.addColorStop(
+    1,
+    "#ea5eaa"
+  );
+
+
+  ctx.shadowBlur =
+    23;
+
+
+  ctx.shadowColor =
+    "#ea5eaa";
+
+
+  ctx.fillStyle =
+    ballGradient;
+
+
+  ctx.beginPath();
+
+
+  ctx.arc(
+    ball.x,
+    ball.y,
+    ball.r,
+    0,
+    Math.PI * 2
+  );
+
+
+  ctx.fill();
+
+
+  ctx.shadowBlur =
+    0;
+
+
+  drawParticles();
+
+}
+
+
+function plinkoLoop() {
+
+  if (
+    !state.running ||
+    state.currentGame !==
+    "plinko"
+  ) {
+    return;
+  }
+
+
+  updatePlinko();
+
+  drawPlinko();
+
+
+  state.animationId =
+    requestAnimationFrame(
+      plinkoLoop
+    );
+
+}
+
+
+/* =========================================================
+   STACK
+========================================================= */
+
+function startStack() {
+
+  stopGame();
+
+
+  state.currentGame =
+    "stack";
+
+
+  state.running =
+    true;
+
+
+  $("#gameStatus")
+    .textContent =
+    "PLAYING";
+
+
+  stackGame = {
+
+    score: 0,
+
+    blocks: [
+      {
+        x: 135,
+        y: 548,
+        w: 180,
+        h: 27
+      }
+    ],
+
+    moving: {
+      x: 20,
+      y: 510,
+      w: 180,
+      h: 27,
+      direction: 1,
+      speed: 2.6
+    }
+
+  };
+
+
+  stackLoop();
+
+}
+
+
+function placeStackBlock() {
+
+  if (
+    !stackGame ||
+    !state.running
+  ) {
+    return;
+  }
+
+
+  const moving =
+    stackGame.moving;
+
+
+  const previous =
+    stackGame.blocks[
+      stackGame.blocks.length -
+      1
+    ];
+
+
+  const left =
+    Math.max(
+      moving.x,
+      previous.x
+    );
+
+
+  const right =
+    Math.min(
+      moving.x +
+        moving.w,
+      previous.x +
+        previous.w
+    );
+
+
+  const width =
+    right -
+    left;
+
+
+  if (
+    width <=
+    2
+  ) {
+
+    finishGame(
+      stackGame.score
+    );
+
+
+    return;
+
+  }
+
+
+  const block = {
+    x: left,
+    y: moving.y,
+    w: width,
+    h: moving.h
+  };
+
+
+  stackGame.blocks.push(
+    block
+  );
+
+
+  stackGame.score +=
+    10;
+
+
+  $("#gameScore")
+    .textContent =
+    stackGame.score;
+
+
+  createParticle(
+    block.x +
+      block.w / 2,
+    block.y,
+    "#e5c67a",
+    10
+  );
+
+
+  const perfect =
+    Math.abs(
+      moving.x -
+      previous.x
+    ) <
+    4;
+
+
+  if (perfect) {
+
+    block.x =
+      previous.x;
+
+
+    block.w =
+      previous.w;
+
+
+    stackGame.score +=
+      5;
+
+
+    $("#gameScore")
+      .textContent =
+      stackGame.score;
+
+  }
+
+
+  stackGame.moving = {
+
+    x:
+      moving.direction >
+      0
+        ? canvas.width -
+          block.w -
+          20
+        : 20,
+
+    y:
+      moving.y -
+      38,
+
+    w:
+      block.w,
+
+    h:
+      27,
+
+    direction:
+      moving.direction *
+      -1,
+
+    speed:
+      Math.min(
+        6,
+        moving.speed +
+        .17
+      )
+
+  };
+
+
+  if (
+    stackGame.moving.y <
+    220
+  ) {
+
+    stackGame.blocks
+      .forEach(
+        item =>
+          item.y +=
+          38
+      );
+
+
+    stackGame.moving.y +=
+      38;
+
+  }
+
+
+  hapticSelection();
+
+}
+
+
+function updateStack() {
+
+  const moving =
+    stackGame.moving;
+
+
+  moving.x +=
+    moving.direction *
+    moving.speed;
+
+
+  if (
+    moving.x <= 8
+  ) {
+
+    moving.x = 8;
+
+    moving.direction = 1;
+
+  }
+
+
+  if (
+    moving.x +
+      moving.w >=
+    canvas.width -
+      8
+  ) {
+
+    moving.x =
+      canvas.width -
+      moving.w -
+      8;
+
+
+    moving.direction = -1;
+
+  }
+
+
+  updateParticles();
+
+}
+
+
+function drawStack() {
+
+  drawBackground(
+    "stack"
+  );
+
+
+  const glow =
+    ctx.createLinearGradient(
+      0,
+      0,
+      canvas.width,
+      0
+    );
+
+
+  glow.addColorStop(
+    0,
+    "#ea5eaa"
+  );
+
+
+  glow.addColorStop(
+    .5,
+    "#e5c67a"
+  );
+
+
+  glow.addColorStop(
+    1,
+    "#70c9e9"
+  );
+
+
+  stackGame.blocks
+    .forEach(
+      (block,index) => {
+
+        ctx.globalAlpha =
+          .55 +
+          (
+            index /
+            stackGame.blocks.length
+          ) *
+          .4;
+
+
+        ctx.fillStyle =
+          glow;
+
+
+        ctx.shadowBlur =
+          12;
+
+
+        ctx.shadowColor =
+          "rgba(229,198,122,.16)";
+
+
+        roundedRect(
+          block.x,
+          block.y,
+          block.w,
+          block.h,
+          5
+        );
+
+
+        ctx.fill();
+
+      }
+    );
+
+
+  ctx.globalAlpha =
+    1;
+
+
+  ctx.fillStyle =
+    glow;
+
+
+  ctx.shadowBlur =
+    20;
+
+
+  ctx.shadowColor =
+    "rgba(112,201,233,.18)";
+
+
+  roundedRect(
+    stackGame.moving.x,
+    stackGame.moving.y,
+    stackGame.moving.w,
+    stackGame.moving.h,
+    5
+  );
+
+
+  ctx.fill();
+
+
+  ctx.shadowBlur =
+    0;
+
+
+  drawParticles();
+
+}
+
+
+function stackLoop() {
+
+  if (
+    !state.running ||
+    state.currentGame !==
+    "stack"
+  ) {
+    return;
+  }
+
+
+  updateStack();
+
+  drawStack();
+
+
+  state.animationId =
+    requestAnimationFrame(
+      stackLoop
+    );
+
+}
+
+
+/* =========================================================
+   PREVIEW
+========================================================= */
+
+function drawGamePreview(type) {
+
+  drawBackground(type);
+
+
+  if (
+    type ===
+    "jump"
+  ) {
+
+    for (
+      let i = 0;
+      i < 7;
+      i++
+    ) {
+
+      const x =
+        i % 2
+          ? 250
+          : 70;
+
+
+      const y =
+        520 -
+        i * 68;
+
+
+      const gradient =
+        ctx.createLinearGradient(
+          x,
+          y,
+          x + 105,
+          y
+        );
+
+
+      gradient.addColorStop(
+        0,
+        "#ea5eaa"
+      );
+
+
+      gradient.addColorStop(
+        1,
+        "#70c9e9"
+      );
+
+
+      ctx.fillStyle =
+        gradient;
+
+
+      roundedRect(
+        x,
+        y,
+        105,
+        9,
+        5
+      );
+
+
+      ctx.fill();
+
+    }
+
+
+    ctx.fillStyle =
+      "#a697dc";
+
+
+    roundedRect(
+      210,
+      430,
+      30,
+      33,
+      10
+    );
+
+
+    ctx.fill();
+
+  }
+
+
+  if (
+    type ===
+    "snake"
+  ) {
+
+    ctx.fillStyle =
+      "#62d99c";
+
+
+    for (
+      let i = 0;
+      i < 9;
+      i++
+    ) {
+
+      roundedRect(
+        120 +
+        i * 19,
+        305,
+        15,
+        15,
+        5
+      );
+
+
+      ctx.fill();
+
+    }
+
+
+    ctx.fillStyle =
+      "#ea5eaa";
+
+
+    ctx.beginPath();
+
+
+    ctx.arc(
+      320,
+      312,
+      8,
+      0,
+      Math.PI * 2
+    );
+
+
+    ctx.fill();
+
+  }
+
+
+  if (
+    type ===
+    "plinko"
+  ) {
+
+    const pegs =
+      createPlinkoPegs();
+
+
+    pegs.forEach(
+      peg => {
+
+        ctx.fillStyle =
+          "rgba(255,255,255,.55)";
+
+
+        ctx.beginPath();
+
+
+        ctx.arc(
+          peg.x,
+          peg.y,
+          peg.r,
+          0,
+          Math.PI * 2
+        );
+
+
+        ctx.fill();
+
+      }
+    );
+
+
+    ctx.fillStyle =
+      "#a697dc";
+
+
+    ctx.beginPath();
+
+
+    ctx.arc(
+      225,
+      50,
+      9,
+      0,
+      Math.PI * 2
+    );
+
+
+    ctx.fill();
+
+  }
+
+
+  if (
+    type ===
+    "stack"
+  ) {
+
+    const widths = [
+      210,
+      194,
+      180,
+      160,
+      145,
+      130,
+      112
+    ];
+
+
+    widths.forEach(
+      (width,index) => {
+
+        ctx.fillStyle =
+          index % 2
+            ? "#70c9e9"
+            : "#e5c67a";
+
+
+        roundedRect(
+          (
+            canvas.width -
+            width
+          ) /
+          2,
+          530 -
+          index * 39,
+          width,
+          27,
+          5
+        );
+
+
+        ctx.fill();
+
+      }
     );
 
   }
@@ -7378,247 +10057,51 @@ function updatePlinko() {
 }
 
 
-function drawPlinko() {
-
-  drawGameBackground();
-
-
-  drawPegs(
-    plinko.pegs
-  );
-
-
-  drawPlinkoSlots();
-
-
-  const gradient =
-    ctx.createLinearGradient(
-      0,
-      0,
-      canvas.width,
-      canvas.height
-    );
-
-
-  gradient.addColorStop(
-    0,
-    "#e95da9"
-  );
-
-
-  gradient.addColorStop(
-    1,
-    "#6fc8e8"
-  );
-
-
-  ctx.fillStyle =
-    gradient;
-
-
-  ctx.beginPath();
-
-
-  ctx.arc(
-    plinko.ball.x,
-    plinko.ball.y,
-    plinko.ball.r,
-    0,
-    Math.PI * 2
-  );
-
-
-  ctx.fill();
-
-}
-
-
-function drawPlinkoPreview() {
-
-  drawGameBackground();
-
-
-  drawPegs(
-    createPegs()
-  );
-
-
-  drawPlinkoSlots();
-
-
-  ctx.fillStyle =
-    "#a695d8";
-
-
-  ctx.beginPath();
-
-
-  ctx.arc(
-    canvas.width / 2,
-    45,
-    8,
-    0,
-    Math.PI * 2
-  );
-
-
-  ctx.fill();
-
-}
-
-
-function drawPegs(pegs) {
-
-  ctx.fillStyle =
-    "rgba(255,255,255,.35)";
-
-
-  pegs.forEach(
-    peg => {
-
-      ctx.beginPath();
-
-
-      ctx.arc(
-        peg.x,
-        peg.y,
-        peg.r,
-        0,
-        Math.PI * 2
-      );
-
-
-      ctx.fill();
-
-    }
-  );
-
-}
-
-
-function drawPlinkoSlots() {
-
-  const labels =
-    [
-      "20",
-      "40",
-      "70",
-      "100",
-      "70",
-      "40",
-      "20"
-    ];
-
-
-  const width =
-    canvas.width /
-    labels.length;
-
-
-  labels.forEach(
-    (label,index) => {
-
-      ctx.fillStyle =
-        index === 3
-          ? "rgba(111,200,232,.10)"
-          : "rgba(255,255,255,.035)";
-
-
-      roundRect(
-        ctx,
-        index *
-          width +
-          3,
-        550,
-        width - 6,
-        38,
-        6
-      );
-
-
-      ctx.fill();
-
-
-      ctx.fillStyle =
-        index === 3
-          ? "#6fc8e8"
-          : "#777b81";
-
-
-      ctx.font =
-        "800 10px sans-serif";
-
-
-      ctx.textAlign =
-        "center";
-
-
-      ctx.fillText(
-        label,
-        index *
-          width +
-          width / 2,
-        574
-      );
-
-    }
-  );
-
-}
-
-
 /* =========================================================
-   GAME INPUT
+   INPUT
 ========================================================= */
 
-let touchStart = null;
+let pointerStart =
+  null;
 
 
 canvas.addEventListener(
   "pointerdown",
   event => {
 
-    const rect =
-      canvas.getBoundingClientRect();
+    const point =
+      getCanvasPoint(
+        event
+      );
 
 
-    const x =
-      (
-        event.clientX -
-        rect.left
-      )
-      /
-      rect.width *
-      canvas.width;
-
-
-    const y =
-      (
-        event.clientY -
-        rect.top
-      )
-      /
-      rect.height *
-      canvas.height;
-
-
-    touchStart = {
-      x,
-      y
-    };
+    pointerStart =
+      point;
 
 
     if (
       state.currentGame ===
         "jump" &&
-      state.gameRunning
+      state.running &&
+      jumpGame
     ) {
 
-      jump.velocityX =
-        x <
+      jumpGame.speedX =
+        point.x <
         canvas.width / 2
-          ? -4
-          : 4;
+          ? -4.2
+          : 4.2;
+
+    }
+
+
+    if (
+      state.currentGame ===
+        "stack" &&
+      state.running
+    ) {
+
+      placeStackBlock();
 
     }
 
@@ -7633,45 +10116,28 @@ canvas.addEventListener(
     if (
       state.currentGame !==
         "snake" ||
-      !state.gameRunning ||
-      !touchStart
+      !state.running ||
+      !snakeGame ||
+      !pointerStart
     ) {
       return;
     }
 
 
-    const rect =
-      canvas.getBoundingClientRect();
-
-
-    const x =
-      (
-        event.clientX -
-        rect.left
-      )
-      /
-      rect.width *
-      canvas.width;
-
-
-    const y =
-      (
-        event.clientY -
-        rect.top
-      )
-      /
-      rect.height *
-      canvas.height;
+    const point =
+      getCanvasPoint(
+        event
+      );
 
 
     const dx =
-      x -
-      touchStart.x;
+      point.x -
+      pointerStart.x;
 
 
     const dy =
-      y -
-      touchStart.y;
+      point.y -
+      pointerStart.y;
 
 
     if (
@@ -7698,7 +10164,7 @@ canvas.addEventListener(
     }
 
 
-    touchStart =
+    pointerStart =
       null;
 
   }
@@ -7712,10 +10178,17 @@ window.addEventListener(
     if (
       $("#gameModal")
         .classList
-        .contains("hidden")
+        .contains(
+          "hidden"
+        )
     ) {
       return;
     }
+
+
+    const key =
+      event.key
+        .toLowerCase();
 
 
     if (
@@ -7726,15 +10199,14 @@ window.addEventListener(
       if (
         event.key ===
           "ArrowLeft" ||
-        event.key.toLowerCase() ===
+        key ===
           "a"
       ) {
 
-        jump &&
-        (
-          jump.velocityX =
-            -4
-        );
+        if (jumpGame) {
+          jumpGame.speedX =
+            -4.2;
+        }
 
       }
 
@@ -7742,15 +10214,14 @@ window.addEventListener(
       if (
         event.key ===
           "ArrowRight" ||
-        event.key.toLowerCase() ===
+        key ===
           "d"
       ) {
 
-        jump &&
-        (
-          jump.velocityX =
-            4
-        );
+        if (jumpGame) {
+          jumpGame.speedX =
+            4.2;
+        }
 
       }
 
@@ -7765,7 +10236,7 @@ window.addEventListener(
       if (
         event.key ===
           "ArrowUp" ||
-        event.key.toLowerCase() ===
+        key ===
           "w"
       ) {
         setSnakeDirection(
@@ -7778,7 +10249,7 @@ window.addEventListener(
       if (
         event.key ===
           "ArrowDown" ||
-        event.key.toLowerCase() ===
+        key ===
           "s"
       ) {
         setSnakeDirection(
@@ -7791,7 +10262,7 @@ window.addEventListener(
       if (
         event.key ===
           "ArrowLeft" ||
-        event.key.toLowerCase() ===
+        key ===
           "a"
       ) {
         setSnakeDirection(
@@ -7804,7 +10275,7 @@ window.addEventListener(
       if (
         event.key ===
           "ArrowRight" ||
-        event.key.toLowerCase() ===
+        key ===
           "d"
       ) {
         setSnakeDirection(
@@ -7815,173 +10286,70 @@ window.addEventListener(
 
     }
 
+
+    if (
+      state.currentGame ===
+        "stack" &&
+      (
+        event.code ===
+          "Space" ||
+        event.key ===
+          "Enter"
+      )
+    ) {
+
+      event.preventDefault();
+
+      placeStackBlock();
+
+    }
+
   }
 );
 
 
-function setSnakeDirection(
-  x,
-  y
+function getCanvasPoint(
+  event
 ) {
 
-  if (!snake) {
-    return;
-  }
+  const rect =
+    canvas
+      .getBoundingClientRect();
 
 
-  if (
-    snake.direction.x +
-      x === 0 &&
-    snake.direction.y +
-      y === 0
-  ) {
-    return;
-  }
+  return {
 
+    x:
+      (
+        event.clientX -
+        rect.left
+      )
+      /
+      rect.width *
+      canvas.width,
 
-  snake.nextDirection = {
-    x,
-    y
+    y:
+      (
+        event.clientY -
+        rect.top
+      )
+      /
+      rect.height *
+      canvas.height
+
   };
 
 }
 
 
 /* =========================================================
-   GAME HELPERS
+   SCORE STORAGE
 ========================================================= */
 
-function drawGameBackground() {
-
-  ctx.clearRect(
-    0,
-    0,
-    canvas.width,
-    canvas.height
-  );
-
-
-  const gradient =
-    ctx.createLinearGradient(
-      0,
-      0,
-      0,
-      canvas.height
-    );
-
-
-  gradient.addColorStop(
-    0,
-    "#0e1115"
-  );
-
-
-  gradient.addColorStop(
-    1,
-    "#07090b"
-  );
-
-
-  ctx.fillStyle =
-    gradient;
-
-
-  ctx.fillRect(
-    0,
-    0,
-    canvas.width,
-    canvas.height
-  );
-
-
-  ctx.fillStyle =
-    "rgba(255,255,255,.025)";
-
-
-  for (
-    let y = 0;
-    y <
-      canvas.height;
-    y += 45
-  ) {
-
-    ctx.fillRect(
-      0,
-      y,
-      canvas.width,
-      1
-    );
-
-  }
-
-}
-
-
-function roundRect(
-  context,
-  x,
-  y,
-  width,
-  height,
-  radius
-) {
-
-  const r =
-    Math.min(
-      radius,
-      width / 2,
-      height / 2
-    );
-
-
-  context.beginPath();
-
-  context.moveTo(
-    x + r,
-    y
-  );
-
-  context.arcTo(
-    x + width,
-    y,
-    x + width,
-    y + height,
-    r
-  );
-
-  context.arcTo(
-    x + width,
-    y + height,
-    x,
-    y + height,
-    r
-  );
-
-  context.arcTo(
-    x,
-    y + height,
-    x,
-    y,
-    r
-  );
-
-  context.arcTo(
-    x,
-    y,
-    x + width,
-    y,
-    r
-  );
-
-  context.closePath();
-
-}
-
-
-function gameStorageKey(game) {
+function scoreKey(game) {
 
   return (
-    "rico-game:" +
+    "rico-game-best:" +
     (
       state.user
         ?.telegram_id ||
@@ -8001,9 +10369,7 @@ function getBest(game) {
 
     return Number(
       localStorage.getItem(
-        gameStorageKey(
-          game
-        )
+        scoreKey(game)
       ) || 0
     );
 
@@ -8021,45 +10387,80 @@ function saveBest(
   score
 ) {
 
-  const best =
-    getBest(game);
-
-
   if (
-    score >
-    best
+    Number(score) <=
+    getBest(game)
   ) {
-
-    try {
-
-      localStorage.setItem(
-        gameStorageKey(
-          game
-        ),
-        String(score)
-      );
-
-    } catch {}
-
+    return;
   }
+
+
+  try {
+
+    localStorage.setItem(
+      scoreKey(game),
+      String(score)
+    );
+
+  } catch {}
 
 }
 
 
-function renderGameBestScores() {
+function renderBestScores() {
 
-  $("#bestJump")
-    .textContent =
-    `BEST ${getBest(
+  const jump =
+    getBest(
       "jump"
-    )}`;
+    );
 
 
-  $("#bestSnake")
-    .textContent =
-    `BEST ${getBest(
+  const snake =
+    getBest(
       "snake"
-    )}`;
+    );
+
+
+  const plinko =
+    getBest(
+      "plinko"
+    );
+
+
+  const stack =
+    getBest(
+      "stack"
+    );
+
+
+  $("#homeJumpBest")
+    .textContent =
+    number(jump);
+
+
+  $("#jumpBestHero")
+    .textContent =
+    number(jump);
+
+
+  $("#jumpBestCard")
+    .textContent =
+    number(jump);
+
+
+  $("#snakeBestCard")
+    .textContent =
+    number(snake);
+
+
+  $("#plinkoBestCard")
+    .textContent =
+    number(plinko);
+
+
+  $("#stackBestCard")
+    .textContent =
+    number(stack);
 
 }
 
@@ -8103,7 +10504,7 @@ function bindEvents() {
         const page =
           event.target
             .closest(
-              "[data-page-link]"
+              "[data-open-page]"
             );
 
 
@@ -8111,7 +10512,7 @@ function bindEvents() {
 
           openPage(
             page.dataset
-              .pageLink
+              .openPage
           );
 
         }
@@ -8136,7 +10537,7 @@ function bindEvents() {
     );
 
 
-  $("#headerAvatarButton")
+  $("#profileButton")
     ?.addEventListener(
       "click",
       () =>
@@ -8167,24 +10568,24 @@ function bindEvents() {
     );
 
 
-  $("#editAvatarButton")
+  $("#editAvatar")
     ?.addEventListener(
       "click",
-      openAvatar
+      openAvatarModal
     );
 
 
   $("#profileAvatarMenu")
     ?.addEventListener(
       "click",
-      openAvatar
+      openAvatarModal
     );
 
 
-  $("#closeAvatarModal")
+  $("#closeAvatar")
     ?.addEventListener(
       "click",
-      closeAvatar
+      closeAvatarModal
     );
 
 
@@ -8197,7 +10598,7 @@ function bindEvents() {
           event.target ===
           $("#avatarModal")
         ) {
-          closeAvatar();
+          closeAvatarModal();
         }
 
       }
@@ -8232,17 +10633,24 @@ function bindEvents() {
     );
 
 
+  $("#startGame")
+    ?.addEventListener(
+      "click",
+      startCurrentGame
+    );
+
+
+  $("#restartGame")
+    ?.addEventListener(
+      "click",
+      restartCurrentGame
+    );
+
+
   $("#closeGame")
     ?.addEventListener(
       "click",
       closeGame
-    );
-
-
-  $("#gameRestart")
-    ?.addEventListener(
-      "click",
-      startSelectedGame
     );
 
 
@@ -8262,23 +10670,13 @@ function bindEvents() {
     );
 
 
-  $("#closeSuccess")
+  $("#successClose")
     ?.addEventListener(
       "click",
       () =>
         $("#successModal")
           .classList
           .add("hidden")
-    );
-
-
-  $("#comingSoonGame")
-    ?.addEventListener(
-      "click",
-      () =>
-        showToast(
-          "A new Rico Arcade game is coming."
-        )
     );
 
 }
@@ -8315,14 +10713,17 @@ function openExternal(url) {
     tg?.openLink
   ) {
 
-    tg.openLink(url);
+    tg.openLink(
+      url
+    );
+
 
     return;
 
   }
 
 
-  window.location.href =
+  location.href =
     url;
 
 }
@@ -8367,6 +10768,7 @@ async function api(
     await fetch(
       url,
       {
+
         ...options,
 
         headers: {
@@ -8439,7 +10841,8 @@ function validColor(value) {
   return /^#[0-9a-fA-F]{6}$/
     .test(
       String(
-        value || ""
+        value ||
+        ""
       )
     );
 
@@ -8454,18 +10857,21 @@ function number(value) {
     )
     .format(
       Number(
-        value || 0
+        value ||
+        0
       )
     );
 
 }
 
 
-function initial(user) {
+function playerInitial(
+  player
+) {
 
   return String(
-    user.first_name ||
-    user.telegram_username ||
+    player.first_name ||
+    player.telegram_username ||
     "R"
   )
     .charAt(0)
@@ -8474,11 +10880,13 @@ function initial(user) {
 }
 
 
-function maskedName(user) {
+function maskedName(
+  player
+) {
 
   const name =
-    user.telegram_username ||
-    user.first_name ||
+    player.telegram_username ||
+    player.first_name ||
     "Rico Member";
 
 
@@ -8516,7 +10924,8 @@ function escapeHtml(value) {
 
   div.textContent =
     String(
-      value ?? ""
+      value ??
+      ""
     );
 
 
@@ -8525,9 +10934,13 @@ function escapeHtml(value) {
 }
 
 
-function escapeAttr(value) {
+function escapeAttribute(
+  value
+) {
 
-  return escapeHtml(value)
+  return escapeHtml(
+    value
+  )
     .replace(
       /"/g,
       "&quot;"
