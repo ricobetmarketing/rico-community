@@ -1,19 +1,12 @@
-<!doctype html>
+<!DOCTYPE html>
+
 <html lang="en">
 <head>
-<meta charset="utf-8">
-
-<meta
-  name="viewport"
-  content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no"
->
-
-<meta name="theme-color" content="#15122e">
-
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no" name="viewport"/>
+<meta content="#15122e" name="theme-color"/>
 <title>Rico Club 2.0 | Arcade</title>
-
 <script src="https://telegram.org/js/telegram-web-app.js?59"></script>
-
 <style>
 /* =========================================================
    RICO CLUB
@@ -3650,1537 +3643,802 @@ html,body{background:#14112c!important}body{background:radial-gradient(ellipse a
 @media(max-width:380px){.day-track{gap:5px!important;grid-template-rows:repeat(2,108px)!important}.day-card .day-icon{width:48px!important;height:45px!important}.day-card.bonus .day-icon{height:80px!important}.daily-journey:before{font-size:19px!important}.greeting:before{width:100px!important}.greeting h1{font-size:24px!important}}
 @media(prefers-reduced-motion:reduce){.greeting:before,.day-card.today,.day-card.bonus .day-icon,.page{animation:none!important}}
 
+
+/* RICO CLUB V5 - arcade-first visual system. No API changes. */
+:root{--rico-v5-ink:#15112e;--rico-v5-lilac:#b49aff;--rico-v5-pink:#ff76c7;--rico-v5-gold:#ffd56f}
+body{background:radial-gradient(ellipse at 50% -10%,#44318b 0%,transparent 48%),#121027!important}
+.app{max-width:1120px!important}
+.topbar{background:linear-gradient(130deg,#1c173d,#251b52)!important;border:1px solid #6653a25c!important;border-radius:19px!important;margin-bottom:17px!important;box-shadow:0 10px 30px #09071a60!important}
+.topbar .brand strong{letter-spacing:1.4px!important}
+.rico-v5-hero{position:relative;isolation:isolate;min-height:236px;padding:26px 22px 22px;overflow:hidden;border-radius:26px;background:radial-gradient(circle at 80% 20%,#bc5cdb88,transparent 40%),linear-gradient(125deg,#35217c 0%,#6836c6 64%,#ad53c5 100%);border:2px solid #a47bf0;box-shadow:0 8px 0 #25124c,0 22px 42px #05041388;margin:5px 0 29px}
+.rico-v5-hero:before{content:'';position:absolute;inset:0;background:linear-gradient(110deg,transparent 30%,#fff2 46%,transparent 56%);transform:translateX(-110%);animation:ricoV5Shine 9s ease-in-out infinite;pointer-events:none}
+.rico-v5-hero-copy{position:relative;z-index:2;width:65%}.rico-v5-pill{display:inline-block;background:#ffffff24;border:1px solid #ffffff50;border-radius:8px;padding:5px 9px;font-size:10px;font-weight:900;letter-spacing:1.3px;color:#ffe6a4}
+.rico-v5-hero h1{font-size:clamp(25px,5vw,37px)!important;line-height:1.12!important;letter-spacing:-.9px!important;margin:14px 0 8px!important;color:#fff!important;text-shadow:0 3px 8px #23115c88}
+.rico-v5-hero h1 em{font-style:normal;color:#ffe29d}.rico-v5-hero p{font-size:12px;line-height:1.5;color:#e7dffb;max-width:270px;margin:0 0 15px}.rico-v5-hero-cta{background:linear-gradient(#ffe9a3,#ffba51);border:1px solid #fff2bb;color:#543016;border-radius:12px;padding:10px 14px;font-size:12px;font-weight:900;box-shadow:0 4px 0 #a9662b,0 8px 18px #190c3c70;transition:transform .2s,filter .2s}.rico-v5-hero-cta:active{transform:translateY(3px);box-shadow:0 1px 0 #a9662b}.rico-v5-hero-cta:hover{filter:brightness(1.07)}
+.rico-v5-mascot{position:absolute;z-index:1;right:-9px;bottom:4px;width:42%;max-width:195px;height:95%;object-fit:contain;object-position:bottom;filter:drop-shadow(0 13px 8px #180b4477);animation:ricoV5Bob 4.3s ease-in-out infinite}.rico-v5-sparkle{position:absolute;right:22%;top:16px;width:30px;height:30px;object-fit:contain;animation:ricoV5Twinkle 3s ease-in-out infinite}
+.rico-v5-hidden-greeting{display:none!important}
+#checkinSection{margin:14px 0 23px!important}#checkinSection>.section-head{margin-bottom:26px!important}#checkinSection .section-head h2{font-size:21px!important;letter-spacing:-.4px!important}
+#checkinSection .daily-journey{margin-top:0!important;padding:51px 11px 15px!important;background:linear-gradient(160deg,#fff9e6,#f0d1a0)!important;border:5px solid #e6b76c!important;border-radius:24px!important;box-shadow:0 7px 0 #80502e,0 18px 30px #08051d88!important}
+#checkinSection .daily-journey:before{content:'Daily Reward'!important;font-size:23px!important;letter-spacing:-.4px!important;top:-23px!important;padding:7px 28px!important}
+.rico-v5-reward-intro{text-align:center;color:#8b5b3c;font-size:11px;font-weight:800;margin:-18px 0 18px;padding:0 12px;line-height:1.5}
+#checkinSection .daily-journey-head{padding:0 5px 12px!important}#checkinSection .day-track{grid-template-rows:repeat(2,123px)!important;gap:7px!important}
+#checkinSection .day-card{border-radius:17px!important;transition:transform .22s ease,filter .22s ease;cursor:default}#checkinSection .day-card.today{transform:translateY(-2px);z-index:1}#checkinSection .day-card .day-name{font-family:system-ui,sans-serif!important;font-weight:850!important}#checkinSection .day-card .day-icon{height:58px!important}#checkinSection .day-card.bonus .day-icon{height:104px!important}#checkinSection .day-card.bonus{background:linear-gradient(150deg,#b68eff,#6b31cf)!important}
+#checkinSection .checkin-card{margin-top:17px!important;background:linear-gradient(130deg,#332363,#493080)!important;border:1px solid #8968d7!important;border-radius:19px!important;box-shadow:0 7px 0 #1d133e,0 12px 25px #0004!important;padding:15px!important}
+#checkinSection .checkin-icon{background:url('/assets/club/club-coin.webp') center/contain no-repeat!important;font-size:0!important;width:60px!important;height:60px!important;flex:0 0 60px!important;border:0!important;box-shadow:none!important}
+#checkinSection .checkin-copy strong{font-size:15px!important;color:white!important}#checkinSection .checkin-copy p{font-size:12px!important;color:#d2c4f5!important}#checkinSection .checkin-copy b{color:#ffe39a!important}
+#checkinButton{background:linear-gradient(180deg,#ffea9b,#f3ae40)!important;color:#50300e!important;border:1px solid #fff1b6!important;border-radius:13px!important;box-shadow:0 4px 0 #a96a28!important;font-weight:900!important;letter-spacing:.4px!important}#checkinButton:disabled{opacity:.7;box-shadow:none!important}
+.member-card{margin:18px 0 24px!important;padding:20px!important;background:linear-gradient(125deg,#34265e,#201b42)!important;border:1px solid #8065b3!important;border-radius:20px!important;box-shadow:0 9px 24px #05031455!important}
+.member-card .balance-logo{background:url('/assets/club/club-coin.webp') center/contain no-repeat!important;color:transparent!important;box-shadow:none!important;width:48px!important;height:48px!important;border:0!important}
+.member-card .balance strong{font-size:clamp(32px,8vw,44px)!important;color:#fff1c5!important;text-shadow:0 2px 9px #c57a3640!important}
+.quick-actions{display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:8px!important;margin:12px 0 18px!important}.quick-action{min-width:0!important;background:linear-gradient(155deg,#43318c,#292055)!important;border:1px solid #846ac4!important;border-radius:16px!important;box-shadow:0 4px 0 #161034,0 9px 18px #0004!important;padding:12px 3px!important;transition:transform .18s,background .18s!important}.quick-action:hover{background:linear-gradient(155deg,#5940b2,#34256a)!important;transform:translateY(-2px)}.quick-action:active{transform:translateY(2px)!important}.quick-action .quick-icon{font-size:25px!important;background:none!important;border:0!important;box-shadow:none!important}.quick-action small{font-size:9px!important;letter-spacing:.25px!important;color:#f5e9ff!important}
+.arcade-hero{min-height:225px!important;border-radius:22px!important;background:linear-gradient(110deg,#442080,#8841c7)!important;box-shadow:0 6px 0 #2b1559,0 15px 28px #0006!important}.arcade-hero-bg{background:url('/assets/club/arcade-toodle-cover.webp') 65% center/cover no-repeat!important;opacity:.6!important;mask-image:linear-gradient(90deg,transparent 5%,black 80%)}.arcade-hero-copy{max-width:67%!important}.arcade-hero h2{color:#fff2be!important}.play-button{background:linear-gradient(#ffe89e,#ffb34c)!important;color:#4e2d12!important;border-radius:12px!important;box-shadow:0 4px 0 #a66625!important}
+#pageHome .desktop-side{padding-top:0!important}.game-card,.mission-card,.reward-card,.drop-card,.rank-card,.profile-card,.info-card{border:1px solid #7158ad!important;background:linear-gradient(150deg,#342866,#231d49)!important;box-shadow:0 6px 17px #05041455!important}.game-card{transition:transform .2s ease,box-shadow .2s ease!important}.game-card:hover{transform:translateY(-3px);box-shadow:0 10px 20px #05041488!important}
+.bottom-nav{background:#1c173bf5!important;border:1px solid #7357b5!important;border-radius:19px!important;box-shadow:0 10px 35px #000a!important}.bottom-nav button.active{background:linear-gradient(135deg,#6d3ab6,#45307d)!important;color:#ffe0a0!important}
+@keyframes ricoV5Bob{0%,100%{transform:translateY(0) rotate(-1deg)}50%{transform:translateY(-8px) rotate(1deg)}}@keyframes ricoV5Twinkle{0%,100%{opacity:.45;transform:scale(.8) rotate(-15deg)}50%{opacity:1;transform:scale(1.12) rotate(15deg)}}@keyframes ricoV5Shine{0%,65%,100%{transform:translateX(-110%)}80%{transform:translateX(120%)}}
+@media(min-width:850px){.rico-v5-hero{min-height:250px}.rico-v5-mascot{max-width:240px}.rico-v5-hero-copy{width:68%}}
+@media(max-width:390px){.rico-v5-hero{min-height:220px;padding:19px 15px}.rico-v5-hero-copy{width:69%}.rico-v5-hero h1{font-size:24px!important}.rico-v5-mascot{width:39%}#checkinSection .day-track{grid-template-rows:repeat(2,108px)!important;gap:5px!important}#checkinSection .day-card .day-icon{height:44px!important}#checkinSection .day-card.bonus .day-icon{height:85px!important}#checkinSection .day-card .day-reward{font-size:11px!important}}
+@media(prefers-reduced-motion:reduce){.rico-v5-mascot,.rico-v5-sparkle,.rico-v5-hero:before{animation:none!important}}
 </style>
 </head>
-
-
 <body>
-
 <div class="world">
-  <div class="world-grid"></div>
-  <div class="world-orb one"></div>
-  <div class="world-orb two"></div>
-  <div class="world-orb three"></div>
+<div class="world-grid"></div>
+<div class="world-orb one"></div>
+<div class="world-orb two"></div>
+<div class="world-orb three"></div>
 </div>
-
-
 <!-- ======================================================
      LOADER
 ======================================================= -->
-
-<div
-  id="loader"
-  class="loader"
->
-
-  <div class="loader-inner">
-
-    <img
-      class="loader-logo"
-      src="/assets/logo.png"
-      alt="Rico"
-    >
-
-    <strong>
+<div class="loader" id="loader">
+<div class="loader-inner">
+<img alt="Rico" class="loader-logo" src="/assets/logo.png"/>
+<strong>
       RICO CLUB
     </strong>
-
-    <span>
+<span>
       COMMUNITY · REWARDS · ARCADE
     </span>
-
-    <div class="loader-progress"></div>
-
-  </div>
-
+<div class="loader-progress"></div>
 </div>
-
-
+</div>
 <!-- ======================================================
      TELEGRAM REQUIRED
 ======================================================= -->
-
-<section
-  id="telegramRequired"
-  class="telegram-required hidden"
->
-
-  <div class="telegram-required-card">
-
-    <img
-      src="/assets/logo.png"
-      alt="Rico"
-    >
-
-    <h1>
+<section class="telegram-required hidden" id="telegramRequired">
+<div class="telegram-required-card">
+<img alt="Rico" src="/assets/logo.png"/>
+<h1>
       Open Rico Club from Telegram
     </h1>
-
-    <p>
+<p>
       Your Telegram account securely connects your Rico Points,
       missions, rewards, arcade and community profile.
     </p>
-
-  </div>
-
+</div>
 </section>
-
-
 <!-- ======================================================
      APP
 ======================================================= -->
-
-<main
-  id="app"
-  class="app hidden"
->
-
-  <!-- HEADER -->
-
-  <header class="topbar">
-
-    <div class="brand">
-
-      <img
-        src="/assets/logo.png"
-        alt="Rico"
-      >
-
-      <div>
-
-        <strong id="brandName">
+<main class="app hidden" id="app">
+<!-- HEADER -->
+<header class="topbar">
+<div class="brand">
+<img alt="Rico" src="/assets/logo.png"/>
+<div>
+<strong id="brandName">
           RICO CLUB
         </strong>
-
-        <span>
+<span>
           DAILY ARCADE · RICO POINTS
         </span>
-
-      </div>
-
-    </div>
-
-
-    <button
-      id="profileButton"
-      class="profile-button"
-      type="button"
-    >
-
-      <img
-        id="headerAvatar"
-        class="hidden"
-        alt=""
-      >
-
-      <div
-        id="headerFallback"
-        class="profile-fallback"
-      >
+</div>
+</div>
+<button class="profile-button" id="profileButton" type="button">
+<img alt="" class="hidden" id="headerAvatar"/>
+<div class="profile-fallback" id="headerFallback">
         R
       </div>
-
-      <span class="profile-online"></span>
-
-    </button>
-
-  </header>
-
-
-  <!-- ====================================================
+<span class="profile-online"></span>
+</button>
+</header>
+<!-- ====================================================
        HOME
   ===================================================== -->
-
-  <section
-    id="pageHome"
-    class="page active"
-  >
-
-    <div class="desktop-grid">
-
-      <div>
-
-        <section class="greeting">
-
-          <div class="greeting-row">
-
-            <div>
-
-              <span
-                id="greetingLabel"
-                class="eyebrow"
-              >
+<section class="page active" id="pageHome">
+<div class="desktop-grid">
+<div><section aria-label="Rico Club Arcade" class="rico-v5-hero"><div aria-hidden="true" class="rico-v5-stars"></div><div class="rico-v5-hero-copy"><span class="rico-v5-pill">THE DAILY ARCADE</span><h1>Play. Collect.<br/><em>Come back for more.</em></h1><p>Your daily rewards, games and Rico Points — all in one club.</p><button class="rico-v5-hero-cta" data-open-page="play" type="button">Explore arcade <span aria-hidden="true">↗</span></button></div><img alt="Rico Club mascot" class="rico-v5-mascot" onerror="this.style.display='none'" src="/assets/club/rico-mascot.webp"/><img alt="" class="rico-v5-sparkle" onerror="this.style.display='none'" src="/assets/club/sparkle.webp"/></section><section class="greeting rico-v5-hidden-greeting">
+<div class="greeting-row">
+<div>
+<span class="eyebrow" id="greetingLabel">
                 WELCOME BACK
               </span>
-
-              <h1>
-                <span>Hello,</span>
-                <br>
-
-                <b id="welcomeName">
+<h1>
+<span>Hello,</span>
+<br/>
+<b id="welcomeName">
                   Rico Member
                 </b>
-              </h1>
-
-            </div>
-
-
-            <div class="streak-chip">
-
-              <span>
+</h1>
+</div>
+<div class="streak-chip">
+<span>
                 🔥
               </span>
-
-              <strong id="topStreak">
+<strong id="topStreak">
                 0
               </strong>
-
-            </div>
-
-          </div>
-
-        </section>
-
-
-        <div
-          id="announcement"
-          class="announcement hidden"
-        ></div>
-
-
-        <!-- MEMBER CARD -->
-
-        <article class="member-card">
-
-          <div class="balance-row">
-
-            <div>
-
-              <span class="balance-label">
-                AVAILABLE RICO POINTS
-              </span>
-
-
-              <div class="balance">
-
-                <span class="balance-logo">
-                  R
-                </span>
-
-                <strong id="pointBalance">
-                  0
-                </strong>
-
-              </div>
-
-            </div>
-
-
-            <span
-              id="tierBadge"
-              class="tier-chip"
-            >
-              ROOKIE
-            </span>
-
-          </div>
-
-
-          <div class="progress-meta">
-
-            <span id="tierProgressText">
-              Begin your Rico journey
-            </span>
-
-            <strong id="rankText">
-              #—
-            </strong>
-
-          </div>
-
-
-          <div class="progress">
-
-            <span id="tierProgressBar"></span>
-
-          </div>
-
-
-          <div class="member-stats">
-
-            <div class="member-stat">
-
-              <span>
-                STREAK
-              </span>
-
-              <strong id="homeStreak">
-                0 DAYS
-              </strong>
-
-            </div>
-
-
-            <div class="member-stat">
-
-              <span>
-                RANK
-              </span>
-
-              <strong id="homeRank">
-                #—
-              </strong>
-
-            </div>
-
-
-            <div class="member-stat">
-
-              <span>
-                LIFETIME
-              </span>
-
-              <strong id="lifetimePoints">
-                0
-              </strong>
-
-            </div>
-
-          </div>
-
-        </article>
-
-
-        <!-- QUICK ACTIONS -->
-
-        <div class="quick-actions">
-
-          <button
-            class="quick-action"
-            data-open-page="play"
-            type="button"
-          >
-
-            <span class="quick-icon">
-              ✦
-            </span>
-
-            <small>
-              ARCADE
-            </small>
-
-          </button>
-
-
-          <button
-            class="quick-action"
-            data-open-page="rewards"
-            type="button"
-          >
-
-            <span class="quick-icon">
-              ◆
-            </span>
-
-            <small>
-              REWARDS
-            </small>
-
-          </button>
-
-
-          <button
-            id="quickInvite"
-            class="quick-action"
-            type="button"
-          >
-
-            <span class="quick-icon">
-              ↗
-            </span>
-
-            <small>
-              INVITE
-            </small>
-
-          </button>
-
-
-          <button
-            class="quick-action"
-            data-open-page="rank"
-            type="button"
-          >
-
-            <span class="quick-icon">
-              ♛
-            </span>
-
-            <small>
-              RANK
-            </small>
-
-          </button>
-
-        </div>
-
-
-        <!-- CHECK IN -->
-
-        <section
-          id="checkinSection"
-          class="home-section"
-        >
-
-          <div class="section-head">
-
-            <div>
-
-              <span class="eyebrow">
-                DAILY JOURNEY
-              </span>
-
-              <h2>
-                Collect your daily treasure
-              </h2>
-
-            </div>
-
-          </div>
-
-
-          <article class="checkin-card">
-
-            <div class="checkin-info">
-
-              <div class="checkin-icon">
+</div>
+</div>
+</section><section class="home-section" id="checkinSection">
+<div class="section-head">
+<div>
+<span class="eyebrow">DAILY CHECK-IN</span>
+<h2>Your 7-day treasure trail</h2>
+</div>
+</div>
+<article class="checkin-card">
+<div class="checkin-info">
+<div class="checkin-icon">
                 ✓
               </div>
-
-
-              <div class="checkin-copy">
-
-                <strong id="checkinTitle">
+<div class="checkin-copy">
+<strong id="checkinTitle">
                   Today's reward is ready
                 </strong>
-
-                <p id="checkinDescription">
+<p id="checkinDescription">
                   Keep your streak active and move closer to the weekly bonus.
                 </p>
-
-                <b id="checkinReward">
+<b id="checkinReward">
                   +20 Rico Points
                 </b>
-
-              </div>
-
-            </div>
-
-
-            <button
-              id="checkinButton"
-              class="primary-button"
-              type="button"
-            >
+</div>
+</div>
+<button class="primary-button" id="checkinButton" type="button">
               CHECK IN NOW
             </button>
-
-          </article>
-
-
-          <!-- ADVANCED WEEK JOURNEY -->
-
-          <div class="daily-journey">
-
-            <div class="daily-journey-head">
-
-              <span>
+</article>
+<!-- ADVANCED WEEK JOURNEY -->
+<div class="daily-journey"><div class="rico-v5-reward-intro">Every day counts. Collect your points and unlock the weekly chest.</div>
+<div class="daily-journey-head">
+<span>
                 THIS WEEK
               </span>
-
-              <strong id="weekJourneyStatus">
+<strong id="weekJourneyStatus">
                 0 / 7 DAYS
               </strong>
+</div>
+<div class="day-track" id="dayTrack"></div>
+</div>
+</section><article class="member-card">
+<div class="balance-row">
+<div>
+<span class="balance-label">
+                AVAILABLE RICO POINTS
+              </span>
+<div class="balance">
+<span class="balance-logo">
+                  R
+                </span>
+<strong id="pointBalance">
+                  0
+                </strong>
+</div>
+</div>
+<span class="tier-chip" id="tierBadge">
+              ROOKIE
+            </span>
+</div>
+<div class="progress-meta">
+<span id="tierProgressText">
+              Begin your Rico journey
+            </span>
+<strong id="rankText">
+              #—
+            </strong>
+</div>
+<div class="progress">
+<span id="tierProgressBar"></span>
+</div>
+<div class="member-stats">
+<div class="member-stat">
+<span>
+                STREAK
+              </span>
+<strong id="homeStreak">
+                0 DAYS
+              </strong>
+</div>
+<div class="member-stat">
+<span>
+                RANK
+              </span>
+<strong id="homeRank">
+                #—
+              </strong>
+</div>
+<div class="member-stat">
+<span>
+                LIFETIME
+              </span>
+<strong id="lifetimePoints">
+                0
+              </strong>
+</div>
+</div>
+</article><div class="quick-actions">
+<button class="quick-action" data-open-page="play" type="button">
+<span class="quick-icon">🕹️</span>
+<small>ARCADE</small>
+</button>
+<button class="quick-action" data-open-page="rewards" type="button">
+<span class="quick-icon">🎁</span>
+<small>REWARDS</small>
+</button>
+<button class="quick-action" id="quickInvite" type="button">
+<span class="quick-icon">👥</span>
+<small>FRIENDS</small>
+</button>
+<button class="quick-action" data-open-page="rank" type="button">
+<span class="quick-icon">🏆</span>
+<small>RANKINGS</small>
+</button>
+</div>
 
-            </div>
+<div class="announcement hidden" id="announcement"></div>
+<!-- MEMBER CARD -->
 
+<!-- QUICK ACTIONS -->
 
-            <div
-              id="dayTrack"
-              class="day-track"
-            ></div>
+<!-- CHECK IN -->
 
-          </div>
-
-        </section>
-
-
-        <!-- MISSIONS -->
-
-        <section
-          id="missionHomeSection"
-          class="home-section"
-        >
-
-          <div class="section-head">
-
-            <div>
-
-              <span class="eyebrow">
+<!-- MISSIONS -->
+<section class="home-section" id="missionHomeSection">
+<div class="section-head">
+<div>
+<span class="eyebrow">
                 YOUR JOURNEY
               </span>
-
-              <h2>
+<h2>
                 Missions
               </h2>
-
-            </div>
-
-
-            <button
-              data-open-page="missions"
-              type="button"
-            >
+</div>
+<button data-open-page="missions" type="button">
               VIEW ALL
             </button>
-
-          </div>
-
-
-          <div
-            id="homeMissionList"
-            class="mission-list"
-          ></div>
-
-        </section>
-
-      </div>
-
-
-      <!-- DESKTOP SIDE -->
-
-      <aside class="desktop-side">
-
-        <section class="home-section">
-
-          <div class="section-head">
-
-            <div>
-
-              <span class="eyebrow">
+</div>
+<div class="mission-list" id="homeMissionList"></div>
+</section>
+</div>
+<!-- DESKTOP SIDE -->
+<aside class="desktop-side">
+<section class="home-section">
+<div class="section-head">
+<div>
+<span class="eyebrow">
                 RICO ARCADE
               </span>
-
-              <h2>
+<h2>
                 Featured game
               </h2>
-
-            </div>
-
-          </div>
-
-
-          <article class="arcade-hero">
-
-            <div class="arcade-hero-bg"></div>
-
-
-            <div class="arcade-hero-copy">
-
-              <span class="game-label">
+</div>
+</div>
+<article class="arcade-hero">
+<div class="arcade-hero-bg"></div>
+<div class="arcade-hero-copy">
+<span class="game-label">
                 FEATURED TODAY
               </span>
-
-              <h2>
+<h2>
                 Toodle Jump
               </h2>
-
-              <p>
+<p>
                 Climb through the Rico skyline, land on moving platforms,
                 collect energy and push your personal record higher.
               </p>
-
-
-              <div class="arcade-meta">
-
-                <span>
+<div class="arcade-meta">
+<span>
                   BEST
                   <b id="homeJumpBest">
                     0
                   </b>
-                </span>
-
-                <span>
+</span>
+<span>
                   MODE
                   <b>
                     ENDLESS
                   </b>
-                </span>
-
-              </div>
-
-
-              <button
-                class="play-button"
-                data-game="jump"
-                type="button"
-              >
+</span>
+</div>
+<button class="play-button" data-game="jump" type="button">
                 PLAY INSIDE RICO
               </button>
-
-            </div>
-
-          </article>
-
-        </section>
-
-      </aside>
-
-    </div>
-
-  </section>
-
-
-  <!-- ====================================================
+</div>
+</article>
+</section>
+</aside>
+</div>
+</section>
+<!-- ====================================================
        PLAY
   ===================================================== -->
-
-  <section
-    id="pagePlay"
-    class="page"
-  >
-
-    <div class="page-intro">
-
-      <span class="eyebrow">
+<section class="page" id="pagePlay">
+<div class="page-intro">
+<span class="eyebrow">
         RICO ARCADE
       </span>
-
-      <h1>
+<h1>
         Welcome to the arcade!
       </h1>
-
-      <p>
+<p>
         Built directly inside Rico Club. Play instantly without leaving Telegram.
       </p>
-
-    </div>
-
-
-    <article class="arcade-hero">
-
-      <div class="arcade-hero-bg"></div>
-
-
-      <div class="arcade-hero-copy">
-
-        <span class="game-label">
+</div>
+<article class="arcade-hero">
+<div class="arcade-hero-bg"></div>
+<div class="arcade-hero-copy">
+<span class="game-label">
           GAME OF THE DAY
         </span>
-
-        <h2>
+<h2>
           Toodle Jump
         </h2>
-
-        <p>
+<p>
           An endless vertical challenge with moving platforms,
           Rico energy and increasing difficulty.
         </p>
-
-
-        <div class="arcade-meta">
-
-          <span>
+<div class="arcade-meta">
+<span>
             PERSONAL BEST
             <b id="jumpBestHero">
               0
             </b>
-          </span>
-
-        </div>
-
-
-        <button
-          class="play-button"
-          data-game="jump"
-          type="button"
-        >
+</span>
+</div>
+<button class="play-button" data-game="jump" type="button">
           START RICO JUMP
         </button>
-
-      </div>
-
-    </article>
-
-
-    <section class="home-section">
-
-      <div class="section-head">
-
-        <div>
-
-          <span class="eyebrow">
+</div>
+</article>
+<section class="home-section">
+<div class="section-head">
+<div>
+<span class="eyebrow">
             ALL GAMES
           </span>
-
-          <h2>
+<h2>
             Rico Arcade
           </h2>
-
-        </div>
-
-      </div>
-
-
-      <div class="games-grid">
-
-        <!-- JUMP -->
-
-        <button
-          class="game-card"
-          data-game="jump"
-          type="button"
-        >
-
-          <div class="game-banner jump-banner"></div>
-
-
-          <div class="game-card-content">
-
-            <div class="game-card-top">
-
-              <span class="game-type">
+</div>
+</div>
+<div class="games-grid">
+<!-- JUMP -->
+<button class="game-card" data-game="jump" type="button">
+<div class="game-banner jump-banner"></div>
+<div class="game-card-content">
+<div class="game-card-top">
+<span class="game-type">
                 ENDLESS
               </span>
-
-              <span class="game-live">
-                <i></i>
+<span class="game-live">
+<i></i>
                 LIVE
               </span>
-
-            </div>
-
-
-            <h3>
+</div>
+<h3>
               Rico Jump
             </h3>
-
-            <p>
+<p>
               Climb higher. Don't fall.
             </p>
-
-
-            <div class="game-card-footer">
-
-              <span>
+<div class="game-card-footer">
+<span>
                 PERSONAL BEST
               </span>
-
-              <b id="jumpBestCard">
+<b id="jumpBestCard">
                 0
               </b>
-
-            </div>
-
-          </div>
-
-        </button>
-
-
-        <!-- SNAKE -->
-
-        <button
-          class="game-card"
-          data-game="snake"
-          type="button"
-        >
-
-          <div class="game-banner snake-banner"></div>
-
-
-          <div class="game-card-content">
-
-            <div class="game-card-top">
-
-              <span class="game-type">
+</div>
+</div>
+</button>
+<!-- SNAKE -->
+<button class="game-card" data-game="snake" type="button">
+<div class="game-banner snake-banner"></div>
+<div class="game-card-content">
+<div class="game-card-top">
+<span class="game-type">
                 SURVIVAL
               </span>
-
-              <span class="game-live">
-                <i></i>
+<span class="game-live">
+<i></i>
                 LIVE
               </span>
-
-            </div>
-
-
-            <h3>
+</div>
+<h3>
               Rico Snake
             </h3>
-
-            <p>
+<p>
               Neon speed survival.
             </p>
-
-
-            <div class="game-card-footer">
-
-              <span>
+<div class="game-card-footer">
+<span>
                 PERSONAL BEST
               </span>
-
-              <b id="snakeBestCard">
+<b id="snakeBestCard">
                 0
               </b>
-
-            </div>
-
-          </div>
-
-        </button>
-
-
-        <!-- PLINKO -->
-
-        <button
-          class="game-card"
-          data-game="plinko"
-          type="button"
-        >
-
-          <div class="game-banner plinko-banner"></div>
-
-
-          <div class="game-card-content">
-
-            <div class="game-card-top">
-
-              <span class="game-type">
+</div>
+</div>
+</button>
+<!-- PLINKO -->
+<button class="game-card" data-game="plinko" type="button">
+<div class="game-banner plinko-banner"></div>
+<div class="game-card-content">
+<div class="game-card-top">
+<span class="game-type">
                 ARCADE
               </span>
-
-              <span class="game-live">
-                <i></i>
+<span class="game-live">
+<i></i>
                 LIVE
               </span>
-
-            </div>
-
-
-            <h3>
+</div>
+<h3>
               Rico Plinko
             </h3>
-
-            <p>
+<p>
               Drop, bounce and score.
             </p>
-
-
-            <div class="game-card-footer">
-
-              <span>
+<div class="game-card-footer">
+<span>
                 PERSONAL BEST
               </span>
-
-              <b id="plinkoBestCard">
+<b id="plinkoBestCard">
                 0
               </b>
-
-            </div>
-
-          </div>
-
-        </button>
-
-
-        <!-- STACK -->
-
-        <button
-          class="game-card"
-          data-game="stack"
-          type="button"
-        >
-
-          <div class="game-banner stack-banner"></div>
-
-
-          <div class="game-card-content">
-
-            <div class="game-card-top">
-
-              <span class="game-type">
+</div>
+</div>
+</button>
+<!-- STACK -->
+<button class="game-card" data-game="stack" type="button">
+<div class="game-banner stack-banner"></div>
+<div class="game-card-content">
+<div class="game-card-top">
+<span class="game-type">
                 TIMING
               </span>
-
-              <span class="game-live">
-                <i></i>
+<span class="game-live">
+<i></i>
                 LIVE
               </span>
-
-            </div>
-
-
-            <h3>
+</div>
+<h3>
               Rico Stack
             </h3>
-
-            <p>
+<p>
               Build the perfect tower.
             </p>
-
-
-            <div class="game-card-footer">
-
-              <span>
+<div class="game-card-footer">
+<span>
                 PERSONAL BEST
               </span>
-
-              <b id="stackBestCard">
+<b id="stackBestCard">
                 0
               </b>
-
-            </div>
-
-          </div>
-
-        </button>
-
-      </div>
-
-    </section>
-
-  </section>
-
-
-  <!-- ====================================================
+</div>
+</div>
+</button>
+</div>
+</section>
+</section>
+<!-- ====================================================
        MISSIONS
   ===================================================== -->
-
-  <section
-    id="pageMissions"
-    class="page"
-  >
-
-    <div class="page-intro">
-
-      <span class="eyebrow">
+<section class="page" id="pageMissions">
+<div class="page-intro">
+<span class="eyebrow">
         YOUR JOURNEY
       </span>
-
-      <h1>
+<h1>
         Missions.
       </h1>
-
-      <p>
+<p>
         Complete Rico community activities and grow your points balance.
       </p>
-
-    </div>
-
-
-    <div
-      id="missionList"
-      class="mission-list"
-    ></div>
-
-  </section>
-
-
-  <!-- ====================================================
+</div>
+<div class="mission-list" id="missionList"></div>
+</section>
+<!-- ====================================================
        REWARDS
   ===================================================== -->
-
-  <section
-    id="pageRewards"
-    class="page"
-  >
-
-    <div class="page-intro">
-
-      <span class="eyebrow">
+<section class="page" id="pageRewards">
+<div class="page-intro">
+<span class="eyebrow">
         RICO STORE
       </span>
-
-      <h1>
+<h1>
         Rewards.
       </h1>
-
-      <p>
+<p>
         Redeem your Rico Points for currently available community rewards.
       </p>
-
-    </div>
-
-
-    <div class="reward-balance">
-
-      <span>
+</div>
+<div class="reward-balance">
+<span>
         AVAILABLE BALANCE
       </span>
-
-      <strong>
+<strong>
         R
         <b id="rewardBalance">
           0
         </b>
-      </strong>
-
-    </div>
-
-
-    <div
-      id="rewardList"
-      class="rewards-grid"
-    ></div>
-
-  </section>
-
-
-  <!-- ====================================================
+</strong>
+</div>
+<div class="rewards-grid" id="rewardList"></div>
+</section>
+<!-- ====================================================
        RANK
   ===================================================== -->
-
-  <section
-    id="pageRank"
-    class="page"
-  >
-
-    <div class="page-intro">
-
-      <span class="eyebrow">
+<section class="page" id="pageRank">
+<div class="page-intro">
+<span class="eyebrow">
         RICO COMMUNITY
       </span>
-
-      <h1>
+<h1>
         Leaderboard.
       </h1>
-
-      <p>
+<p>
         Follow your position and see who is leading the Rico community.
       </p>
-
-    </div>
-
-
-    <div
-      id="podium"
-      class="podium"
-    ></div>
-
-
-    <div
-      id="rankList"
-      class="rank-list"
-    ></div>
-
-  </section>
-
-
-  <!-- ====================================================
+</div>
+<div class="podium" id="podium"></div>
+<div class="rank-list" id="rankList"></div>
+</section>
+<!-- ====================================================
        PROFILE
   ===================================================== -->
-
-  <section
-    id="pageProfile"
-    class="page"
-  >
-
-    <div class="profile-head">
-
-      <div class="profile-avatar-wrap">
-
-        <img
-          id="profileAvatar"
-          class="profile-avatar"
-          alt=""
-        >
-
-        <button
-          id="editAvatar"
-          class="avatar-edit"
-          type="button"
-        >
+<section class="page" id="pageProfile">
+<div class="profile-head">
+<div class="profile-avatar-wrap">
+<img alt="" class="profile-avatar" id="profileAvatar"/>
+<button class="avatar-edit" id="editAvatar" type="button">
           ✦
         </button>
-
-      </div>
-
-
-      <span class="eyebrow">
+</div>
+<span class="eyebrow">
         RICO IDENTITY
       </span>
-
-      <h1 id="profileName">
+<h1 id="profileName">
         Rico Member
       </h1>
-
-      <p id="profileUsername">
+<p id="profileUsername">
         Telegram Member
       </p>
-
-
-      <span
-        id="profileTier"
-        class="tier-chip"
-      >
+<span class="tier-chip" id="profileTier">
         ROOKIE
       </span>
-
-    </div>
-
-
-    <div class="profile-stats">
-
-      <div class="profile-stat">
-
-        <span>
+</div>
+<div class="profile-stats">
+<div class="profile-stat">
+<span>
           POINTS
         </span>
-
-        <strong id="profilePoints">
+<strong id="profilePoints">
           0
         </strong>
-
-      </div>
-
-
-      <div class="profile-stat">
-
-        <span>
+</div>
+<div class="profile-stat">
+<span>
           STREAK
         </span>
-
-        <strong id="profileStreak">
+<strong id="profileStreak">
           0
         </strong>
-
-      </div>
-
-
-      <div class="profile-stat">
-
-        <span>
+</div>
+<div class="profile-stat">
+<span>
           RANK
         </span>
-
-        <strong id="profileRank">
+<strong id="profileRank">
           #—
         </strong>
-
-      </div>
-
-    </div>
-
-
-    <div class="profile-menu">
-
-      <button
-        id="profileAvatarMenu"
-        type="button"
-      >
-
-        <span class="profile-menu-icon">
+</div>
+</div>
+<div class="profile-menu">
+<button id="profileAvatarMenu" type="button">
+<span class="profile-menu-icon">
           ✦
         </span>
-
-        <span>
-
-          <strong>
+<span>
+<strong>
             My Avatar
           </strong>
-
-          <small>
+<small>
             Choose your Rico Club identity
           </small>
-
-        </span>
-
-        <span class="profile-arrow">
+</span>
+<span class="profile-arrow">
           ›
         </span>
-
-      </button>
-
-
-      <button
-        id="profileInvite"
-        type="button"
-      >
-
-        <span class="profile-menu-icon">
+</button>
+<button id="profileInvite" type="button">
+<span class="profile-menu-icon">
           ↗
         </span>
-
-        <span>
-
-          <strong>
+<span>
+<strong>
             Invite Friends
           </strong>
-
-          <small>
+<small>
             Share your personal invitation link
           </small>
-
-        </span>
-
-        <span class="profile-arrow">
+</span>
+<span class="profile-arrow">
           ›
         </span>
-
-      </button>
-
-
-      <button
-        id="profileChannel"
-        type="button"
-      >
-
-        <span class="profile-menu-icon">
+</button>
+<button id="profileChannel" type="button">
+<span class="profile-menu-icon">
           ◉
         </span>
-
-        <span>
-
-          <strong>
+<span>
+<strong>
             Official Channel
           </strong>
-
-          <small>
+<small>
             Events, drops and Rico announcements
           </small>
-
-        </span>
-
-        <span class="profile-arrow">
+</span>
+<span class="profile-arrow">
           ›
         </span>
-
-      </button>
-
-    </div>
-
-  </section>
-
-
-  <!-- ====================================================
+</button>
+</div>
+</section>
+<!-- ====================================================
        NAV
   ===================================================== -->
-
-  <nav class="bottom-nav">
-
-    <button
-      class="active"
-      data-nav="home"
-      type="button"
-    >
-
-      <i>⌂</i>
-      <span>Home</span>
-
-    </button>
-
-
-    <button
-      data-nav="play"
-      type="button"
-    >
-
-      <i>✦</i>
-      <span>Play</span>
-
-    </button>
-
-
-    <button
-      data-nav="rewards"
-      type="button"
-    >
-
-      <i>◆</i>
-      <span>Rewards</span>
-
-    </button>
-
-
-    <button
-      data-nav="rank"
-      type="button"
-    >
-
-      <i>♛</i>
-      <span>Rank</span>
-
-    </button>
-
-
-    <button
-      data-nav="profile"
-      type="button"
-    >
-
-      <i>◎</i>
-      <span>Me</span>
-
-    </button>
-
-  </nav>
-
+<nav class="bottom-nav">
+<button class="active" data-nav="home" type="button">
+<i>⌂</i>
+<span>Home</span>
+</button>
+<button data-nav="play" type="button">
+<i>✦</i>
+<span>Play</span>
+</button>
+<button data-nav="rewards" type="button">
+<i>◆</i>
+<span>Rewards</span>
+</button>
+<button data-nav="rank" type="button">
+<i>♛</i>
+<span>Rank</span>
+</button>
+<button data-nav="profile" type="button">
+<i>◎</i>
+<span>Me</span>
+</button>
+</nav>
 </main>
-
-
 <!-- ======================================================
      AVATAR MODAL
 ======================================================= -->
-
-<div
-  id="avatarModal"
-  class="modal hidden"
->
-
-  <div class="sheet">
-
-    <div class="sheet-handle"></div>
-
-
-    <div class="sheet-head">
-
-      <div>
-
-        <span class="eyebrow">
+<div class="modal hidden" id="avatarModal">
+<div class="sheet">
+<div class="sheet-handle"></div>
+<div class="sheet-head">
+<div>
+<span class="eyebrow">
           RICO IDENTITY
         </span>
-
-        <h2>
+<h2>
           Choose your avatar
         </h2>
-
-      </div>
-
-
-      <button
-        id="closeAvatar"
-        class="sheet-close"
-        type="button"
-      >
+</div>
+<button class="sheet-close" id="closeAvatar" type="button">
         ×
       </button>
-
-    </div>
-
-
-    <div
-      id="avatarGrid"
-      class="avatar-grid"
-    ></div>
-
-  </div>
-
 </div>
-
-
+<div class="avatar-grid" id="avatarGrid"></div>
+</div>
+</div>
 <!-- ======================================================
      GAME MODAL
 ======================================================= -->
-
-<div
-  id="gameModal"
-  class="modal hidden"
->
-
-  <div class="sheet game-sheet">
-
-    <div class="game-sheet-header">
-
-      <div class="game-sheet-title">
-
-        <span>
+<div class="modal hidden" id="gameModal">
+<div class="sheet game-sheet">
+<div class="game-sheet-header">
+<div class="game-sheet-title">
+<span>
           RICO ARCADE
         </span>
-
-        <strong id="gameTitle">
+<strong id="gameTitle">
           Rico Game
         </strong>
-
-      </div>
-
-
-      <div class="game-sheet-actions">
-
-        <button
-          id="restartGame"
-          type="button"
-          title="Restart"
-        >
+</div>
+<div class="game-sheet-actions">
+<button id="restartGame" title="Restart" type="button">
           ↻
         </button>
-
-        <button
-          id="closeGame"
-          type="button"
-          title="Close"
-        >
+<button id="closeGame" title="Close" type="button">
           ×
         </button>
-
-      </div>
-
-    </div>
-
-
-    <div class="game-hud">
-
-      <div class="hud-card">
-
-        <span>
+</div>
+</div>
+<div class="game-hud">
+<div class="hud-card">
+<span>
           SCORE
         </span>
-
-        <strong id="gameScore">
+<strong id="gameScore">
           0
         </strong>
-
-      </div>
-
-
-      <div class="hud-card">
-
-        <span>
+</div>
+<div class="hud-card">
+<span>
           BEST
         </span>
-
-        <strong id="gameBest">
+<strong id="gameBest">
           0
         </strong>
-
-      </div>
-
-
-      <div class="hud-card">
-
-        <span>
+</div>
+<div class="hud-card">
+<span>
           STATUS
         </span>
-
-        <strong id="gameStatus">
+<strong id="gameStatus">
           READY
         </strong>
-
-      </div>
-
-    </div>
-
-
-    <div
-      id="gameStage"
-      class="game-stage"
-    >
-
-      <canvas
-        id="gameCanvas"
-        class="game-canvas"
-        width="450"
-        height="600"
-      ></canvas>
-
-
-      <div
-        id="gameOverlay"
-        class="game-start-overlay"
-      >
-
-        <div class="game-start-panel">
-
-          <div
-            id="gameOverlayIcon"
-            class="game-start-icon"
-          >
+</div>
+</div>
+<div class="game-stage" id="gameStage">
+<canvas class="game-canvas" height="600" id="gameCanvas" width="450"></canvas>
+<div class="game-start-overlay" id="gameOverlay">
+<div class="game-start-panel">
+<div class="game-start-icon" id="gameOverlayIcon">
             R
           </div>
-
-          <h3 id="gameOverlayTitle">
+<h3 id="gameOverlayTitle">
             Rico Game
           </h3>
-
-          <p id="gameOverlayText">
+<p id="gameOverlayText">
             Ready?
           </p>
-
-
-          <button
-            id="startGame"
-            type="button"
-          >
+<button id="startGame" type="button">
             START GAME
           </button>
-
-        </div>
-
-      </div>
-
-    </div>
-
-
-    <div
-      id="gameHelp"
-      class="game-help"
-    >
+</div>
+</div>
+</div>
+<div class="game-help" id="gameHelp">
       Mobile and desktop controls supported.
     </div>
-
-  </div>
-
 </div>
-
-
+</div>
 <!-- ======================================================
      SUCCESS
 ======================================================= -->
-
-<div
-  id="successModal"
-  class="modal hidden"
->
-
-  <div class="sheet">
-
-    <div class="success">
-
-      <div class="success-logo">
+<div class="modal hidden" id="successModal">
+<div class="sheet">
+<div class="success">
+<div class="success-logo">
         R
       </div>
-
-      <span class="eyebrow">
+<span class="eyebrow">
         RICO CLUB
       </span>
-
-      <h2 id="successTitle">
+<h2 id="successTitle">
         Complete
       </h2>
-
-      <p id="successMessage"></p>
-
-
-      <button
-        id="successClose"
-        class="primary-button"
-        type="button"
-      >
+<p id="successMessage"></p>
+<button class="primary-button" id="successClose" type="button">
         CONTINUE
       </button>
-
-    </div>
-
-  </div>
-
 </div>
-
-
-<div
-  id="toast"
-  class="toast"
-></div>
-
-
+</div>
+</div>
+<div class="toast" id="toast"></div>
 <script>
 (() => {
 
@@ -10997,7 +10255,6 @@ function showToast(message) {
 
 })();
 </script>
-
 <script>
 /* Rico Club 2.0: visual enhancements only. The original inline application handles authentication and points. */
 (()=>{
