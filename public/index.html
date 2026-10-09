@@ -8,7 +8,7 @@
   content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no"
 >
 
-<meta name="theme-color" content="#08090c">
+<meta name="theme-color" content="#15122e">
 
 <title>Rico Club 2.0 | Arcade</title>
 
@@ -3636,35 +3636,19 @@ span {
 
 }
 
-/* Rico Club Phase 3: visual layer; existing app handlers remain authoritative */
-:root{--bg:#14132d;--bg-soft:#1b1937;--surface:#242044;--surface-2:#2b2550;--surface-3:#342c5e;--line:rgba(199,181,255,.15);--line-strong:rgba(199,181,255,.28);--text:#fff;--text-soft:#e1dcf3;--muted:#bbb4d8;--muted-2:#9489b8;--pink:#ff6ec4;--violet:#927dff;--blue:#64d6fa;--green:#79e3a1;--gold:#ffcb67;--gradient:linear-gradient(120deg,#ff6ec4,#927dff 55%,#64d6fa)}
-html,body{background:#14132d}body{background:radial-gradient(ellipse at 20% -10%,#4b3988 0,transparent 48%),#14132d}
-.world{background:radial-gradient(ellipse at 30% -20%,#493487,transparent 55%),linear-gradient(180deg,#171431,#100f25)}
-button{transition:transform .18s ease,filter .2s ease,box-shadow .2s ease}button:active{transform:scale(.97)}button:focus-visible{outline:2px solid #64d6fa;outline-offset:3px}
-.home-section,.profile-card,.mission-card,.reward-card,.info-card{animation:ricoRise .5s ease both}
-@keyframes ricoRise{from{opacity:.55;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
-.checkin-card{position:relative;overflow:hidden;border:1px solid #8f6ce1;background:linear-gradient(125deg,#3c287a,#6c3bc6 70%,#5e32a8);box-shadow:0 14px 30px #08061c66;border-radius:22px}
-.checkin-card:before{content:'';position:absolute;pointer-events:none;right:-25px;top:-45px;width:170px;height:170px;background:url('/assets/club/club-coin.webp') center/contain no-repeat;opacity:.22;animation:ricoFloat 5s ease-in-out infinite}
-.checkin-card .checkin-info,.checkin-card #checkinButton{position:relative;z-index:1}
-.checkin-card .checkin-icon{background:#ffffff20;color:#ffe7a5}
-.checkin-card .primary-button,.primary-button{background:linear-gradient(180deg,#ffe9a6,#f4b74f);color:#39250e;border-color:#d59c43;box-shadow:0 4px 0 #ad732c,0 8px 22px #0003;font-weight:850}
-.daily-journey{position:relative;margin-top:30px;padding:31px 13px 18px;background:linear-gradient(150deg,#fff5df,#efd4a5);border:4px solid #dbac64;border-radius:24px;color:#69432f;box-shadow:0 7px 0 #865a39,0 15px 35px #0006}
-.daily-journey:before{content:'DAILY REWARDS';position:absolute;top:-24px;left:50%;transform:translateX(-50%);white-space:nowrap;padding:9px 23px;background:linear-gradient(180deg,#b48cff,#7338db 55%,#5025ac);border:2px solid #b08aff;border-radius:12px 12px 18px 18px;color:#fff1cd;font:900 19px/1.1 Georgia,serif;text-shadow:0 2px #50268a;box-shadow:0 5px 0 #47217f,0 9px 17px #37225b66;z-index:3}
-.daily-journey-head{color:#795139}.daily-journey-head span,.daily-journey-head strong{color:#795139}
-.day-track{gap:7px;grid-template-columns:repeat(7,minmax(0,1fr))}.day-track:before{display:none}
-.day-card{padding:12px 2px 9px;background:linear-gradient(#fff8e9,#ffe4bd);border:1px solid #e6c08e;border-radius:13px;box-shadow:inset 0 2px 4px #fff,0 3px 5px #996c4140;color:#65422c;min-height:112px}
-.day-card.completed{background:linear-gradient(#e8ffdc,#c1eeaa);border-color:#84c67c}.day-card.today{transform:translateY(-3px);background:linear-gradient(#e5ffd6,#9cea89);border:2px solid #50c95b;animation:ricoGlow 2.4s ease-in-out infinite alternate}
-.day-card .day-name,.day-card .day-date,.day-card .day-reward{color:#66432e}.day-card .day-icon{display:block;margin:3px auto;width:35px;height:35px;font-size:0!important;background:url('/assets/club/club-coin.webp') center/contain no-repeat;filter:drop-shadow(0 3px 2px #6b3e2444)}
-.day-card.completed .day-icon{background-image:url('/assets/club/check.webp')}.day-card:last-child .day-icon{background-image:url('/assets/club/weekly-chest.webp');width:42px;height:42px;animation:ricoFloat 3.8s ease-in-out infinite}
-.day-card .today-label{color:#2b743b!important}.day-card .day-reward{font-weight:900}
-@keyframes ricoFloat{50%{transform:translateY(-6px)}}@keyframes ricoGlow{to{box-shadow:0 0 0 3px #76e18e88,0 0 20px #7aef8d66}}
-.arcade-hero{border:1px solid #8a6bea;border-radius:22px;background:linear-gradient(135deg,#36277e,#6638b4);box-shadow:0 12px 28px #0b092466;overflow:hidden}
-.arcade-hero:after{content:'';position:absolute;right:5px;bottom:4px;width:38%;height:90%;pointer-events:none;background:url('/assets/club/rico-mascot.webp') right bottom/contain no-repeat;filter:drop-shadow(0 8px 8px #140d4788);opacity:.82;animation:ricoFloat 5s ease-in-out infinite}
-.arcade-hero-copy{position:relative;z-index:2}.arcade-hero-bg{opacity:.25}
-.bottom-nav{background:#1c1939f5;border-top:1px solid #51447b;backdrop-filter:blur(16px)}.bottom-nav button.active{color:#ff9ed9}.bottom-nav button.active i{color:#ff9ed9}
-.page{animation:ricoRise .25s ease both}
-@media(max-width:480px){.daily-journey{padding:28px 8px 13px}.day-track{gap:3px}.day-card{border-radius:9px;min-height:96px;padding:10px 1px 6px}.day-card .day-icon{width:27px;height:27px}.day-card:last-child .day-icon{width:32px;height:32px}.daily-journey:before{font-size:17px}.arcade-hero:after{opacity:.55;width:42%}}
-@media(prefers-reduced-motion:reduce){.day-card.today,.day-card:last-child .day-icon,.arcade-hero:after,.checkin-card:before,.home-section,.page{animation:none!important}}
+/* RICO CLUB 2.0 - ARCADE DESIGN SYSTEM */
+:root{--bg:#15122e;--bg-soft:#1a1739;--surface:#29214e;--surface-2:#312759;--surface-3:#392c69;--line:#66519c70;--line-strong:#9879d780;--text:#fff9f4;--text-soft:#e3d9ff;--muted:#bcb1dc;--pink:#ff73bf;--violet:#a477ff;--blue:#67d7ff;--green:#65dd9b;--gold:#ffce6b;--gradient:linear-gradient(120deg,#ff69ba,#956bff,#67d7ff)}
+html,body{background:#14112c!important}body{background:radial-gradient(ellipse at 15% 0%,#3c2a79 0%,transparent 43%),radial-gradient(ellipse at 90% 35%,#2b1b64 0%,transparent 46%),#14112c!important;font-family:system-ui,-apple-system,Segoe UI,sans-serif!important}
+.app{max-width:520px!important;padding-bottom:120px!important;background:transparent!important}.topbar{background:linear-gradient(130deg,#322568,#241b50)!important;border:1px solid #7757b977!important;border-radius:19px!important;margin:10px 10px 15px!important;padding:12px 15px!important;box-shadow:0 12px 25px #0b07275c!important}.brand strong{letter-spacing:1.5px!important}.brand span{color:#c7b6fa!important}.profile-button{box-shadow:0 0 0 3px #ff79c266,0 6px 20px #0007!important}
+.greeting{margin:10px 0 14px!important;padding:19px 18px 27px!important;position:relative;overflow:hidden;border-radius:23px;background:linear-gradient(125deg,#46318f 0%,#7142d3 65%,#aa52bb 100%)!important;border:1px solid #a58bff80!important;box-shadow:0 12px 35px #09062466!important;min-height:162px}.greeting:before{content:'';position:absolute;right:5px;bottom:-4px;width:120px;height:135px;background:url('/assets/club/rico-mascot.webp') center bottom/contain no-repeat;filter:drop-shadow(0 10px 8px #13072e70);animation:ricoFloat 4s ease-in-out infinite;pointer-events:none}.greeting h1{font-size:clamp(23px,6vw,34px)!important;line-height:1.14!important;max-width:65%!important;letter-spacing:-.7px!important;margin-top:9px!important}.greeting h1 span{font-size:16px!important;color:#f2dfff!important}.greeting .eyebrow{color:#ffe6a4!important}.greeting-row{align-items:flex-start!important}.streak-chip{position:absolute!important;right:12px;top:14px;z-index:2;background:#261944bd!important;border:1px solid #ffffff55!important;backdrop-filter:blur(10px);padding:7px 10px!important}
+.member-card{background:linear-gradient(145deg,#49349a,#2e235f 65%,#251c4a)!important;border:2px solid #9172e2!important;border-radius:23px!important;box-shadow:0 7px 0 #1b1343,0 16px 35px #09071e8c!important;padding:20px!important;overflow:hidden!important}.member-card:before{background:radial-gradient(circle at 90% 10%,#ffce6b22,transparent 45%)!important}.member-card:after{opacity:.08!important}.balance-logo{background:linear-gradient(145deg,#ffe38e,#eaa33e)!important;color:#613610!important;box-shadow:0 4px 12px #0004!important}.balance strong{color:#fff6d8!important;text-shadow:0 3px 0 #29135c!important}.tier-chip{background:#ffce6b!important;color:#51300e!important;border-color:#ffe8a0!important}.progress{background:#201642!important}.progress>span{background:linear-gradient(90deg,#ff82c8,#ffe180,#68dfff)!important}.member-stats{border-color:#a58be855!important}
+.quick-actions{gap:9px!important}.quick-action{background:linear-gradient(150deg,#4e36a1,#30225e)!important;border:1px solid #8c6dd5!important;border-radius:16px!important;box-shadow:0 5px 0 #1c1347!important;transition:transform .2s,box-shadow .2s!important}.quick-action:hover{transform:translateY(-3px)!important}.quick-action:active{transform:translateY(3px)!important;box-shadow:0 1px 0 #1c1347!important}.quick-icon{font-size:24px!important;background:linear-gradient(150deg,#9e75ff,#e17bdf)!important;color:white!important;border-radius:13px!important}.quick-action small{color:#f8e7ff!important}
+.home-section{margin-top:26px!important}.section-head h2,.page-intro h1{color:#fff8e9!important;letter-spacing:-.6px!important}.eyebrow{color:#c5aaff!important}.checkin-card{background:linear-gradient(145deg,#fdf2d8,#f4d9a9)!important;border:3px solid #dba85b!important;border-radius:20px!important;box-shadow:0 6px 0 #84502c,0 12px 25px #0005!important;color:#603b25!important;padding:17px!important}.checkin-copy strong,.checkin-copy p{color:#684129!important}.checkin-copy b{color:#a35a20!important}.checkin-icon{background:#fff0c4!important;color:#aa6425!important}.primary-button,#checkinButton{background:linear-gradient(180deg,#ffe88f,#f6b44c)!important;color:#563315!important;border:1px solid #ffecb0!important;border-radius:13px!important;box-shadow:0 4px 0 #a76727!important;font-weight:900!important}.primary-button:disabled,#checkinButton:disabled{opacity:.75!important}
+.daily-journey{position:relative!important;margin-top:35px!important;padding:36px 11px 18px!important;background:linear-gradient(150deg,#fff5df,#f0d4a5)!important;border:5px solid #dfb06b!important;border-radius:25px!important;box-shadow:0 7px 0 #87572f,0 16px 28px #0006!important;color:#613b24!important;overflow:visible!important}.daily-journey:before{content:'DAILY REWARD';position:absolute;z-index:2;left:50%;top:-24px;transform:translateX(-50%);white-space:nowrap;background:linear-gradient(180deg,#c19aff,#773de5 48%,#4c20b1);border:2px solid #c29dff;box-shadow:0 5px 0 #432084,0 9px 15px #0003;border-radius:11px 11px 19px 19px;color:#fff3cc;font:bold 22px Georgia,serif;text-shadow:0 2px 1px #4a2785;padding:7px 21px}.daily-journey-head{color:#805536!important;padding:0 3px 12px!important}.daily-journey-head span,.daily-journey-head strong{color:#8d583a!important}.day-track{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr)) 1.15fr!important;grid-template-rows:repeat(2,118px)!important;gap:7px!important;overflow:visible!important;padding:0!important;background:none!important}.day-track:before{display:none!important}.day-card{position:relative!important;min-width:0!important;width:auto!important;height:auto!important;display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:flex-end!important;background:linear-gradient(160deg,#fff9e9,#ffe0b2)!important;border:2px solid #e7c49a!important;border-radius:16px!important;box-shadow:inset 0 3px 5px #fff,0 4px 8px #a66b493d!important;padding:31px 2px 8px!important;color:#64422c!important;gap:1px!important}.day-card .day-name{position:absolute!important;top:-2px!important;left:3px!important;right:3px!important;padding:4px 1px!important;background:linear-gradient(#a88aff,#6032d2)!important;border-radius:9px 9px 12px 12px!important;color:white!important;font-size:11px!important;text-align:center!important;line-height:1.2!important}.day-card .day-date{display:none!important}.day-card .day-icon{display:block!important;width:60px!important;height:52px!important;font-size:0!important;background:url('/assets/club/club-coin.webp') center/contain no-repeat!important;filter:drop-shadow(0 5px 3px #6a482c50)!important}.day-card .day-reward{color:#70452c!important;font-size:12px!important;font-weight:900!important;white-space:nowrap!important}.day-card.completed .day-icon{background-image:url('/assets/club/check.webp')!important}.day-card.today:not(.completed){border-color:#53cb78!important;background:linear-gradient(#e6ffd0,#b6ef98)!important;animation:ricoPulse 2.8s ease-in-out infinite}.day-card .today-label{display:none!important}.day-card.bonus{grid-column:4!important;grid-row:1/3!important;background:linear-gradient(145deg,#b38aff,#7439db)!important;border-color:#8957e2!important;padding-bottom:25px!important}.day-card.bonus .day-icon{width:100%!important;height:102px!important;background-image:url('/assets/club/weekly-chest.webp')!important;animation:ricoFloat 3.6s ease-in-out infinite}.day-card.bonus .day-name{background:linear-gradient(#ffdc80,#e8a641)!important;color:#59341c!important}.day-card.bonus .day-reward{color:#fff6c9!important}.day-card.bonus.completed .day-icon{background-image:url('/assets/club/weekly-chest.webp')!important}.day-card.bonus:after{content:'★ BONUS';position:absolute;bottom:7px;font-size:9px;color:#ffe6a3;font-weight:900;letter-spacing:.5px}
+.arcade-hero{background:linear-gradient(125deg,#5930a7,#8e48d8)!important;border:2px solid #b18eff!important;border-radius:22px!important;box-shadow:0 7px 0 #291456,0 15px 30px #0006!important;overflow:hidden!important}.arcade-hero-bg{background:url('/assets/club/arcade-toodle-cover.webp') center/cover no-repeat!important;opacity:.34!important}.arcade-hero-copy{position:relative!important;z-index:2!important}.game-card,.mission-card,.reward-card,.drop-card,.rank-card,.profile-card,.info-card{border-color:#7458b28c!important;background:linear-gradient(145deg,#30255e,#231c48)!important;border-radius:18px!important}.bottom-nav{max-width:500px!important;left:50%!important;transform:translateX(-50%)!important;bottom:8px!important;border:1px solid #8b6fd28c!important;background:#211a48f5!important;backdrop-filter:blur(18px)!important;border-radius:20px!important;box-shadow:0 12px 32px #0009!important;padding:9px 7px calc(9px + env(safe-area-inset-bottom))!important}.bottom-nav button.active{background:#7a50d04a!important;color:#ff9ed9!important;border-radius:14px!important}.bottom-nav i{font-size:23px!important}.page{animation:ricoEnter .32s ease both}.page-intro{margin-top:20px!important}.page-intro h1{font-size:clamp(27px,6vw,39px)!important}.rico-coin-float{position:fixed;pointer-events:none;z-index:9999;width:58px;height:58px;object-fit:contain;animation:ricoCoin 1s ease-out forwards}.rico-celebrate{position:fixed;inset:0;pointer-events:none;z-index:9998;overflow:hidden}.rico-celebrate span{position:absolute;top:-30px;width:9px;height:16px;border-radius:3px;animation:ricoFall 1.4s ease-in forwards}
+@keyframes ricoFloat{50%{transform:translateY(-8px) rotate(2deg)}}@keyframes ricoPulse{50%{box-shadow:0 0 0 4px #74df8970,0 0 18px #4cbd6790}}@keyframes ricoEnter{from{opacity:.5;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}@keyframes ricoCoin{0%{opacity:1;transform:translateY(0) scale(.5)}60%{opacity:1;transform:translateY(-90px) scale(1.2)}100%{opacity:0;transform:translateY(-150px) scale(.7)}}@keyframes ricoFall{to{transform:translateY(105vh) rotate(620deg);opacity:0}}
+@media(max-width:380px){.day-track{gap:5px!important;grid-template-rows:repeat(2,108px)!important}.day-card .day-icon{width:48px!important;height:45px!important}.day-card.bonus .day-icon{height:80px!important}.daily-journey:before{font-size:19px!important}.greeting:before{width:100px!important}.greeting h1{font-size:24px!important}}
+@media(prefers-reduced-motion:reduce){.greeting:before,.day-card.today,.day-card.bonus .day-icon,.page{animation:none!important}}
 
 </style>
 </head>
@@ -3769,7 +3753,7 @@ button{transition:transform .18s ease,filter .2s ease,box-shadow .2s ease}button
         </strong>
 
         <span>
-          COMMUNITY EXPERIENCE
+          DAILY ARCADE · RICO POINTS
         </span>
 
       </div>
@@ -4057,7 +4041,7 @@ button{transition:transform .18s ease,filter .2s ease,box-shadow .2s ease}button
               </span>
 
               <h2>
-                Check in & build your streak
+                Collect your daily treasure
               </h2>
 
             </div>
@@ -4208,7 +4192,7 @@ button{transition:transform .18s ease,filter .2s ease,box-shadow .2s ease}button
               </span>
 
               <h2>
-                Rico Jump
+                Toodle Jump
               </h2>
 
               <p>
@@ -4273,7 +4257,7 @@ button{transition:transform .18s ease,filter .2s ease,box-shadow .2s ease}button
       </span>
 
       <h1>
-        Play your way up.
+        Welcome to the arcade!
       </h1>
 
       <p>
@@ -4295,7 +4279,7 @@ button{transition:transform .18s ease,filter .2s ease,box-shadow .2s ease}button
         </span>
 
         <h2>
-          Rico Jump
+          Toodle Jump
         </h2>
 
         <p>
@@ -11014,5 +10998,25 @@ function showToast(message) {
 })();
 </script>
 
+<script>
+/* Rico Club 2.0: visual enhancements only. The original inline application handles authentication and points. */
+(()=>{
+ const btn=document.getElementById('checkinButton');
+ if(!btn)return;
+ let before=false;
+ btn.addEventListener('click',()=>{before=!btn.disabled;},true);
+ const obs=new MutationObserver(()=>{
+   if(!before||!btn.disabled||!(/COMPLETED|DONE/i).test(btn.textContent||''))return;
+   before=false;
+   if(window.matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+   const wrap=document.createElement('div');wrap.className='rico-celebrate';document.body.appendChild(wrap);
+   const colors=['#ffd76d','#ff7dc5','#a68aff','#68dfff','#87eaa8'];
+   for(let i=0;i<28;i++){const e=document.createElement('span');e.style.left=(Math.random()*100)+'%';e.style.background=colors[i%colors.length];e.style.animationDelay=(Math.random()*.45)+'s';wrap.appendChild(e)}
+   const coin=document.createElement('img');coin.className='rico-coin-float';coin.src='/assets/club/club-coin.webp';const r=btn.getBoundingClientRect();coin.style.left=(r.left+r.width/2-29)+'px';coin.style.top=(r.top-25)+'px';document.body.appendChild(coin);
+   setTimeout(()=>{wrap.remove();coin.remove()},1900);
+ });
+ obs.observe(btn,{attributes:true,childList:true,characterData:true,subtree:true});
+})();
+</script>
 </body>
 </html>
