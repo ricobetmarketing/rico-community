@@ -9540,9 +9540,10 @@ function renderBestScores() {
     );
 
 
-  $("#homeJumpBest")
-    .textContent =
-    number(jump);
+  // The old Featured Game score element was removed in V9.
+  // Keep updating it only if an older layout still includes it.
+  const homeJumpBest = $("#homeJumpBest");
+  if (homeJumpBest) homeJumpBest.textContent = number(jump);
 
 
   $("#jumpBestHero")
