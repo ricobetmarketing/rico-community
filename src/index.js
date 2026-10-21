@@ -51,6 +51,11 @@ async function handleApi(request, env, url) {
     });
   }
 
+  if (path === "/api/app/hot-games" && request.method === "GET") {
+    const {results} = await env.DB.prepare("SELECT id,title,description,banner_url,target_url,cta_label FROM hot_games WHERE active=1 ORDER BY sort_order ASC,id DESC LIMIT 10").all();
+    return json({ok:true,games:results});
+  }
+
   if (
     path === "/api/app/bootstrap" &&
     request.method === "POST"
@@ -149,6 +154,19 @@ async function handleApi(request, env, url) {
         },
         401
       );
+    }
+
+    if (path === "/api/admin/hot-games" && request.method === "GET") {
+      const {results}=await env.DB.prepare("SELECT * FROM hot_games ORDER BY sort_order ASC,id DESC").all();
+      return json({ok:true,games:results});
+    }
+    if (path === "/api/admin/hot-games" && request.method === "POST") {
+      return saveHotGame(request,env);
+    }
+    const hotMatch=path.match(/^\/api\/admin\/hot-games\/(\d+)$/);
+    if (hotMatch && request.method === "DELETE") {
+      await env.DB.prepare("DELETE FROM hot_games WHERE id=?").bind(Number(hotMatch[1])).run();
+      return json({ok:true});
     }
 
     /* DASHBOARD */
@@ -4771,4 +4789,25 @@ function json(
       }
     }
   );
+}
+
+// V9: administrator-managed hot games. Existing player authentication and rewards untouched.
+async function saveHotGame(request,env){
+  const b=await safeJson(request);
+  const title=String(b.title||'').trim().slice(0,80);
+  const description=String(b.description||'').trim().slice(0,220);
+  const banner=String(b.banner_url||'').trim();
+  const target=String(b.target_url||'').trim();
+  const cta=String(b.cta_label||'Play Now').trim().slice(0,28);
+  const validBanner=/^https:\/\/[^\s]+$/i.test(banner)||/^\/assets\/[\w./-]+$/.test(banner)||/^data:image\/webp;base64,[A-Za-z0-9+/=]+$/.test(banner)&&banner.length<320000;
+  const validTarget=/^https:\/\/[^\s]+$/i.test(target)||/^\/(?!\/)[\w/?=&%#.-]+$/.test(target);
+  if(!title||!validBanner||!validTarget)return json({ok:false,error:'Title, valid banner and HTTPS or internal destination are required.'},400);
+  const order=Math.max(0,Math.min(999,Number(b.sort_order)||0));
+  const active=b.active?1:0;
+  if(b.id){
+    await env.DB.prepare('UPDATE hot_games SET title=?,description=?,banner_url=?,target_url=?,cta_label=?,sort_order=?,active=?,updated_at=CURRENT_TIMESTAMP WHERE id=?').bind(title,description,banner,target,cta,order,active,Number(b.id)).run();
+  }else{
+    await env.DB.prepare('INSERT INTO hot_games (title,description,banner_url,target_url,cta_label,sort_order,active) VALUES (?,?,?,?,?,?,?)').bind(title,description,banner,target,cta,order,active).run();
+  }
+  return json({ok:true});
 }
