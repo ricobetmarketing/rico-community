@@ -307,6 +307,8 @@
       "Rewards"
     ],
 
+    hotgames: ["ENGAGEMENT", "Hot Games Carousel"],
+
     messages: [
       "TELEGRAM",
       "Messages"
@@ -425,6 +427,10 @@
 
         case "missions":
           await loadMissions();
+          break;
+
+        case "hotgames":
+          window.ricoLoadHotGames?.();
           break;
 
         case "drops":
