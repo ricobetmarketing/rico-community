@@ -3702,6 +3702,9 @@ body{background:radial-gradient(ellipse at 50% -10%,#44318b 0%,transparent 48%),
 @keyframes v8Mascot{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}@keyframes v8Today{0%,100%{filter:brightness(1)}50%{filter:brightness(1.07)}}
 @media(max-width:390px){.rico-v8-milestone{padding:10px;gap:9px}.rico-v8-milestone strong{font-size:12px}.rico-v5-hero{min-height:210px!important}.rico-rank-toolbar{flex-wrap:wrap}}
 @media(prefers-reduced-motion:reduce){.rico-v5-mascot,#checkinSection .day-card.today:not(.completed){animation:none!important}.rico-v8-progress span,.bottom-nav button,.rico-rank-podium .podium-card{transition:none!important}}
+
+/* V9: fixed-height aligned, backend-driven hot-game carousel */
+.rico-hot-games{min-width:0;width:100%;overflow:hidden}.rico-hot-viewport{overflow:hidden;border-radius:22px;touch-action:pan-y;position:relative}.rico-hot-track{display:flex;transition:transform .5s cubic-bezier(.2,.8,.2,1);will-change:transform}.rico-hot-card{flex:0 0 100%;min-width:0;box-sizing:border-box;min-height:360px;position:relative;display:flex;flex-direction:column;justify-content:flex-end;isolation:isolate;background:#322064;border:2px solid #a986ff;border-radius:22px;overflow:hidden}.rico-hot-card:before{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(0deg,rgba(23,10,48,.97) 0%,rgba(35,15,67,.65) 55%,rgba(20,10,45,.12) 100%)}.rico-hot-card img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:-2}.rico-hot-content{padding:24px;display:flex;flex-direction:column;align-items:flex-start;gap:10px;min-width:0}.rico-hot-label{font-size:11px;font-weight:800;letter-spacing:.12em;color:#ffe19b}.rico-hot-card h3{font-size:clamp(24px,5vw,34px);line-height:1.12;margin:0;color:#fff5d5;overflow-wrap:anywhere}.rico-hot-card p{font-size:14px;line-height:1.5;color:#e4d7f8;max-width:42ch;margin:0;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}.rico-hot-cta{border:0;border-radius:14px;padding:13px 22px;min-height:46px;display:inline-flex;align-items:center;gap:10px;justify-content:center;font-size:13px;font-weight:900;letter-spacing:.025em;background:linear-gradient(180deg,#ffe9a2,#ffb950);color:#4e2b17;box-shadow:0 4px 0 #ad6b28,0 8px 22px #0004;cursor:pointer;transition:transform .18s,filter .18s}.rico-hot-cta:hover{transform:translateY(-2px);filter:brightness(1.07)}.rico-hot-cta:active{transform:translateY(2px);box-shadow:0 1px 0 #ad6b28}.rico-hot-controls{display:flex;align-items:center;justify-content:center;gap:15px;margin-top:15px}.rico-hot-controls>button{background:#302453;color:#eadcff;border:1px solid #7562a2;border-radius:12px;width:38px;height:36px;font-size:25px;cursor:pointer}.rico-hot-dots{display:flex;align-items:center;gap:7px}.rico-hot-dots button{width:8px;height:8px;border:0;padding:0;border-radius:20px;background:#78669d;cursor:pointer;transition:width .3s,background .3s}.rico-hot-dots button.active{width:26px;background:#ffd582}.rico-hot-loading{min-height:220px;display:grid;place-items:center;width:100%;color:#d4c4eb}.rico-starburst{position:fixed;pointer-events:none;z-index:9999;color:#ffdf87;font-size:22px;animation:ricoStarPop .65s ease-out forwards}@keyframes ricoStarPop{from{opacity:1;transform:translate(-50%,-50%) scale(.5) rotate(0)}to{opacity:0;transform:translate(-50%,-130%) scale(1.4) rotate(90deg)}}@media(max-width:520px){.rico-hot-card{min-height:335px}.rico-hot-content{padding:18px}.rico-hot-card p{font-size:13px}}@media(prefers-reduced-motion:reduce){.rico-hot-track,.rico-hot-cta,.rico-starburst{transition:none!important;animation:none!important}}
 </style>
 <style>
 /* Rico Club 2.0 focused navigation and homepage */
@@ -3960,49 +3963,12 @@ body{background:radial-gradient(ellipse at 50% -10%,#44318b 0%,transparent 48%),
 </div>
 <!-- DESKTOP SIDE -->
 <aside class="desktop-side">
-<section class="home-section">
-<div class="section-head">
-<div>
-<span class="eyebrow">
-                RICO ARCADE
-              </span>
-<h2>
-                Featured game
-              </h2>
-</div>
-</div>
-<article class="arcade-hero">
-<div class="arcade-hero-bg"></div>
-<div class="arcade-hero-copy">
-<span class="game-label">
-                FEATURED TODAY
-              </span>
-<h2>
-                Toodle Jump
-              </h2>
-<p>
-                Climb through the Rico skyline, land on moving platforms,
-                collect energy and push your personal record higher.
-              </p>
-<div class="arcade-meta">
-<span>
-                  BEST
-                  <b id="homeJumpBest">
-                    0
-                  </b>
-</span>
-<span>
-                  MODE
-                  <b>
-                    ENDLESS
-                  </b>
-</span>
-</div>
-<button class="play-button" data-game="jump" type="button">
-                PLAY INSIDE RICO
-              </button>
-</div>
-</article>
+<section class="home-section rico-hot-games" id="ricoHotGames">
+ <div class="section-head"><div><span class="eyebrow">RICO ARCADE</span><h2>This Week Hot Game</h2></div></div>
+ <div class="rico-hot-viewport" id="ricoHotViewport" aria-label="This Week Hot Game carousel">
+  <div class="rico-hot-track" id="ricoHotTrack"><div class="rico-hot-loading">Loading hot games…</div></div>
+ </div>
+ <div class="rico-hot-controls"><button type="button" id="ricoHotPrev" aria-label="Previous game">‹</button><div class="rico-hot-dots" id="ricoHotDots"></div><button type="button" id="ricoHotNext" aria-label="Next game">›</button></div>
 </section>
 </aside>
 </div>
@@ -10224,6 +10190,30 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
    setTimeout(()=>{wrap.remove();coin.remove()},1900);
  });
  obs.observe(btn,{attributes:true,childList:true,characterData:true,subtree:true});
+})();
+</script>
+
+<script>
+// V9 carousel: public data only, never touches Telegram authentication or point balances.
+(()=>{
+ const track=document.getElementById('ricoHotTrack'),viewport=document.getElementById('ricoHotViewport'),dots=document.getElementById('ricoHotDots');
+ if(!track)return;
+ let games=[],index=0,timer=null,startX=null;
+ const reduced=matchMedia('(prefers-reduced-motion: reduce)');
+ const escapeHTML=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+ function go(i){if(!games.length)return;index=(i+games.length)%games.length;track.style.transform=`translateX(-${index*100}%)`;dots.querySelectorAll('button').forEach((b,j)=>{b.classList.toggle('active',j===index);b.setAttribute('aria-current',j===index?'true':'false')});}
+ function pause(){clearInterval(timer);timer=null}
+ function resume(){pause();if(games.length>1&&!reduced.matches&&!document.hidden)timer=setInterval(()=>go(index+1),5000)}
+ function render(){
+  track.innerHTML=games.map((g,i)=>`<article class="rico-hot-card"><img src="${escapeHTML(g.banner_url)}" alt="" loading="${i?'lazy':'eager'}"><div class="rico-hot-content"><span class="rico-hot-label">HOT THIS WEEK</span><h3>${escapeHTML(g.title)}</h3><p>${escapeHTML(g.description)}</p><button class="rico-hot-cta" type="button" data-hot="${i}">${escapeHTML(g.cta_label||'Play Now')} <span aria-hidden="true">↗</span></button></div></article>`).join('');
+  dots.innerHTML=games.map((_,i)=>`<button type="button" data-slide="${i}" aria-label="Show game ${i+1}"></button>`).join('');go(0);resume();
+ }
+ function openGame(g){const u=g.target_url;if(!u)return;if(u==='/'&&/toodle/i.test(g.title)&&typeof openGame==='function'){/* internal legacy game is handled below */}if(u==='/'&&/toodle/i.test(g.title)){document.querySelector('[data-game="jump"]')?.click();return}if(u.startsWith('/')&&!u.startsWith('//')){location.assign(u);return}try{const parsed=new URL(u);if(parsed.protocol!=='https:')return;if(window.Telegram?.WebApp?.openLink)window.Telegram.WebApp.openLink(parsed.href);else window.open(parsed.href,'_blank','noopener,noreferrer')}catch{}}
+ track.addEventListener('click',e=>{const b=e.target.closest('[data-hot]');if(b){openGame(games[Number(b.dataset.hot)]);if(!reduced.matches){const r=b.getBoundingClientRect(),star=document.createElement('span');star.className='rico-starburst';star.textContent='✦';star.style.left=r.left+r.width/2+'px';star.style.top=r.top+'px';document.body.append(star);setTimeout(()=>star.remove(),650)}}});
+ dots.addEventListener('click',e=>{const b=e.target.closest('[data-slide]');if(b){go(Number(b.dataset.slide));resume()}});
+ document.getElementById('ricoHotPrev')?.addEventListener('click',()=>{go(index-1);resume()});document.getElementById('ricoHotNext')?.addEventListener('click',()=>{go(index+1);resume()});
+ viewport.addEventListener('pointerenter',pause);viewport.addEventListener('pointerleave',resume);viewport.addEventListener('touchstart',e=>{startX=e.touches[0].clientX;pause()},{passive:true});viewport.addEventListener('touchend',e=>{if(startX!==null){const delta=e.changedTouches[0].clientX-startX;if(Math.abs(delta)>40)go(index+(delta<0?1:-1));startX=null}resume()},{passive:true});document.addEventListener('visibilitychange',()=>document.hidden?pause():resume());
+ fetch('/api/app/hot-games').then(r=>{if(!r.ok)throw Error('Unavailable');return r.json()}).then(d=>{games=Array.isArray(d.games)?d.games:[];if(games.length)render();else track.innerHTML='<div class="rico-hot-loading">New games coming soon</div>'}).catch(()=>{games=[{title:'Toodle Jump',description:'Climb higher and beat your personal best.',banner_url:'/assets/club/arcade-toodle-cover.webp',target_url:'/',cta_label:'Play Now'}];render()});
 })();
 </script>
 </body>
