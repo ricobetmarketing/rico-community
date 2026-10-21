@@ -294,7 +294,9 @@
       }
     }
   </style>
-</head>
+<style>
+.v9-panel{background:#fff;border:1px solid #e8e5ef;border-radius:18px;padding:24px;margin:16px 0}.v9-panel>p{color:#716b7c}.v9-list{display:grid;gap:12px;margin:20px 0}.v9-item{display:flex;gap:14px;align-items:center;padding:12px;border:1px solid #e9e3f1;border-radius:14px}.v9-item img{width:120px;aspect-ratio:16/9;object-fit:cover;border-radius:10px}.v9-item-info{flex:1;min-width:0}.v9-item-info strong{display:block}.v9-item-info small{display:block;color:#777;overflow-wrap:anywhere}.v9-item button{border:1px solid #d4c9e8;border-radius:9px;padding:9px;background:#fff;cursor:pointer}.v9-form{display:grid;gap:14px;max-width:650px}.v9-form label{display:grid;gap:6px;font-weight:650;color:#302846}.v9-form input:not([type=checkbox]),.v9-form textarea{width:100%;box-sizing:border-box;padding:12px;border:1px solid #d9d3e4;border-radius:10px;font:inherit}.v9-form small{color:#777;font-weight:400}.v9-inline{display:flex!important;align-items:center}.v9-actions{display:flex;gap:10px;flex-wrap:wrap}@media(max-width:650px){.v9-panel{padding:15px}.v9-item{flex-wrap:wrap}.v9-item img{width:100%}}
+</style></head>
 
 <body>
 
@@ -519,6 +521,8 @@
           Rewards
         </button>
 
+
+        <button class="nav-item" data-section="hotgames" type="button"><b>✦</b> Hot Games Carousel</button>
 
         <span class="nav-heading">
           COMMUNICATION
@@ -2017,6 +2021,23 @@
 
       </div>
 
+
+<section class="admin-section" id="sectionHotgames" style="max-width:1080px">
+ <div class="v9-panel"><h2>This Week Hot Game</h2><p>Manage the Mini App carousel. Cards stay the same height, and changes appear without a GitHub update.</p>
+ <div id="hotGamesList" class="v9-list"></div>
+ <form id="hotGameForm" class="v9-form"><h3 id="hotGameFormTitle">Add game</h3><input type="hidden" id="hotGameId">
+ <label>Game title<input id="hotGameTitle" maxlength="80" required placeholder="Toodle Jump"></label>
+ <label>Short description<textarea id="hotGameDescription" maxlength="220" rows="3" placeholder="Short and inviting game description"></textarea></label>
+ <label>Banner image URL (HTTPS or /assets/... )<input id="hotGameBanner" placeholder="https://.../banner.webp"></label>
+ <label>Or upload a banner (automatically resized to WebP)<input id="hotGameUpload" type="file" accept="image/*"><small>Recommended 1200 × 675, 16:9. Keep images below 250 KB.</small></label>
+ <img id="hotGamePreview" alt="Banner preview" style="display:none;max-width:100%;width:360px;aspect-ratio:16/9;object-fit:cover;border-radius:12px">
+ <label>Destination URL<input id="hotGameTarget" required placeholder="https://example.com/game or /internal-path"></label>
+ <label>CTA button text<input id="hotGameCta" maxlength="28" value="Play Now"></label>
+ <label>Display order<input id="hotGameOrder" type="number" min="0" max="999" value="0"></label>
+ <label class="v9-inline"><input id="hotGameActive" type="checkbox" checked> Active</label>
+ <div class="v9-actions"><button class="primary-button" type="submit">Save game</button><button class="secondary-button" id="hotGameReset" type="button">Clear</button></div>
+ <p id="hotGameStatus" role="status"></p></form></div>
+</section>
     </main>
 
   </div>
@@ -2109,6 +2130,7 @@
 
 
   <script src="/admin.js"></script>
+<script src="/hot-games-admin.js"></script>
 
 </body>
 </html>
