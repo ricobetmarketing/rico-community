@@ -3678,6 +3678,30 @@ body{background:radial-gradient(ellipse at 50% -10%,#44318b 0%,transparent 48%),
 @media(min-width:850px){.rico-v5-hero{min-height:250px}.rico-v5-mascot{max-width:240px}.rico-v5-hero-copy{width:68%}}
 @media(max-width:390px){.rico-v5-hero{min-height:220px;padding:19px 15px}.rico-v5-hero-copy{width:69%}.rico-v5-hero h1{font-size:24px!important}.rico-v5-mascot{width:39%}#checkinSection .day-track{grid-template-rows:repeat(2,108px)!important;gap:5px!important}#checkinSection .day-card .day-icon{height:44px!important}#checkinSection .day-card.bonus .day-icon{height:85px!important}#checkinSection .day-card .day-reward{font-size:11px!important}}
 @media(prefers-reduced-motion:reduce){.rico-v5-mascot,.rico-v5-sparkle,.rico-v5-hero:before{animation:none!important}}
+
+/* V8 polished arcade UI: lightweight, mobile-first and no backend overrides */
+:root{--v8-gold:#ffe19a;--v8-lilac:#bda2ff}
+.rico-v5-hero{box-shadow:0 9px 0 #291654,0 22px 38px #07031688!important;isolation:isolate}
+.rico-v5-mascot{filter:drop-shadow(0 12px 14px #1d0c50aa);animation:v8Mascot 5s ease-in-out infinite!important}
+.rico-v5-hero-cta,.rico-invite-share,#ricoCopyInvite{transition:transform .18s ease,filter .18s ease,box-shadow .18s ease!important}
+.rico-v5-hero-cta:active,.rico-invite-share:active,#ricoCopyInvite:active{transform:translateY(2px) scale(.98)!important}
+.rico-v5-hero-cta:focus-visible,.rico-invite-share:focus-visible,#ricoCopyInvite:focus-visible,.bottom-nav button:focus-visible,.rico-rank-tabs button:focus-visible{outline:3px solid #ffe29b!important;outline-offset:3px}
+#checkinSection .daily-journey{box-shadow:0 6px 0 #80502e,0 17px 28px #08051d66!important}
+#checkinSection .day-card.today:not(.completed){animation:v8Today 2.8s ease-in-out infinite!important}
+#checkinSection .day-card.bonus:after{content:'STREAKS ONLY'!important;font-size:9px!important}
+.rico-v5-reward-intro{font-size:13px!important;line-height:1.5!important}
+.rico-v8-milestone{display:flex;align-items:center;gap:12px;margin:15px 2px 2px;padding:13px;border-radius:15px;background:#fff6e5;border:1px solid #e0bb84;color:#65422b}
+.rico-v8-milestone-icon{flex:none;display:grid;place-items:center;width:39px;height:39px;border-radius:12px;background:linear-gradient(140deg,#9e67ed,#6330bc);color:#ffe4a0;font-size:24px}
+.rico-v8-milestone>div{flex:1;min-width:0}.rico-v8-milestone strong{display:block;font-size:13px;line-height:1.3}.rico-v8-milestone small{display:block;font-size:11px;line-height:1.5;margin-top:4px;color:#8a6247}
+.rico-v8-progress{height:6px;background:#e7d1b4;border-radius:10px;overflow:hidden;margin-top:9px}.rico-v8-progress span{display:block;height:100%;width:0;background:linear-gradient(90deg,#a564e9,#f0b54d);border-radius:10px;transition:width .6s ease}
+.rico-invite{box-shadow:0 8px 0 #21134e,0 19px 35px #09051e70!important}.rico-link-box{min-width:0}.rico-link-text{overflow-wrap:anywhere}
+.rico-rank-podium .podium-card{transition:transform .2s ease,box-shadow .2s ease}.rico-rank-podium .podium-card.winner{box-shadow:0 0 0 1px #f4c76b66,0 14px 25px #07031580!important}.rico-rank-podium .podium-card .podium-avatar{border:2px solid #b995ff}
+.rico-v8-rank-note{text-align:center;font-size:11px;color:#b5a8d6;margin:-5px 0 13px}
+.rico-v8-faq{margin:22px 0;padding:18px 15px;border-radius:20px;background:linear-gradient(145deg,#29204e,#1c1837);border:1px solid #584582}.rico-v8-faq h2{font-size:18px;margin:0 0 12px;color:#fff2d5}.rico-v8-faq details{border-top:1px solid #ffffff20;padding:12px 1px}.rico-v8-faq summary{list-style:none;cursor:pointer;color:#f8f2ff;font-size:13px;font-weight:750;display:flex;align-items:center;justify-content:space-between;gap:10px}.rico-v8-faq summary::-webkit-details-marker{display:none}.rico-v8-faq summary:after{content:'+';color:#ffdc90;font-size:21px;line-height:1}.rico-v8-faq details[open] summary:after{content:'−'}.rico-v8-faq p{color:#c9bce7;font-size:12px;line-height:1.6;margin:10px 0 0}
+.bottom-nav button{transition:background .22s ease,color .22s ease,transform .22s ease}.bottom-nav button:active{transform:scale(.96)}
+@keyframes v8Mascot{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}@keyframes v8Today{0%,100%{filter:brightness(1)}50%{filter:brightness(1.07)}}
+@media(max-width:390px){.rico-v8-milestone{padding:10px;gap:9px}.rico-v8-milestone strong{font-size:12px}.rico-v5-hero{min-height:210px!important}.rico-rank-toolbar{flex-wrap:wrap}}
+@media(prefers-reduced-motion:reduce){.rico-v5-mascot,#checkinSection .day-card.today:not(.completed){animation:none!important}.rico-v8-progress span,.bottom-nav button,.rico-rank-podium .podium-card{transition:none!important}}
 </style>
 <style>
 /* Rico Club 2.0 focused navigation and homepage */
@@ -3775,7 +3799,7 @@ body{background:radial-gradient(ellipse at 50% -10%,#44318b 0%,transparent 48%),
   ===================================================== -->
 <section class="page active" id="pageHome">
 <div class="desktop-grid">
-<div><section aria-label="Rico Club Arcade" class="rico-v5-hero"><div aria-hidden="true" class="rico-v5-stars"></div><div class="rico-v5-hero-copy"><span class="rico-v5-pill">THE DAILY ARCADE</span><h1>Check in. Collect.<br/><em>Share the fun.</em></h1><p>Collect Rico Points every day and invite friends to join the club.</p><button class="rico-v5-hero-cta" id="heroInviteAction" type="button">Invite Friends</button></div><img alt="Rico Club mascot" class="rico-v5-mascot" onerror="this.style.display='none'" src="/assets/club/rico-mascot.webp"/><img alt="" class="rico-v5-sparkle" onerror="this.style.display='none'" src="/assets/club/sparkle.webp"/></section><section class="greeting rico-v5-hidden-greeting">
+<div><section aria-label="Rico Club Arcade" class="rico-v5-hero"><div aria-hidden="true" class="rico-v5-stars"></div><div class="rico-v5-hero-copy"><span class="rico-v5-pill">RICO DAILY CLUB</span><h1>Check in. Collect.<br/><em>Share the fun.</em></h1><p>Collect Rico Points every day and invite friends to join the club.</p><button class="rico-v5-hero-cta" id="heroInviteAction" type="button">Invite Friends</button></div><img alt="Rico Club mascot" class="rico-v5-mascot" onerror="this.style.display='none'" src="/assets/club/rico-mascot.webp"/><img alt="" class="rico-v5-sparkle" onerror="this.style.display='none'" src="/assets/club/sparkle.webp"/></section><section class="greeting rico-v5-hidden-greeting">
 <div class="greeting-row">
 <div>
 <span class="eyebrow" id="greetingLabel">
@@ -3815,7 +3839,7 @@ body{background:radial-gradient(ellipse at 50% -10%,#44318b 0%,transparent 48%),
                   Today's reward is ready
                 </strong>
 <p id="checkinDescription">
-                  Keep your streak active and move closer to the weekly bonus.
+                  Check in daily to build your streak. Bonuses unlock at specific milestones.
                 </p>
 <b id="checkinReward">
                   +20 Rico Points
@@ -3827,7 +3851,7 @@ body{background:radial-gradient(ellipse at 50% -10%,#44318b 0%,transparent 48%),
             </button>
 </article>
 <!-- ADVANCED WEEK JOURNEY -->
-<div class="daily-journey"><div class="rico-v5-reward-intro">Every day counts. Collect your points and unlock the weekly chest.</div>
+<div class="daily-journey"><div class="rico-v5-reward-intro">Check in daily for Rico Points. Extra rewards unlock only when you reach a consecutive-day streak milestone.</div>
 <div class="daily-journey-head">
 <span>
                 THIS WEEK
@@ -3836,9 +3860,9 @@ body{background:radial-gradient(ellipse at 50% -10%,#44318b 0%,transparent 48%),
                 0 / 7 DAYS
               </strong>
 </div>
-<div class="day-track" id="dayTrack"></div><p class="rico-streak-disclaimer" id="ricoStreakDisclaimer">Every day: +20 points. Streak bonuses are earned only at consecutive-day milestones (7, 14, 28, 56, 84 and 112).</p>
+<div class="day-track" id="dayTrack"></div><div class="rico-v8-milestone" id="ricoV8Milestone" aria-live="polite"><span class="rico-v8-milestone-icon">✦</span><div><strong id="ricoV8MilestoneTitle">Your next streak milestone</strong><small id="ricoV8MilestoneText">Keep checking in to unlock your next bonus.</small><div class="rico-v8-progress"><span id="ricoV8ProgressFill"></span></div></div></div><p class="rico-streak-disclaimer" id="ricoStreakDisclaimer">Every day: +20 points. Streak bonuses are earned only at consecutive-day milestones (7, 14, 28, 56, 84 and 112).</p>
 </div>
-</section><section class="rico-invite" id="inviteHomeSection"><div aria-hidden="true" class="rico-invite-glow"></div><div class="rico-invite-top"><span class="rico-invite-label">FRIENDS &amp; REFERRALS</span><span aria-hidden="true" class="rico-invite-icon">✦</span></div><h2>Invite friends.<br/><span>Earn Rico Points.</span></h2><p>Share your personal link. Your friends can join Rico Club through your invitation.</p><div class="rico-link-box"><span class="rico-link-text" id="ricoInviteLink">Loading your invite link…</span><button aria-label="Copy invitation link" id="ricoCopyInvite" type="button">Copy</button></div><button class="rico-invite-share" id="ricoShareInvite" type="button">Share on Telegram <span aria-hidden="true">↗</span></button><p class="rico-invite-hint" id="ricoInviteHint">Referral points are awarded according to the current Club rules.</p></section><article class="member-card">
+</section><section class="rico-invite" id="inviteHomeSection"><div aria-hidden="true" class="rico-invite-glow"></div><div class="rico-invite-top"><span class="rico-invite-label">FRIENDS &amp; REFERRALS</span><span aria-hidden="true" class="rico-invite-icon">✦</span></div><h2>Invite friends.<br/><span>Earn Rico Points.</span></h2><p>Share your personal link. Your friends can join Rico Club through your invitation.</p><div class="rico-link-box"><span class="rico-link-text" id="ricoInviteLink">Loading your invite link…</span><button aria-label="Copy invitation link" id="ricoCopyInvite" type="button">Copy</button></div><button class="rico-invite-share" id="ricoShareInvite" type="button">Share on Telegram <span aria-hidden="true">✦</span></button><p class="rico-invite-hint" id="ricoInviteHint">Referral points are awarded according to the current Club rules.</p></section><article class="member-card">
 <div class="balance-row">
 <div>
 <span class="balance-label">
@@ -4208,9 +4232,9 @@ body{background:radial-gradient(ellipse at 50% -10%,#44318b 0%,transparent 48%),
   <div class="rico-rank-tabs" role="group" aria-label="Ranking category"><button class="selected" data-rank-type="checkins" type="button">Daily Check-ins</button><button data-rank-type="referrals" type="button">Referrals</button></div>
   <div class="rico-rank-toolbar"><label for="ricoRankWeek">Results for</label><select id="ricoRankWeek"><option value="0">This week</option><option value="1">Last week</option><option value="2">2 weeks ago</option><option value="3">3 weeks ago</option><option value="4">4 weeks ago</option></select></div>
   <p class="rico-rank-explain" id="ricoRankExplain">Number of daily check-ins completed this week.</p>
-  <div class="rico-rank-self" id="ricoRankSelf">Loading your position…</div>
+  <div class="rico-rank-self" id="ricoRankSelf">Loading your position…</div><div class="rico-v8-rank-note" id="ricoV8RankNote">Rankings refresh when you select a category or week.</div>
   <div class="podium rico-rank-podium" id="podium"></div><div class="rank-list rico-rank-list" id="rankList"></div>
-</section><section class="page" id="pageInfo"><div class="rico-info-head"><span class="rico-invite-label">RICO CLUB GUIDE</span><h1>Info Hub</h1><p>Everything you need to know about earning Rico Points.</p></div><div class="rico-criteria"><h2>How to earn Rico Points</h2><div class="rico-rule"><span class="rico-rule-art">✓</span><div><strong>Daily check-in</strong><p>Come back every day to grow your streak.</p></div><b id="ricoDailyRule">+20 pts</b></div><div class="rico-streak-rule"><h3>Streak milestones</h3><div class="rico-milestones" id="ricoStreakRules"><div>7 days <b>+50 pts</b></div><div>14 days <b>+150 pts</b></div><div>28 days <b>+300 pts</b></div><div>56 days <b>+600 pts</b></div><div>84 days <b>+900 pts</b></div><div>112 days <b>+1,200 pts</b></div></div></div><div class="rico-rule"><span class="rico-rule-art">♧</span><div><strong>Invite a friend</strong><p>Earn points for qualifying referrals.</p></div><b id="ricoReferralRule">+60 pts</b></div><p class="rico-rule-note">Your live Club settings determine the actual awards. Streak bonuses are additional to the daily check-in reward.</p></div><div class="rico-help-card"><h3>Your personal invite link</h3><p>Copy your link from the homepage and share it with friends.</p><button id="ricoInfoInvite" type="button">Go to invitation</button></div></section>
+</section><section class="page" id="pageInfo"><div class="rico-info-head"><span class="rico-invite-label">RICO CLUB GUIDE</span><h1>Info Hub</h1><p>Everything you need to know about earning Rico Points.</p></div><div class="rico-criteria"><h2>How to earn Rico Points</h2><div class="rico-rule"><span class="rico-rule-art">✓</span><div><strong>Daily check-in</strong><p>Come back every day to grow your streak.</p></div><b id="ricoDailyRule">+20 pts</b></div><div class="rico-streak-rule"><h3>Streak milestones</h3><div class="rico-milestones" id="ricoStreakRules"><div>7 days <b>+50 pts</b></div><div>14 days <b>+150 pts</b></div><div>28 days <b>+300 pts</b></div><div>56 days <b>+600 pts</b></div><div>84 days <b>+900 pts</b></div><div>112 days <b>+1,200 pts</b></div></div></div><div class="rico-rule"><span class="rico-rule-art">♧</span><div><strong>Invite a friend</strong><p>Earn points for qualifying referrals.</p></div><b id="ricoReferralRule">+60 pts</b></div><p class="rico-rule-note">Your live Club settings determine the actual awards. Streak bonuses are additional to the daily check-in reward.</p></div><div class="rico-v8-faq"><h2>Quick answers</h2><details><summary>When do I earn my daily points?</summary><p>After a successful daily check-in. Your available balance updates from the Club system.</p></details><details><summary>How do streak bonuses work?</summary><p>Streak bonuses are additional points, awarded only when you reach a qualifying consecutive-day milestone. A new calendar week does not automatically trigger a bonus.</p></details><details><summary>What counts on the leaderboard?</summary><p>Check-in rankings count valid check-ins during the selected week. Referral rankings count qualified referrals, not pending invitations.</p></details><details><summary>Can I see previous results?</summary><p>Yes. Open Ranking and choose a previous week from the dropdown.</p></details></div><div class="rico-help-card"><h3>Your personal invite link</h3><p>Copy your link from the homepage and share it with friends.</p><button id="ricoInfoInvite" type="button">Go to invitation</button></div></section>
 <!-- ====================================================
        PROFILE
   ===================================================== -->
@@ -10116,6 +10140,7 @@ async function ricoLoadWeeklyRankings(){
   const people=data.leaderboard||[],unit=ricoRankType==='checkins'?'check-in':'referral';
   document.getElementById('ricoRankExplain').textContent=ricoRankType==='checkins'?'Ranked by valid check-ins during the selected week. Ties are broken by earliest check-in.':'Ranked by qualified referrals during the selected week. Pending invitations do not count.';
   self.innerHTML=`<span>Your weekly position</span><b>${data.my_rank?'#'+data.my_rank:'Unranked'} · ${number(data.my_score||0)} ${unit}${Number(data.my_score)!==1?'s':''}</b>`;
+  document.getElementById('ricoV8RankNote').textContent=ricoRankWeeks===0?'Live weekly activity · results update as members participate':'Historical weekly activity · showing the selected week';
   if(!people.length){podium.innerHTML='<div class="rico-rank-loading">No qualifying activity recorded for this week yet.</div>';return}
   const top=[people[1],people[0],people[2]].filter(Boolean);
   podium.innerHTML=top.map(p=>`<article class="podium-card ${p.rank===1?'winner':''}"><span class="podium-rank">#${p.rank}</span><div class="podium-avatar">${ricoRankAvatar(p)}</div><strong>${escapeHtml(maskedName(p))}</strong><b>${number(p.score)} ${unit}${Number(p.score)!==1?'s':''}</b></article>`).join('');
@@ -10140,10 +10165,28 @@ function ricoUpdateInfo(){
  if(el)el.textContent=link||'Invite link unavailable — check bot settings';
  const points=(key,fallback)=>{const n=Number(state.settings?.[key]);return Number.isFinite(n)&&n>=0&&state.settings?.[key]!==undefined?n:fallback};
  const daily=document.getElementById('ricoDailyRule');if(daily)daily.textContent=`+${points('daily_checkin_points',20).toLocaleString()} pts`;
+ ricoV8UpdateMilestone();
  const streakNote=document.getElementById('ricoStreakDisclaimer');if(streakNote)streakNote.textContent=`Earn ${points('daily_checkin_points',20)} points for each valid daily check-in. An extra ${points('streak_bonus_7',50)} points is awarded only on your 7th consecutive day. Further bonuses unlock at 14, 28, 56, 84 and 112 consecutive days.`;
  const referral=document.getElementById('ricoReferralRule');if(referral)referral.textContent=`+${points('referral_reward_points',60).toLocaleString()} pts`;
  const milestones=[7,14,28,56,84,112],defaults=[50,150,300,600,900,1200];
  const target=document.getElementById('ricoStreakRules');if(target)target.innerHTML=milestones.map((d,i)=>`<div>${d} days <b>+${points('streak_bonus_'+d,defaults[i]).toLocaleString()} pts</b></div>`).join('');
+}
+function ricoV8UpdateMilestone(){
+ const current=Math.max(0,Number(state.user?.current_streak||0));
+ const milestones=[7,14,28,56,84,112];
+ const next=milestones.find(d=>d>current);
+ const title=document.getElementById('ricoV8MilestoneTitle');
+ const description=document.getElementById('ricoV8MilestoneText');
+ const fill=document.getElementById('ricoV8ProgressFill');
+ if(!title||!description||!fill)return;
+ if(!next){title.textContent=`${current}-day streak`;description.textContent='You have reached the highest listed streak milestone!';fill.style.width='100%';return;}
+ const prev=[0,...milestones].filter(d=>d<=current).pop()||0;
+ const fallback={7:50,14:150,28:300,56:600,84:900,112:1200};
+ const setting=state.settings?.['streak_bonus_'+next];
+ const bonus=setting===undefined?fallback[next]:Number(setting);
+ title.textContent=`Next milestone: ${next} days`;
+ description.textContent=`${next-current} more consecutive day${next-current===1?'':'s'} for +${number(bonus)} bonus Rico Points`;
+ fill.style.width=Math.max(0,Math.min(100,(current-prev)/(next-prev)*100))+'%';
 }
 function ricoInviteNavigate(){openPage('home');document.getElementById('inviteHomeSection')?.scrollIntoView({behavior:'smooth',block:'center'})}
 function ricoCopyInvite(){const link=ricoInvitationLink();if(!link){showToast('Invite link is not available yet.');return}if(navigator.clipboard?.writeText){navigator.clipboard.writeText(link).then(()=>showToast('Invite link copied!')).catch(()=>ricoCopyFallback(link))}else ricoCopyFallback(link)}
